@@ -21,7 +21,77 @@
     \date{\today}
     \begin{onehalfspace}
 
-        In Tuesday January 12th's seminar, David Chan opened the talk with a summary of the course generally.
+        \emph{What is Research?} The process of learning enough information to sufficiently answer a question.
+
+        In Tuesday January 12th's seminar, David Chan opened the talk with a summary of the course generally. We began
+        by noting that every summary document assignment (due the Friday following the seminar) should contain the following elements:
+        \begin{itemize}
+            \item the name of the presenter,
+            \item the presentation title, and
+            \item a thorough but consise summary.
+        \end{itemize}
+        The class expectations follow as:
+        \begin{itemize}
+            \item be on time,
+            \item pay attention,
+            \item ask questions.
+        \end{itemize}
+        The goals for the course in general follow as:
+        \begin{itemize}
+            \item to discover the research interests of a collection of faculty members,
+            \item to experience a fairly broad range of research topics,
+            \item to experience a broad range of presentation styles, and finally
+            \item to gain a better understanding of what research is and how to do it.
+        \end{itemize}
+        When doing guided research with a professor there are a few expectations that go along with the hours obtained.
+        The following give a fairly comprehensive set of expectations for research operation:
+        \begin{enumerate}
+            \item work consistently,
+            \item meeting regularly,
+            \item explain your results to others (for example in seminars),
+            \item training (e.g. lab policies, software),
+            \item reading,
+            \item getting frustrated a lot.
+        \end{enumerate}
+        Some general advice follows as:
+        \begin{itemize}
+            \item pick something that you are passionate about,
+            \item try to find a professor that you are comfortable with,
+            \item pick something that is in an area of strength
+            \item \textbf{think on your own}
+            \item enjoy yourself!
+        \end{itemize}
+        After this description of the courses logistics and goals Dr. Chan got into his individual areas of research,
+        which we'll address in the following sections.
+
+        \section{Project 1. Rippled Dynamics}
+        The idea at hand here is to study these sequence generators mainly for the purpose of modeling drug
+        interactions with epilepsy patients. Though the lens through which we are looking at these drug interactions
+        is differnce equations in the discrete dynamical system field. The curiousity with regards to these sequence
+        generating functions is that they are both chaotic and periodic with their behaviour.
+
+        The model that we were given follows as
+        \begin{align*}
+            x_{n+1} = \max\left\{\frac{A_n + D_n H_{\epsilon}(x_n)}{x_n}, \frac{B_n}{x_n-1}\right\}
+        \end{align*}
+        where $A_n$ and $D_n$ are periodic generating sequences, $B_n$ is non-periodic, and $H_{\epsilon}(x)$
+        is the heavyside function. We generally simplify the model to:
+        \begin{align*}
+            x_{n+1} = \frac{A_n + D_n H_{\epsilon}(x_n)}{x_n}
+        \end{align*}
+        We then proceeded to go over graphs of these models showing periodic behaviour, and then with persistent
+        iterations mild non-periodic behaviour develops over top of the persistent periodic behaviour.
+
+        \section{Project 2. Barrier Island Evolution}
+        Barrier islands, take for example Parramore Island on the Eastern Shore of Virginia, have quite a subtly
+        non-stable landmass. So we're attempting to model the island topograpy over time with regards to both physical and
+        biological stimuli (e.g. tides, storms, wave mechanics, plants, grasses). Specifically noted as the modeling
+        mechanics were Cellular Models/ABM. Furthermore, the mechanics of the models heavily rely upon linear algebra.
+        The final goal with the project would be to eventually develop a classification system upon which a risk
+        metric would be developed (in the same sense as the risk metric for hurricanes).
+
+        \section(Project 3. Cortisol Modeling)
+
 
     \end{onehalfspace}
 \end{document}
