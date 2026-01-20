@@ -7,6 +7,7 @@
 \setlength{\voffset}{-.5in}
 \setlength{\textheight}{9.0in}
 \usepackage{amsmath}
+\usepackage{leftindex}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{enumitem}
@@ -29,12 +30,36 @@
         with capacities 25, 35 and 40 respectively
         \begin{enumerate}[label=(\alph*)]
             \item How many ways are there to fill the dormitories?
-            \item Suppowe that of the 100 students 50 are men and 50 are women and that $A$
+            \item Suppose that of the 100 students 50 are men and 50 are women and that $A$
                   is an all-men's dorm, $B$ is an all-women's dorm, and $C$ is co-ed. How
                   many ways are there to fill the dormitories.
         \end{enumerate}
         \begin{solution}
-            Problem 1
+            (a) We begin by asking how many different ways are there to fill a a dorm of size 25 from 100 people:
+            \begin{displaymath}
+                \binom{100}{25} = \frac{100!}{25!(100 - 25)!}
+            \end{displaymath}
+
+            Now if we want to fill the three dorms, we start by filling $A$ with the $\binom{100}{25}$ possibilities
+            leaving us 75 students to work with for the next dorm, $B$, which we fill with $\binom{75}{35}$
+            possibilities. Lastly, we are left with $C$ which has $\binom{40}{40}$ possibilities. So, the number
+            of ways to fill the dorms follows as
+            \begin{eqnarray*}
+                \binom{100}{25}\binom{75}{35}\binom{40}{40} & = & \frac{100!}{25!(100 - 25)!} \cdot \frac{75!}{35!(75 - 35)!} \\
+                                                            & = & \frac{100!}{20!25!35!} \\
+                                                            & = & 7.0 \times 10^{44} \text{ ways.}
+            \end{eqnarray*}
+
+            (b) Let us be under the assumptions stipulated in (b) above with $A$ being all male, $B$ being all female,
+            and $C$ being co-ed. Notice, when $A$ is filled the number of remaining men to fill dorm $C$ will be
+            $50 - 25 = 25$. Similarly, the number of women left to fill dorm $C$ will be $50 - 35 = 15$. So, when we
+            put this all together using the binomial coefficient as we did before, we see that the number of ways to fill
+            the dorms follows as:
+            \begin{eqnarray*}
+                \binom{50}{25}\binom{50}{35}\binom{40}{40} & = & \frac{50!}{25!25!}\cdot\frac{50!}{35!15!} \\
+                                                           & = & \frac{50!^2}{25!^2 35!15!} \\
+                                                           & = & 2.845 \times 10^{26} \text{ ways.}
+            \end{eqnarray*}
         \end{solution}
 
         % Problem 2
@@ -44,7 +69,37 @@
         particular man and one particular woman who are members of the club refuse to
         serve together on the committee?
         \begin{solution}
-            Problem 2
+            For the first portion we proceed in cases using both the addition and multiplication rules:
+            \begin{itemize}
+                \item Case: 0-men, 5-women: $\binom{12}{5} = 792$
+                \item Case: 1-man, 4-women: $\binom{10}{1}\binom{12}{4} = 4950$
+                \item Case: 2-men, 3-women: $\binom{10}{2}\binom{12}{3} = 9900$
+                \item Case: 3-men, 2-women: $\binom{10}{3}\binom{12}{2} = 7920$
+            \end{itemize}
+            So we add these values up to get the total number of possibilities for filling our committee, which follows
+            as
+            \begin{displaymath}
+                792 + 4950 + 9900 + 7920 = 23,562 \text{ combinations.}
+            \end{displaymath}
+
+            For the next portion of the problem we will comute the complement and subtract it from the whole given just
+            above. So assume that our pair of people is infact on the committee. We now have three slots to work with,
+            where one of the slots must be a women, and we are working with 9-men and 11-women. So our cases for filling
+            these slots follow as:
+            \begin{itemize}
+                \item Case: 0-men, 3-women: $\binom{11}{3} = 165$
+                \item Case: 1-man, 2-women: $\binom{9}{1}\binom{11}{2} = 495$
+                \item Case: 2-men, 1-woman: $\binom{9}{2}\binom{11}{1} = 396$.
+            \end{itemize}
+            So we add these, and we see that the number of misconfigured committees follows as:
+            \begin{displaymath}
+                165 + 495 + + 396 = 1056,
+            \end{displaymath}
+            and the number of possible ways to fill the committee follows as
+            \begin{displaymath}
+                23,562 - 1056 = 22,506.
+            \end{displaymath}
+
         \end{solution}
 
         % Problem 3
@@ -57,12 +112,25 @@
                   (and he can't swim)? (Hint: Count the routes that use the block under water).
         \end{enumerate}
         \begin{solution}
-            Problem 3
+            Consider the $U\times V$ taxicab lattice. We let the point $(m,n)$ represent the destination, and $(0,0)$
+            represent the starting point of our secretary. We must move $m$ units to the right, and $n$ units up no
+            matter what path we take. So the totalk length of the shortest path is $m+n$. Any path is a sequence of $m+n$
+            length over the letterss $R$ ``right'' and $U$ ``up'' (e.g. $RUURURRURRU\ldots$). Now notice that the total
+            number of paths is the total number of ways to choose which $m+n$ slots in the sequence will be the horizontal
+            moves $R$. So we have:
+            \begin{displaymath}
+                \text{Number of paths } = \binom{m + n}{m} = \frac{(m+n)!}{m!n!}.
+            \end{displaymath}
+
+            (a) We now simply set $U = 9$ and $V = 8$ so the number of paths becomes:
+            \begin{displaymath}
+                \text{Number of paths } = \binom{17}{8} = \frac{17!}{8!9!} = 24,310
+            \end{displaymath}
         \end{solution}
 
         % Problem 4
         \textbf{4.} There are 20 identical sticks lined up in a row occupying 20 distinct places
-        as follows: $\|\|\|\|\|\|\|\|\|\|\|\|\|\|\|\|\|\|\|\|$ - six of them are to be chosen.
+        as follows: $\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert\vert$ - six of them are to be chosen.
         \begin{enumerate}[label=(\alph*)]
             \item How many choices are there?
             \item How many choices are there if no two of the chosen sticks can be consecutive?
@@ -70,14 +138,67 @@
                   pair of chosen sticks?
         \end{enumerate}
         \begin{solution}
-            Problem 4
+            (a) Clearly for choosing 6 sticks out of a row of 20, the solution follows as the binomial coefficient:
+            \begin{displaymath}
+                \binom{20}{6} = 38,760
+            \end{displaymath}
+            (b) For the next portion of the problem we will reduce it to the classical ``stars and bars'' problem. So,
+            we will let our unchosen sticks be given as $*$, and our chosen sticks to be $\vert$, so a representation
+            of our solution might look like:
+            \begin{displaymath}
+                * \vert * \vert * * \vert * * * * \vert * * \vert * \vert * *
+            \end{displaymath}
+            This is essentially a specific case of the problem of distributing $r$ identical balls into $n$ distinct
+            boxes. Let us briefly consider the general case here. But let us consider the general case where there must
+            be a ball in every box. First put one ball in each box, and then put a false bottom in the boxes to conceal
+            the ball in each box. Now it remains to count the ways to distribute without restriction the remaining
+            $r - n$ balls into the $n$ boxes. So the answer is
+            \begin{displaymath}
+                \binom{(r - n) + n - 1}{r - n} = \frac{\left[(r - n) + n - 1\right]!}{(r - n)!(n - 1)!} = \binom{r-1}{n-1}
+            \end{displaymath}
+            So our answer falls out that we have 7 - boxes and 14 balls (or stars). And the solution follows as:
+            \begin{displaymath}
+                \binom{14 - 1}{7 - 1} = \binom{13}{6} = 1716
+            \end{displaymath}
+
+            (c) For the third portion of the problem we will use the fact that the nunber of solutions to the equation:
+            \begin{displaymath}
+                x_1 + x_2 + \cdots + x_k = n
+            \end{displaymath}
+            such that for all $1\le i \le k$, $x_i > 0$. We know that the number of solutions to this is $\binom{n+k-1}{k-1}$. It
+            is also clear that this can be reduced to the number $x_i$ balls in $k$ boxes out of $n$ balls. From here
+            we set our linear equation with seven variables for our seven bins above, and set all of our variables
+            greater than or equal to two. So we have
+            \begin{displaymath}
+                x_1 + x_2 + \cdots + x_7  = 14
+            \end{displaymath}
+            with $x_i \ge 2$. Now set $x_i' \ge 0 $ with $x_i' = x_i - 2$. Then our equation becomes:
+            \begin{eqnarray*}
+                (x_1' + 2) + (x_2' + 2) + \cdots + (x_7' + 2)  & = & 14 \\
+                x_1' + x_2' + \cdots + x_7'  & = & 14 - 14 = 0
+            \end{eqnarray*}
+            So the number of solutions follows as:
+            \begin{displaymath}
+                \binom{0 + 7 - 1}{7-1} = \binom{6}{6} = 1
+            \end{displaymath}
         \end{solution}
 
         % Problem 5
         \textbf{5.} How many integral solutions of $x_1 + x_2 + x_3 + x_4 = 30$ satisfy
         $x_1\ge 2$, $x_2\ge 0$, $x_3\ge -5$, and $x_4\ge 8$?
         \begin{solution}
-            Problem 5
+            Similarly to (c) in problem 4, we will simply manipulate the inequalities and use the number of solutions
+            to the linear combination of non-negative integers computation. So for our problem let $x_1' \ge 0$ with
+            $x_1' = x_1 - 2$, $x_3' \ge 0$ with $x_3' = x_3 + 5$, and $x_4' \ge 0$ with $x_4'=x_4 - 8$. Then our equation
+            becomes:
+            \begin{eqnarray*}
+                (x_1'+ 2) + x_2 + (x_3' - 5) + (x_4' + 8) & = & 10 \\
+                x_1' + x_2 + x_3' + x_4' & = & 5
+            \end{eqnarray*}
+            So our calulation for the number of possible solutions follows as:
+            \begin{displaymath}
+                \binom{25+ 4 - 1}{4 - 1} = \binom{29}{4} = 23,751.
+            \end{displaymath}
         \end{solution}
 
         % Problem 6
@@ -86,7 +207,40 @@
         of each kind? If one of the kinds of bagels is Sesame, what is the probability that
         your choice contains at least three Sesame bagels?
         \begin{solution}
-            Problem 6
+            Again we are going to use the number of solutions for a linear equation. First though, because we want to
+            calculate probabilities. Let's get the total possible number of bagel orders of 15 bagles grabbing from 6 types
+            randomly. Let ${A, B, C, D, E, S}$ be our types of bagels. So for $A, B, C, D, E, S \ge 0$ and
+            \begin{displaymath}
+                A + B + C + D + E + S = 15
+            \end{displaymath}
+            We quickly see that the total number of possible orders follows as:
+            \begin{displaymath}
+                \binom{15 + 6 - 1}{6 - 1} = \binom{20}{5} = 15,504.
+            \end{displaymath}
+            Now let's compute the same thing but instead for $A, B, C, D, E, S > 0$. Given the same linear equation
+            above we know from earlier that the total number of orders given these constraints are:
+            \begin{displaymath}
+                \binom{15 - 1}{6 - 1} = \binom{14}{5} = 2002
+            \end{displaymath}
+            So,
+            \begin{displaymath}
+                \text{the probability of getting one of each bagel type in the order } = \frac{2002}{15,504}\cdot 100 = 12.913\%
+            \end{displaymath}
+            We let $S$ bet the sesame type of bagels in our linear combination. So for us to have at least three sesame
+            bagels our variable constraints follow as $A, B, C, D, E \ge 0$ and $S \ge 3$. So we let $S' \ge 0$ be
+            defined as $S' = S - 3$. Then our linear combination follows as:
+            \begin{eqnarray*}
+                A + B + C + D + E + (S' + 3) & = & 15 \\
+                A + B + C + D + E + S' & = & 12
+            \end{eqnarray*}
+            So we fall back to our formula that relies on the binomial coefficient:
+            \begin{displaymath}
+                \binom{12 + 6 - 1}{6 - 1} = \binom{17}{5} = 6188
+            \end{displaymath}
+            So our probability of having atleast three sesame begals follows as:
+            \begin{displaymath}
+                \frac{6188}{15,504}\cdot 100 = 39.912\%.
+            \end{displaymath}
         \end{solution}
 
         % Problem 7
@@ -101,10 +255,69 @@
             \item The probability that there are exactly two different numbers of dots shown
         \end{enumerate}
         \begin{solution}
-            Problem 7
+            (a) We can use our number of solutions for linear equations for this problem, but instead
+            let $a_1, a_2, a_3, a_4$ represent the die such that $1 \le x_i \le 6$. We need $x_1 + x+2 + x_3 + x_4 = 6$.
+            But because each $a_i \ge 1$, set $b_i = a_i - 1$ so that $b_i \ge 0$. Then
+            \begin{eqnarray*}
+                (b_1 + 1) + (b_2 + 1) + (b_3 + 1) + (b_4 + 1) & = & 6 \\
+                b_1 + b_2 + b_3 + b_4 & = & 2
+            \end{eqnarray*}
+            So the number of non-negative solutions to the equations follows as
+            \begin{displaymath}
+                \binom{2 + 4 - 1}{4 - 1} = \binom{5}{3} = 10
+            \end{displaymath}
+            So the probability of landing this dice roll is
+            \begin{displaymath}
+                P = \frac{10}{1296} = \frac{5}{648}.
+            \end{displaymath}
+
+            (b) Let $k$ be the number of dice showing 1. We want $k = 0, 1, 2$
+            We begin by chosing which $k$ dice are 1, $\binom{4}{k}$. Each of the other
+            $4 - k$ dice can be $2, 3, 4, 5, 6$ which is $5^{4-k}$ ways. Wo we count
+            \begin{eqnarray*}
+                \sum_{k=0}^3 \binom{4}{k}5^{4-k} & = & \binom{4}{0}5^4 + \binom{4}{1}{5^3} + \binom{4}{2}5^2 \\
+                             & = & 625 + 500 + 150 = 1275.
+            \end{eqnarray*}
+            So our probability at most two dice show 1 is
+            \begin{displaymath}
+                P = \frac{1275}{1296} = \frac{425}{432}
+            \end{displaymath}
+
+            (c) Each die can be $2, 3, 4, 5, 6$ which is five choices per die that are independent. So the total
+            number of outcomes is:
+            \begin{displaymath}
+                5^4 = 625
+            \end{displaymath}
+            So the probability each die is at least a two is:
+            \begin{displaymath}
+                P = \frac{625}{1296}
+            \end{displaymath}
+
+            (d) Choose 4 distinct faces for 6 with order since the die are coloured. So we
+            have $6 \cdot 5 \cdot 4 \cdot 3 = \leftindex_6 P_4 = 360$. So the probability of all
+            four nunbers being different is:
+            \begin{displaymath}
+                P = \frac{360}{1296} = \frac{5}{18}
+            \end{displaymath}
+
+            (e) We have two cases that we have to deal with here where the dice are split evenly 2,2
+            and where we have a stand alone die and three repetitions call it 3,1.
+            \textbf{Case 1.} 3,1 - Choose the two numbers that we're going to get on the die $\binom{6}{2} = 15$.
+            Choose which number appears 3 times: 2 ways to do this. Choose which die is the singleton $\binom{4}{1} = 4$.
+            So our count follows as $15 \cdot 2 \cdot 4 = 120$.
+            \textbf{Case 2.} 2,2 - Choose the two numbers that we're going to get on the die $\binom{6}{2} = 15$. Choose
+            which two dice show the first number and the rest show the other number $\binom{4}{2} = 6$. Which gives the
+            count $15 \cdot 6 = 90$.
+
+            So now we combine the results of Case 1 and Case 2 with the total ways to get just two numbers
+            as:
+            \begin{displaymath}
+                120 + 90 = 210
+            \end{displaymath}
+            So the probability of getting the same two numbers across the die follows as:
+            \begin{displaymath}
+                P = \frac{210}[1296] = \frac{35}{216}.
+            \end{displaymath}
         \end{solution}
-
-
-
     \end{onehalfspace}
 \end{document}
