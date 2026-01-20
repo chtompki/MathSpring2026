@@ -1,0 +1,182 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{leftindex}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\title{Combinatorics\\Notes January 15, 2026}
+%\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        \underline{Counting}
+        \begin{quote}
+            ``Those who do not count; do not count!''
+        \end{quote}
+        Our combinatorial proofs will mainly rely upon the following principles
+        \begin{enumerate}
+            \item The Addition rule,
+            \item The Multiplication rule,
+            \item The Permutation rule (with or without repeating),
+            \item The Combination rule (with or without repeating),
+            \item The Distribution rule (twelve fold method),
+            \item Inclusion and Exclusion,
+            \item Generating Functions (ordinary and exponential),
+            \item Recurring Relations (linear and non-linear),
+            \item The Pigeonhole Principle (both simple and generalized) \emph{important},
+            \item Other miscellaneous methods.
+        \end{enumerate}
+        Suppose we have boxes for distributing items
+        \begin{figure}[!ht]
+            \centering
+            \begin{tikzpicture}
+                \draw (-4,1) -- (-4, 0) -- (-2, 0) -- (-2, 1);
+                \draw (-1, 1) -- (-1, 0) -- (1, 0) -- (1, 1);
+                \draw (2, 1) -- (2, 0) -- (4, 0) -- (4, 1);
+            \end{tikzpicture}
+            \caption{Three boxes}
+        \end{figure}
+        We'd want to quickly ask some questions about our boxes:
+        \begin{itemize}
+            \item are they labled?
+            \item are the items indistinguishable or have types?
+            \item Define a bijection for capturing the mechanics of the problem.
+        \end{itemize}
+        \emph{Note.} Maybe use the ``Sterling'' or ``Burr'' Numbers.
+        To solve this problem we'd probably use rules 1, 2, 3, or 4 from above.
+
+        Before we get into the principles at hand let us note one definition.
+        \begin{definition}
+            A \emph{partition} of a group of $r$ identical objects divides the group into a collection
+            of (unordered) subsets of various sizes. Analogously, we define a partition of the integer $r$ to be a
+            collection of positive integers who's sum is $r$. Normally we write this collection as a sum and list the
+            integers in increasing order.
+        \end{definition}
+        For example, the seven partions of the integer 5 are:
+        \begin{eqnarray*}
+            1 + 1 + 1 + 1 + 1  \qquad  1 + 1 + 1 + 2 \qquad 1 + 1 + 3 \\
+            1 + 2 + 2 \qquad 1 + 4 \qquad 2 + 3 \qquad 5
+        \end{eqnarray*}
+
+        \begin{definition}
+            \emph{The Addition Principle.} Suppose a set $S$ is partitioned into pairwise disjoint parts
+             $S_1, S_2, \ldots S_m$, the number of the parts is given by adding the numbers obtained
+            \begin{displaymath}
+                |S| = \sum_{i=1}^m |s_i| = |s_1| + |s_2| + \ldots + |s_m|
+            \end{displaymath}
+        \end{definition}
+
+        Consider the following example where we look at a situation where the subsets or parts are not necessarily disjoint
+        \begin{displaymath}
+            S = S_1 \cup S_2 \cup S_3 \cup S_4,
+        \end{displaymath}
+        but we have
+        \begin{eqnarray*}
+            |S| & = & |S_1| + |S_2| + |S_3| + |S_4| - |S_1 \cap S_2| - |S_1 \cap S_3| - |S_1 \cap S_4| \\
+                &  &  - |S_2 \cap S_3 | - |S_2 \cap S_4| - |S_3 \cap S_4| \\
+                &  &  + | S_1 \cap S_2 \cap S_3| + |S_1 \cap S_2 \cap S_4| + |S_1 \cap S_3 \cap S_4| + |S_2 \cap S_3 \cap S_4| \\
+                &  &  - |S_1 \cap S_2 \cap S_3 \cap S_4|
+        \end{eqnarray*}
+
+        \begin{definition}
+            Let $S$ be a st of ordered $n$-tuples $(a_1, a_2, \ldots, a_n)$ of objects where the element $a_j$ comes
+            from a set of size $n_j$ then the size of $S$ is given by
+            \begin{displaymath}
+                |S| = \prod_{i=1}^n n_i
+            \end{displaymath}
+        \end{definition}
+
+        \noindent\textbf{Example.} Determine the nujber of integers that are the factors of $N = 3^4 \cdot 5^2 \cdot 11^7 \cdot 13^8$.
+        We simply add one to the exponents and multiply them together giving us
+        \begin{displaymath}
+            5 \times 3 \times 8 \times 9  = 1080
+        \end{displaymath}
+
+        \begin{definition}
+            \emph{Permutations.} (with no repition and order matters). \\
+            $\leftindex_n P_r$ is the permutation of $n$ elements taking $r$ at a time
+            \begin{displaymath}
+                n \times n-1 \times n-2 \times \cdots \times n-r + 1 \times \frac{(n-r)(n-r-1)\cdots (1)}{(n-r)(n-r-1)\cdots(1)} = \frac{n!}{(n-r)!}
+            \end{displaymath}
+        \end{definition}
+
+        \noindent\textbf{Example.} Consider $\{a,b,c,d\}$ let's look at $\leftindex_4 P_3 = 4 \cdot 3 \cdot 2 = 24$
+        \begin{center}
+            \begin{tabular}{ c|c|c|c }
+                abc & bac & cab & dab \\
+                abd & bca & cad & dac \\
+                acd & bad & cba & dba \\
+                acb & bda & cbd & dbc \\
+                adb & bcd & cda & dca \\
+                adc & bdc & cdb & dcb
+            \end{tabular}
+        \end{center}
+        and if we drop the ordering then we have
+        \begin{displaymath}
+            \leftindex_n C_r = \frac{\leftindex_n P_r}{r!} = \frac{n!}{(n-r)!r!} = \binom{n}{r}.
+        \end{displaymath}
+
+        \noindent\textbf{Example.} How many ways are there to rearrange the word \emph{mississippi}?
+        using $2!$ for the $p$'s, $4!$ for the $s$'s, $4!$ for the $i$'s and $1!$ for the $m$ we count it as
+        \begin{displaymath}
+            \frac{11!}{2!4!4!2!}
+        \end{displaymath}
+        In how many ways can we arrange the letters of \emph{mississippi} so that the vowels are together? Well how about
+        we just take all six of the $i$'s and block them together calling them $I$. Then, we are merely concerned with
+        the word $mIsssspp$, and that counts out as:
+        \begin{displaymath}
+            \frac{8!}{4!2!}
+        \end{displaymath}
+
+        \noindent\textbf{Example.} Bagel Shop. We have three types of bagels plain $P$, everything $E$, and
+        cinnamon-rasin $R$. The combination for selecting 12 bagels follows as
+        \begin{displaymath}
+            P + E + R = 12
+        \end{displaymath}
+        how may non-negative integer solutions does the equation have. For example the following are solutions
+        \begin{eqnarray*}
+            (6, 6, 0) \\
+            (4, 4, 4) \\
+            (3, 3, 6)
+        \end{eqnarray*}
+        Also we can represent the bagles in the following pattern
+        \begin{displaymath}
+            \underbrace{bb}_{P} \Bigg\vert \underbrace{bbbbbb}_{E} \Bigg\vert \underbrace{bbbb}_{R}
+        \end{displaymath}
+        or even more generally
+        \begin{displaymath}
+            \vert\vert bbbbbb \ldots
+        \end{displaymath}
+        Regardless when we count these suckers up we get
+        \begin{eqnarray*}
+            \binom{12 + 3 - 1}{12} & = & \binom{12 + 3 - 1}{3 - 1} \\
+            \binom{14}{12} = \binom{14}{2}
+        \end{eqnarray*}
+
+        \emph{Important.} The number of ways to select $r$ (order) from $n$ (varietes) with repitition is
+        \begin{displaymath}
+            \binom{n + r - 1}{r} = \binom{n + r - 1}{n-1}.
+        \end{displaymath}
+
+    \end{onehalfspace}
+\end{document}
