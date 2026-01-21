@@ -9,6 +9,8 @@
 \setlength{\textheight}{9.0in}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{pgfplots}
+\usepackage{tikz}
 \usepackage{amsthm}
 \usepackage{enumitem}
 \usepackage{setspace}
@@ -16,6 +18,23 @@
 \newenvironment{solution}
 {\begin{proof}[Solution]}
 {\end{proof}}
+
+\pgfplotstableread[]{
+    x      y        label
+    3      4        $z$
+    -3     -4       $-z$
+    3      -4       $\bar{z}$
+    -3      4       $-\bar{z}$
+    0.12   -0.16    $$
+    0.12   0.16     $$
+    -0.12 -0.16     $$
+}\advdata
+
+\pgfplotstableread[]{
+    x           y             label
+    1.0987      0.4551        $$
+    -1.0987     -0.4551       $$
+}\advdatab
 
 \title{Advanced Linear Algebra\\Homework 1}
 \author{Rob Tompkins}
@@ -36,14 +55,115 @@
             \item $(\sqrt{3} + i)^3 = 8i$
         \end{enumerate}
         \begin{solution}
-            Solution P.A.1
+            (a) The solution follows by computing $(1 + i)^2$, which follows as
+            \begin{eqnarray*}
+                (1 + i)(1 + i) & = & 1 + 2i + i^2 \\
+                               & = & 2i
+            \end{eqnarray*}
+            so we see that
+            \begin{eqnarray*}
+                (1 + i)^2(1 + i)^2 & = & (2i)^2 \\
+                                   & = & 4(-1) \\
+                                   & = & -4 \\
+            \end{eqnarray*}
+
+            (b) For the problem $(1-i)^{-1} - (1+i)^{-1} = i$ set $a = 1 - i$ and $b = 1 + i$. Then notice that
+            \begin{eqnarray*}
+                a^{-1} & = & \frac{1}{1^2 + (-1)^2} - \frac{-1}{1^2+(-1)^2} \\
+                       & = & \frac{1}{2} + \frac{1}{2}i
+            \end{eqnarray*}
+            and
+            \begin{eqnarray*}
+                b^{-1} & = & \frac{1}{1^2 + 1^2} - \frac{-1}{1^2+1^2} \\
+                       & = & \frac{1}{2} - \frac{1}{2}i
+            \end{eqnarray*}
+            so
+            \begin{eqnarray*}
+                (1 - i)^{-1} - (1 + i)^{-1} & = & \frac{1}{2} + \frac{1}{2}i - \frac{1}{2} + \frac{1}{2}i \\
+                                            & = & i
+            \end{eqnarray*}
+
+            (c) Set $a = i - 1$, then
+            \begin{eqnarray*}
+                a^2 & = & (i-1)^2 \\
+                    & = & -1 -2i + 1 \\
+                    & = & -2i
+            \end{eqnarray*}
+            So we see that
+            \begin{eqnarray*}
+                a^4 & = & -4 \\
+                a^{-4} & = & -\frac{1}{4} \\
+                (i - 1)^{-4} & = & -\frac{1}{4}.
+            \end{eqnarray*}
+
+            (d) Let $a = 1 + 3i$, and notice that
+            \begin{eqnarray*}
+                a^{-1} & = & \frac{1}{1^2 + 3^2} - \frac{3}{1^2 + 3^2}i \\
+                       & = & \frac{1}{10} - \frac{3}{10}i
+            \end{eqnarray*}
+            Now we have that
+            \begin{eqnarray*}
+                10(1 + 3i)^{-1} & = & 10a^{-1} \\
+                                & = & 10\left(\frac{1}{10} - \frac{3}{10}i\right) \\
+                                & = & 1 - 3i
+            \end{eqnarray*}
+
+            (e) We want to show that $(\sqrt{3} + i)^3 = 8i$ so we set $a = \sqrt{3} + i$ and we compute the following
+            \begin{eqnarray*}
+                a^2 & = & (\sqrt{3} + 1)^2 \\
+                    & = & 3 - 1 + 2\sqrt{3}i \\
+                    & = & 2 + 2\sqrt{3}i
+            \end{eqnarray*}
+            Then we see that
+            \begin{eqnarray*}
+                             a^3 & = & (\sqrt{3} + i)(2 + 2\sqrt{3}i) \\
+                                 & = & 2\sqrt{3} + 2i + 6i - 2\sqrt{3} \\
+                (\sqrt{3} + i)^3 & = & 8i.
+            \end{eqnarray*}
         \end{solution}
 
         % Problem P.A.3
-        \noindent\textbf{P.A.3} Let $z = 3+4i$. Plot and lablel the following pointw in the comples plane: $z$,
+        \noindent\textbf{P.A.3} Let $z = 3+4i$. Plot and label the following points in the complex plane: $z$,
         $-z$, $\bar{z}$, $-\bar{z}$, $1/z$, $1/\bar{z}$, $-1/\bar{z}$
         \begin{solution}
-            Solution P.A.3
+            We easily see that:
+            \begin{eqnarray*}
+                      z & = & 3 + 4i \\
+                     -z & = & -3 - 4i \\
+                \bar{z} & = & 3 - 4i \\
+               -\bar{z} & = & -3 + 4i \\
+            \frac{1}{z} & = & z^{-1} = \frac{3}{3^2 + 4^2} - \frac{4}{3^2 + 4^2}i = \frac{3}{25} - \frac{4}{25}i \\
+      \frac{1}{\bar{z}} & = & \frac{3}{25} + \frac{4}{25}i \\
+     -\frac{1}{\bar{z}} & = & \frac{3}{25} + \frac{4}{25}i
+            \end{eqnarray*}
+            So we have our plot given in Figure 1,
+            \begin{figure}[!ht]
+                \centering
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        xmin=-5, xmax=5, ymin=-5, ymax=5, % Set axis limits
+                        axis lines=middle, % Show axes in middle
+                        xlabel={$\text{re}$}, ylabel={$\text{im}$},
+                        grid=major % Add grid lines
+                    ]
+                        % Plot individual points
+                        \addplot[
+                            mark=*,only marks,
+                            point meta =color,
+                            point meta =explicit symbolic,
+                            nodes near coords,
+                        ]
+                        table[x=x,y=y, meta =color, meta =label]{\advdata};
+
+                        % Plot a function example (e.g., y = x^2)
+
+                    \end{axis}
+                \end{tikzpicture}
+                \caption{Plot of the points $z$, $-z$, $\bar{z}$, $-\bar{z}$, $1/z$, $1/\bar{z}$, $-1/\bar{z}$ }
+            \end{figure}
+
+            Note that the unlabled dots around the origin are starting from the top right and moving clockwise around
+            the origin are $1/z$, $1/\bar{z}$, $-1/\bar{z}$.
         \end{solution}
 
         % Problem P.A.6
@@ -54,34 +174,111 @@
             \item $(1 + i)^4$
         \end{enumerate}
         \begin{solution}
-            Solution P.A.6
+            Note that the polar form of $z^n$ as $z^n = r^n(\cos(n\theta) + i\sin(n\theta))$ for $n\in\mathbb{Z}$.
+            (a) For $1 + i$ we get $r = \sqrt{1 + 1}$ and $\theta = \frac{\pi}{4}$. So,
+            \begin{displaymath}
+                1+i = \sqrt{2}\left(\cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right)\right)
+            \end{displaymath}
+            (b) Then using our formula we have
+            \begin{displaymath}
+                (1+i)^2 = 2\left(\cos\left(\frac{pi}{2}\right) + i\sin\left(\frac{\pi}{2}\right)\right)
+            \end{displaymath}
+            (c) Again using our formula we have
+            \begin{displaymath}
+                (1 + i)^4 = 8\left(\cos(\pi) + i\sin(\pi)\right)
+            \end{displaymath}
         \end{solution}
 
         % Problem P.A.7
         \noindent\textbf{P.A.7} What are the square roots of $1 + i$? Draw a picture of their locations.
         \begin{solution}
-            Solution P.A.7
+            Using rectangular form we have that for $z = a+bi$
+            \begin{displaymath}
+                \sqrt{a+bi} = \pm \left(\sqrt{\frac{|z| + a}{2}} + i \cdot \frac{b}{|b|}\sqrt{\frac{|z| - a}{2}}\right)
+            \end{displaymath}
+            So we get that
+            \begin{eqnarray*}
+                \sqrt{1 + i} & = & \pm \left(\sqrt{\frac{\sqrt{2} + 1}{2}} + i \sqrt{\frac{\sqrt{2} - 1}{2}}\right) \\
+                             & \approx & \pm (1.0987 + 0.4551i)
+            \end{eqnarray*}
+            \begin{figure}[!ht]
+                \centering
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        xmin=-5, xmax=5, ymin=-5, ymax=5, % Set axis limits
+                        axis lines=middle, % Show axes in middle
+                        xlabel={$\text{re}$}, ylabel={$\text{im}$},
+                    grid=major % Add grid lines
+                    ]
+                        % Plot individual points
+                        \addplot[
+                            mark=*,only marks,
+                            point meta =color,
+                            point meta =explicit symbolic,
+                            nodes near coords,
+                        ]
+                        table[x=x,y=y, meta =color, meta =label]{\advdatab};
+
+                        % Plot a function example (e.g., y = x^2)
+
+                    \end{axis}
+                \end{tikzpicture}
+                \caption{Plot of the points for $\sqrt{1 + i}$ }
+            \end{figure}
         \end{solution}
 
         % Problem P.A.11
         \noindent\textbf{P.A.11} If $z \ne 0$, show that $\overline{1/z} = 1/\overline{z}$.
-        \begin{solution}
-            Solution P.A.11
-        \end{solution}
+        \begin{proof}
+            Let $z = a+bi$, then we have
+            \begin{eqnarray*}
+                \overline{\left(\frac{1}{z}\right)} & = & \overline{\left(\frac{a}{a^2 + b^2} - i\frac{b}{a^2 + b^2}\right)} \\
+                                                    & = & \frac{a}{a^2+b^2} + \frac{b}{a^2+b^2}
+            \end{eqnarray*}
+            and similarly
+            \begin{eqnarray*}
+                \frac{1}{\bar{z}} = (a - bi)^{-1} = \frac{a}{a^2 + b^2} + \frac{b}{a^2+b^2}
+            \end{eqnarray*}
+            So $\overline{1/z} = 1/\overline{z}$.
+        \end{proof}
 
         % Problem P.B.2
         \noindent\textbf{P.B.2} If $p$ is a real polynomial, show that $p(\lambda) = 0$ if
         and only if $p(\bar{\lambda}) = 0$.
-        \begin{solution}
-            Solution P.B.2
-        \end{solution}
+        \begin{proof}
+            ($\Rightarrow$) Let $p(\lambda) = 0$. So there must be some polynomial $q(z)$ such that
+            $p(z) = (z - \lambda)q(z) + r$. Also notice that
+            \begin{eqnarray*}
+                p(\lambda) & = & (\lambda - \lambda)q(\lambda) + r = 0 \\
+                           & = & r = 0.
+            \end{eqnarray*}
+            Now set $\lambda = a+bi$ so that $\bar{\lambda} = a - bi$. Now what is $p(\bar{\lambda})$? Well its
+            \begin{eqnarray*}
+                p(\bar{\lambda}) & = & (a - bi - a + bi)q(\bar{\lambda}) = 0.
+            \end{eqnarray*}
+            ($\Leftarrow$) Similarly to the previous case let $p(\bar{\lambda}) = 0$ and we find a polynomial $q(z)$
+            such that $p(z) = (z-\bar{\lambda})q(z)$ (shortcutting the dropping of the constant term). Then we see that
+            \begin{displaymath}
+                p(\lambda) = (\lambda - \bar{\lambda})q(\lambda) = (a + bi - a - bi)q(\lambda) = 0
+            \end{displaymath}
+        \end{proof}
 
         % Problem P.C.3
         \noindent\textbf{P.C.3} If $A\in\mathbf{M}_n(\mathbb{F})$ is invertible, show that
         $A^\top$ is invertible and $(A^{-1})^\top$ is its inverse.
-        \begin{solution}
-            Solution P.C.3
-        \end{solution}
+        \begin{proof}
+            We have the standard identities $(XY)^\top =X^\top Y^\top$ and $I^\top = I$. Now
+            let $A\in\mathbf{M}_n(\mathbb{F})$ be invertible so then we have that $AA^{-1}=I$ and
+            we have that $A^{-1}A=I$. So let's apply our standard identities to these equations, and we have
+            \begin{displaymath}
+                (AA^{-1})^{\top} = I^{\top} \quad\Rightarrow\quad (A^{-1})^\top A^\top = I
+            \end{displaymath}
+            and
+            \begin{displaymath}
+                (A^{-1}A)^{\top} = I^{\top} \quad\Rightarrow\quad A^{\top}(A^{-1})^{\top} = I
+            \end{displaymath}
+            So $(A^{-1})^\top$ is the left and right inverse of $A^\top$.
+        \end{proof}
 
         % Problem P.C.13
         \noindent\textbf{P.C.13} Compute the determinants of:
@@ -100,7 +297,76 @@
              1 & 2 & 3
         \end{bmatrix}$
         \begin{solution}
-            Solution P.C.13
+            For the first matrix we have
+            \begin{displaymath}
+                \text{det}\left[
+                  \begin{matrix}
+                      5 & \sqrt{3} + i \\
+                      \sqrt{3} - i & 4
+                  \end{matrix}
+                \right]
+                = 5\cdot4 - (\sqrt{3}-1)(\sqrt{3} + 1) = 20 - (3 + i\sqrt{3} - i\sqrt{3} - i^2) = 16
+            \end{displaymath}
+            For the second matrix we have the following:
+            \begin{eqnarray*}
+                \text{det}\left[
+                   \begin{matrix}
+                       1 & 2 & 3 \\
+                       2 & 2 & 3 \\
+                       3 & 3 & 3
+                   \end{matrix}
+                \right]
+                 & = & 1\text{det}\left[
+                    \begin{matrix}
+                        2 & 3 \\
+                        3 & 3
+                    \end{matrix}
+                \right] +
+                2\text{det}\left[
+                   \begin{matrix}
+                       2 & 3 \\
+                       3 & 3
+                   \end{matrix}
+                \right] +
+                3\text{det}\left[
+                   \begin{matrix}
+                       2 & 2 \\
+                       3 & 3
+                   \end{matrix}
+                \right] \\
+                & = & 1 (6 - 9) + 2 (6-9) + 3(6 - 6) \\
+                & = & -9
+            \end{eqnarray*}
+            For the third matrix we have the following:
+            \begin{eqnarray*}
+                \text{det}\left[
+                              \begin{matrix}
+                                  1 & 1 & 1 \\
+                                  1 & 2 & 2 \\
+                                  1 & 2 & 3
+                              \end{matrix}
+                \right]
+                & = & \text{det}\left[
+                                     \begin{matrix}
+                                         2 & 2 \\
+                                         2 & 3
+                                     \end{matrix}
+                \right] +
+                \text{det}\left[
+                               \begin{matrix}
+                                   1 & 2 \\
+                                   1 & 3
+                               \end{matrix}
+                \right] +
+                \text{det}\left[
+                               \begin{matrix}
+                                   1 & 2 \\
+                                   1 & 2
+                               \end{matrix}
+                \right] \\
+                & = & 2 + 1 + 0 \\
+                & = & 3
+            \end{eqnarray*}
         \end{solution}
 
         % Problem P.D.5
@@ -109,7 +375,22 @@
             1 + z + z^2 + \dots + z^{n-1} = \frac{1 - z^n}{1-z}
         \end{align*}
         \begin{proof}
-            Proof P.D.5
+            Let's begin with the case where $n = 1$. Then we have
+            \begin{displaymath}
+                1 = \frac{1-z}{1-z} = 1.
+            \end{displaymath}
+            So we assume that the equation holds for $n$ and we want to show that from there $n+1$ also holds. Begin by
+            setting $p_n(z) = 1 + z + z_2 + \cdots + z^{n-1}$. So we do the following work:
+            \begin{eqnarray*}
+                P_n(z) & = & \frac{1 - z^n}{1-z} \\
+                P_n(z) & = & \frac{1 - z^{n+1} - z^n + z_{n+1}}{1-z} \\
+                P_n(z) & = & \frac{1-z^{n+1}}{1 - z} - \frac{z^n(1 - z)}{1 - z} \\
+                P_n(z) & = & \frac{1 - z^{n+1}}{1 - z} - z^n \\
+                P_n(z) + z^n & = & \frac{1 + z^{n+1}}{1 - z} \\
+                P_n(z) + z^n & = & \frac{1 + z^{n+1}}{1 - z} \\
+                1 + z + z_2 + \cdots + z^{n-1} + z^{n+1-1} & = & \frac{1 + z^{n+1}}{1 - z}
+            \end{eqnarray*}
+            And we are done.
         \end{proof}
 
     \end{onehalfspace}
