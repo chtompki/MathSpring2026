@@ -1,0 +1,130 @@
+%! Author = chtompki
+%! Date = 1/14/26
+% Example LaTeX document for GP111 - note % sign indicates a comment
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta} % Required for the Circle and Triangle arrow tips
+\usepackage{setspace}
+\title{Seminar Summary:\\January 20, 2026 - Sean Cox\\Can we predict the future?}
+\author{Rob Tompkins}
+\date{\today}
+
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        So we began with a bit of an odd question, namely ``how robustly can you predict the future?'' And clearly
+        this is a problem that has long been sought after, take for example the dynamical systems of weather prediction.
+        But I digress because the motivation here was to look at the results surrounding this question with a logical
+        lens.
+
+        So our setting sets up as suppose we have a function that is unknown $F:\mathbb{R} \rightarrow \mathbb{R}$, but
+        we know $F|_{(-\infty,t)}$, can we predict $f(t)$?
+        \begin{figure}[!ht]
+            \centering
+            \begin{tikzpicture}
+                % Axes (Optional)
+                \draw[->] (-1,0) -- (5,0) node[right] {$t$};
+                \draw[->] (0,-2) -- (0,4) node[above] {$$};
+                % Wavy Plot
+                \draw[smooth, samples=100, domain=-2:4] plot (\x, {0.5*\x + 1 + 0.1*sin(4*\x*180/pi)}) node[right] {$F(t)$};
+            \end{tikzpicture}
+            \caption{An arbitrary $F$ with known quantity from the left}
+        \end{figure}
+
+        well this is a classical problem if the function is continuous, and we have that
+        \begin{displaymath}
+            F(t) = \lim_{s\nearrow t} f'(s) = L
+        \end{displaymath}
+        But what do we do if $F$ is not continuous. Or even worse consider $t=0$ and the plot of $\sin(1/x)$ for $x<0$
+
+        \begin{figure}[!ht]
+            \centering
+            \begin{tikzpicture}
+                % Axes (Optional)
+                \draw[->] (-3,0) -- (1,0) node[right] {$x$};
+                \draw[->] (0,-2) -- (0,2) node[above] {$y$};
+                % Wavy Plot
+                \draw[black,domain=-0.01:-3,samples=5000] plot (\x, {sin((1/\x)r)});
+            \end{tikzpicture}
+            \caption{$\sin(1/x)$}
+        \end{figure}
+        So we know that for \emph{discontinuous} functions it is impossible to \emph{always} predict$F(t)$ based only
+        on the information given by the behaviour of $F$ before $t$. However:
+
+
+        \noindent\textbf{Theorem. (Hardin - Taylor ~ 2008)} There exists some function $\mathcal{P}$ taking partical
+        functions as inputs so that $F:\mathbb{R} \rightarrow \mathbb{R}$ (possibly nowhere continuous):
+        \begin{displaymath}
+            \mathcal{P}\left(F\big|_{(-\infty,t)}\right) = F(t)
+        \end{displaymath}
+        for ``almost every'' $t$.
+
+        Then we were presented with the following question: Can we also arrange that $\mathcal{P}$ is ``shift-invariant''
+        with regards to time?
+
+        \begin{figure}[!ht]
+            \centering
+            \begin{tikzpicture}
+                % Axes (Optional)
+                \draw[->] (-1,0) -- (6,0) node[right] {$t$};
+                \draw[->] (0,-2) -- (0,5) node[above] {$$};
+                % Wavy Plot
+                \draw[smooth, samples=100, domain=-2:4] plot (\x, {0.5*\x + 1 + 0.1*sin(4*\x*180/pi)}) node[right] {$F(t)$};
+                \draw[smooth, samples=100, domain=-1:5] plot (\x, {0.5*(\x) + 0 + 0.1*sin(4*(\x)*180/pi)}) node[right] {$G(s)$};
+            \end{tikzpicture}
+            \caption{A shift of $F(t)$ by a constant to a function $G(s)$}
+        \end{figure}
+
+        Can we also arrange that:
+        \begin{displaymath}
+            \mathcal{P}\left(F\big|_{(-\infty,t)}\right) = \mathcal{P}\left(G\big|_{(-\infty,s)}\right)?
+        \end{displaymath}
+
+        \noindent\textbf{Theorem. (Bajpai - Vellemm ~ 2016 )} Yes. Infact we can arrange $\mathcal{P}$ to be invariant
+        with regards to distortions of time with assuming we have positive slope.
+
+        More precisely, we arrange that $\mathcal{P}$ has the property
+        \begin{displaymath}
+            \mathcal{P}\left(F\big|_{(\infty,t)}\right) = \mathcal{P}\left(F \dot A \big|_{(-\infty, A^*(t))}\right)
+        \end{displaymath}
+        for any $A: \mathbb{R} \rightarrow \mathbb{R}$ where $A(x) = mx+b$ for some $m,b\in\mathbb{R}$ with $m > 0$. So
+        what is the domain of $\mathcal{P}$? $\text{dom}(\mathcal{P}) = \{f | \text{ for some } t\in \mathbb{R} \text{ with dom}(f) = (-\infty,t) \text{ and range}(f)\subseteq\mathbb{R}\}$
+
+        \noindent\textbf{Theorem.} There is no predictor that is invariant with respect to all increasing $C^\infty$ distortions of
+        time.
+
+        \emph{Note.} There are $C^\infty$ non-analytic function that work here. Specifically the ``bump functions'' which
+        are functions that are continuous yet 0 except for on an interval. And it's curious that these get used in machine
+        learning a good deal these days.
+
+        \noindent\textbf{Theorem. (Cody-Lee-Cox)} It's consistent with ZFC that there are \emph{no} analytic-invariant
+        prediction functions. (Infact, the continuum hypothesis implies no such predictors).
+
+        We then went a little into the Hardin-Taylor Proof (rough sketch):
+        \begin{proof}
+            We use the Axiom of Choice to fix a well order ``$<$'' of $\mathbb{R}^{\mathbb{R}} = \{\text{All functions from }\mathbb{R}\rightarrow\mathbb{R}\}$,
+            i.e. $<$ is a linear order and has no infinite descending chain.
+            \begin{displaymath}
+                \mathcal{P}(f) = F_f(t_f)
+            \end{displaymath}
+            where $F_f$ is the $<$-least function extending $f$. We also see that $f:(-\infty,t_f)\rightarrow\mathbb{R}$.
+        \end{proof}
+
+
+
+        \noindent
+
+
+    \end{onehalfspace}
+\end{document}
