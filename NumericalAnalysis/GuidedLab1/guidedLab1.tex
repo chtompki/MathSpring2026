@@ -88,23 +88,35 @@
         log-log scale for $a = 2$. How sensitive is the result to y our initial guess of $y_0$?
 
         \begin{solution}
+            First note that the file https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab/problem3.m.
+
             Consider a function that we have in file ``problem3.m'' that we have below:
             \begin{verbatim}
                 function [p,absError,relError] = fixpt(a,y,n)
-                    % Input - a, the number to sqaure root
-                    %       - y, the initial guess
-                    %       - n, the number of iterations to run
-                        p = y; % Initialize p with the initial guess
-                        for k = 1:n
-                            p_new = 0.5 * (p + a / p);
-                            absError = abs(p_new - p);
-                            relError = absError / abs(p_new);
-                            if absError < 1e-10
-                                break;
-                            end
-                            p = p_new;
+                % Input - a, the number to sqaure root
+                %       - y, the initial guess
+                %       - n, the number of iterations to run
+                    p = y; % Initialize p with the initial guess
+                    absError = zeros(1,n);
+                    relError = zeros(1,n);
+                    for k = 1:n
+                        p_new = 0.5 * (p + a / p);
+                        absError(k) = abs(p_new - sqrt(a));
+                        relError(k) = absError(k) / abs(p_new);
+                        if absError < 1e-10
+                            break;
                         end
+                        p = p_new;
                     end
+                end
+
+                format long
+                [p,absError,relError] = fixpt(2,30,6)
+                loglog(1:6,absError, '-k')
+                hold on
+                loglog(1:6,relError,'--k')
+                hold off
+                legend("Absolute Error", "Relative Error")
             \end{verbatim}
             So we see our plot from the above results as:
             \begin{figure}[!ht]
@@ -126,11 +138,52 @@
         % Problem 4
         \textbf{4.}
         \begin{solution}
-            Problem 4
+            First note that the file https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab/problem4.m.
+
+            Compute the \emph{appoximate} relative error, and compare to the ``true'' errors. So we vary our algorithm a little
+            as follows
+            \begin{verbatim}
+                function [p,absError,relError] = fixpt(a,y,n)
+                % Input - a, the number to sqaure root
+                %       - y, the initial guess
+                %       - n, the number of iterations to run
+                    p = y; % Initialize p with the initial guess
+                    absError = zeros(1,n);
+                    relError = zeros(1,n);
+                    for k = 1:n
+                        p_new = 0.5 * (p + a / p);
+                        absError(k) = abs(p_new - p);
+                        relError(k) = absError(k) / abs(p_new);
+                        if absError < 1e-10
+                            break;
+                        end
+                        p = p_new;
+                    end
+                end
+
+                format long
+                [p,absError,relError] = fixpt(2,30,6)
+                loglog(1:6,absError, '-k')
+                hold on
+                loglog(1:6,relError,'--k')
+                hold off
+                legend("Absolute Error", "Relative Error")
+            \end{verbatim}
+            And for $N=6$ and $y_0=30$ we see get the following errors
+            \begin{displaymath}
+                \varepsilon_6^{\text{abs}} = \left[\begin{matrix}14.966666666666667 \\  7.450147819660015 \\  3.659722054452168 \\  1.706854881541622 \\  0.657164646924791  \\ 0.138467746307099\end{matrix}\right]
+            \end{displaymath}
+            and
+            \begin{displaymath}
+                \varepsilon_6^{\text{rel}} = \left[\begin{matrix}0.995565410199557  \\ 0.982456225846853 \\  0.932778422047204 \\  0.770029900059511  \\ 0.421409602464346  \\ 0.097445508110978
+
+\end{matrix}\right]
+            \end{displaymath}
         \end{solution}
 
         % Problem 5
-        \textbf{5.}
+        \textbf{5.} Plug in the equation $y_n = \sqrt{a}(1 + \delta_n)$ where $\varepsilon_n^{\text{rel}} = |\delta_n|$.
+        Assuming that $|\delta_n|<< 1$, simplify that to get that $\delta_{n+1} = C\delta_n^2 + \mathcal{O}(\delta_n^3)$.
         \begin{solution}
             Problem 5
         \end{solution}
