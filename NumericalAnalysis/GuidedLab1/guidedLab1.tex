@@ -12,6 +12,7 @@
 \usepackage{enumitem}
 \usepackage{setspace}
 \usepackage{graphicx}
+\usepackage[colorlinks=true, urlcolor=black, linkcolor=black]{hyperref}
 
 \newenvironment{solution}
 {\begin{proof}[Solution]}
@@ -55,9 +56,9 @@
         \textbf{2.}
         The Newton-Raphason method for determining $\sqrt{a}$ follows from repeated
         iteration of
-        \begin{displaymath}
+        \begin{equation}
             y_{n+1} = \frac{1}{2} \left(y_n + \frac{a}{y_n}\right)
-        \end{displaymath}
+        \end{equation}
         Show that $y = \sqrt{a}$ is the fixed point of this sequence.
         \begin{proof}
             To achieve $y = \sqrt{a}$ as a fixed point of our equation we will need to
@@ -88,7 +89,8 @@
         log-log scale for $a = 2$. How sensitive is the result to y our initial guess of $y_0$?
 
         \begin{solution}
-            First note that the file https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab/problem3.m.
+            First note the file
+            \underline{\href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab1/problem3.m}{problem3.m}}.
 
             Consider a function that we have in file ``problem3.m'' that we have below:
             \begin{verbatim}
@@ -138,7 +140,8 @@
         % Problem 4
         \textbf{4.}
         \begin{solution}
-            First note that the file https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab/problem4.m.
+            First note the file
+            \underline{\href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab1/problem4.m}{problem4.m}}.
 
             Compute the \emph{appoximate} relative error, and compare to the ``true'' errors. So we vary our algorithm a little
             as follows
@@ -183,9 +186,31 @@
 
         % Problem 5
         \textbf{5.} Plug in the equation $y_n = \sqrt{a}(1 + \delta_n)$ where $\varepsilon_n^{\text{rel}} = |\delta_n|$.
-        Assuming that $|\delta_n|<< 1$, simplify that to get that $\delta_{n+1} = C\delta_n^2 + \mathcal{O}(\delta_n^3)$.
+        Assuming that $|\delta_n|\ll 1$, simplify that to get that $\delta_{n+1} = C\delta_n^2 + \mathcal{O}(\delta_n^3)$
+        and specify what value the constant $C$ should take.
         \begin{solution}
-            Problem 5
+            Begin by substituting our $\delta_n$ formula into (1). We get the following
+            \begin{displaymath}
+                \sqrt{a}(1 + \delta_{n+1`})  = \frac{1}{2}\left(\sqrt{a}(1 + \delta_n)
+                                                              + \frac{a}{\sqrt{a}(1+\delta_n)} \right)
+            \end{displaymath}
+            Now divide both sides by $\sqrt{a}$, and now notice that
+            \begin{align*}
+                1 + \delta_{n+1} & = & \frac{1}{2} \left( 1 + \delta_n + \frac{1}{1+\delta_n}\right) \\
+                                 & = & \frac{1}{2} \left( \frac{(1 + \delta_n)^2 + 1} {1+\delta_n}\right) \\
+                                 & = & \frac{1}{2} \left( \frac{1 + 2\delta_n + \delta_n^2 + 1}{1+\delta_n}\right) \\
+                                 & = & \frac{2 + 2\delta_n + \delta_n^2}{2(1+\delta_n)} \\
+                                 & = & 1 + \frac{\delta_n^2}{2(1+\delta_n)}
+            \end{align*}
+            now consider the taylor polynomial over
+            \begin{align*}
+                (1+\delta_n)^{-1} & = & \frac{1}{\delta_n} - \left(\frac{1}{\delta_n}\right)^2 + \left(\frac{1}{\delta_n}\right)^3 - \cdots\\
+                                  & = & \frac{1}{\delta_n} - \left(\frac{1}{\delta_n}\right)^2 + \mathcal{O}\left(\left(\frac{1}{\delta_n}\right)^3\right) - \cdots\\
+            \end{align*}
+            Because the sequence converges and we know that $|\delta_n|\ll 1$ we can obtain
+            \begin{displaymath}
+                \delta_{n+1} = \frac{\delta_n^2}{2} + \mathcal{O}(\delta^3_n)
+            \end{displaymath}
         \end{solution}
 
         % Problem 6
@@ -201,21 +226,38 @@
         \end{solution}
 
         % Problem 8
-        \textbf{8.}
-        \begin{solution}
-            Problem 8
-        \end{solution}
+        \textbf{8.} Consider the problem $y_n+1 = y_n + y_n^2 - a$. Show that $y = \sqrt{a}$ is a fixed point of our equation.
+        \begin{proof}
+            Asuming convergence fixed point $c$ should satisify the equality $c = c + c^2 - a$ so $c = \sqrt{a}$.
+        \end{proof}
 
         % Problem 9
-        \textbf{9.}
+        \textbf{9.} Implement the algorithm for the equation in problem 8, and test it with several initial guesses between
+        1 and 2. What do you notice about how the algorithm's convergence depends on the initial guess.
         \begin{solution}
-            Problem 9
+            See the file \href
+
+            When we plot the absolute and relative as the series progresses for the different values of $y_0 = {1.2, 1.5, 1.8}$
+            we see vastly differing errors and some that don't converge
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{Figure_problem_9.png}
+                \caption{Log-Log plot of the absolute and relative error for $y_{n+1 = y_n + y_n^2 - a}$ with changes
+                to initial conditions $y_0$}
+            \end{figure}
+
         \end{solution}
 
         % Problem 10
-        \textbf{10.}
+        \textbf{10.} Explore the error and convergence for other method for computing the square root of two. You can
+        consider the following two iterative methods. Also find (or create) and implem ent one additional method
+        for comparison
+        \begin{align*}
+            x_{n+1} & = & \frac{1}{4} \left(3x_n + \frac{2}{x_n}\right) \\
+            z_{n+1} & = & \frac{1}{8} \left(3z_n + \frac{12}{z_n} - \frac{4}{z_n^3}\right)
+        \end{align*}
         \begin{solution}
-            Problem 10
+            We went and ran the algorithm for the sequence $x_n$ to see how things would converge.
         \end{solution}
 
 
