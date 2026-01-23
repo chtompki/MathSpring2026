@@ -178,9 +178,15 @@
             \end{displaymath}
             and
             \begin{displaymath}
-                \varepsilon_6^{\text{rel}} = \left[\begin{matrix}0.995565410199557  \\ 0.982456225846853 \\  0.932778422047204 \\  0.770029900059511  \\ 0.421409602464346  \\ 0.097445508110978
-
-\end{matrix}\right]
+                \varepsilon_6^{\text{rel}} = \left[\begin{matrix}0.995565410199557  \\ 0.982456225846853 \\  0.932778422047204 \\  0.770029900059511  \\ 0.421409602464346  \\ 0.097445508110978\end{matrix}\right]
+            \end{displaymath}
+            if we choose the $y_0 = 1.5$ and $N=6$ our errors drop considerably to:
+            \begin{displaymath}
+                \varepsilon_6^{\text{abs}} = \left[\begin{matrix}0.344444444444444\\ 0.040754877014419\\ 0.000586994346855\\ 0.000000121821181\\ 0.000000000000005\\ 0\end{matrix}\right]
+            \end{displaymath}
+            and
+            \begin{displaymath}
+                \varepsilon_6^{\text{rel}} = \left[\begin{matrix}0.236641221374046\\   0.028806090944516\\   0.000415067647425\\   0.000000086140583\\   0.000000000000004\\ 0\end{matrix}\right]
             \end{displaymath}
         \end{solution}
 
@@ -214,13 +220,28 @@
         \end{solution}
 
         % Problem 6
-        \textbf{6.}
+        \textbf{6.} Compare your theoretical error estimate to you numerically computed errors. Use your first numerically
+        computed error for $\delta_0$.
         \begin{solution}
-            Problem 6
+            First note the file
+            \underline{\href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab1/problem6.m}{problem6.m}}.
+
+            If we look at the last problem we see that we have the sequence
+            \begin{displaymath}
+                \delta_{n+1} = \frac{\delta_n^2}{2 + \delta_n}
+            \end{displaymath}
+            So we took that and plugged it into our a convergence iteration in the same fashion as
+            the other problems, except we were concerned with convergence to $\delta_n\rightarrow 0$
+            as $n\rightarrow\infty$. And our goal was to base this error on earlier computed errors,
+            so we used the $y_0 = 1.5$ run above and grabbed the the first step in the absolute error there
+            specifically $\epsilon_0^{\text{abs}} = 0.344444444444444$ and plugged that into our formula for
+            theoretical error. The plot that we got follows:
         \end{solution}
 
         % Problem 7
-        \textbf{7.}
+        \textbf{7.} Modify your script to run for 10 iterations. Notice that the behaviour of the computer
+        error deviates significantly from your theoretical prediction after some number of iterations (how many?).
+        At what value does the numerically computed error seem to level off at all? Why does this happen?
         \begin{solution}
             Problem 7
         \end{solution}
@@ -235,17 +256,19 @@
         \textbf{9.} Implement the algorithm for the equation in problem 8, and test it with several initial guesses between
         1 and 2. What do you notice about how the algorithm's convergence depends on the initial guess.
         \begin{solution}
-            See the file \href
+            First note the file
+            \underline{\href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab1/problem9.m}{problem9.m}}.
 
             When we plot the absolute and relative as the series progresses for the different values of $y_0 = {1.2, 1.5, 1.8}$
             we see vastly differing errors and some that don't converge
             \begin{figure}[!ht]
                 \centering
                 \includegraphics[scale=0.4]{Figure_problem_9.png}
-                \caption{Log-Log plot of the absolute and relative error for $y_{n+1 = y_n + y_n^2 - a}$ with changes
+                \caption{Log-Log plot of the absolute and relative error for $y_{n+1} = y_n + y_n^2 - a$ with changes
                 to initial conditions $y_0$}
             \end{figure}
 
+            Curious that for 1.5 and 1.8 we diverge, but for 1.2 we converge.
         \end{solution}
 
         % Problem 10
@@ -257,7 +280,15 @@
             z_{n+1} & = & \frac{1}{8} \left(3z_n + \frac{12}{z_n} - \frac{4}{z_n^3}\right)
         \end{align*}
         \begin{solution}
-            We went and ran the algorithm for the sequence $x_n$ to see how things would converge.
+            \underline{\href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab1/problem10.m}{problem10.m}}.
+
+            We went and ran the algorithm for the sequence $x_n$ to see how things would converge. The convergence plot follows ad:
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{Figure_problem_10.png}
+                \caption{Log-Log plot of the absolute and relative error for $x_{n+1} = 1/4(3x_n + 2/x_n)$ with changes
+                to initial conditions $y_0$}
+            \end{figure}
         \end{solution}
 
 
