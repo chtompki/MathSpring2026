@@ -236,6 +236,12 @@
             so we used the $y_0 = 1.5$ run above and grabbed the the first step in the absolute error there
             specifically $\epsilon_0^{\text{abs}} = 0.344444444444444$ and plugged that into our formula for
             theoretical error. The plot that we got follows:
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{Figure_problem_6.png}
+                \caption{Log-Log plot of the theoretical for $y_{n}$ $\delta_{n}$ in $N=6$ steps}
+            \end{figure}
+            and we are done with this portion of the problem
         \end{solution}
 
         % Problem 7
@@ -243,7 +249,15 @@
         error deviates significantly from your theoretical prediction after some number of iterations (how many?).
         At what value does the numerically computed error seem to level off at all? Why does this happen?
         \begin{solution}
-            Problem 7
+            If we bump up the number of iterations to run in the code from problem 6 from $N=6$ to $N=10$, then we get
+            the following plot of error.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{Figure_problem_7.png}
+                \caption{Log-Log plot of the theoretical for $y_{n}$ $\delta_{n}$ in $N=10$ steps}
+            \end{figure}
+            And we are done with this portion of the problem
         \end{solution}
 
         % Problem 8

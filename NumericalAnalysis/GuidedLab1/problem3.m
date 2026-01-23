@@ -1,7 +1,4 @@
 function [p,absError,relError] = fixpt(a,y,n)
-% Input - a, the number to sqaure root
-%       - y, the initial guess
-%       - n, the number of iterations to run
     p = y; % Initialize p with the initial guess
     absError = zeros(1,n);
     relError = zeros(1,n);

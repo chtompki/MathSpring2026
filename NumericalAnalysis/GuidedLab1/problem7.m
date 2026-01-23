@@ -1,10 +1,10 @@
-function [p,absError,relError] = fixpt(a,y,n)
+function [p,absError,relError] = fixpt(y,n)
     p = y; % Initialize p with the initial guess
     absError = zeros(1,n);
     relError = zeros(1,n);
     for k = 1:n
-        p_new = 0.5 * (p + a / p); % Update p using the fixed-point iteration formula
-        absError(k) = abs(p_new - p); % Calculate absolute error
+        p_new = p^2/(2+p); % Update p using the fixed-point iteration formula
+        absError(k) = abs(p_new - 0); % Calculate absolute error
         relError(k) = absError(k) / abs(p_new); % Calculate relative error
         if absError < 1e-10 % Check for convergence
             break;
@@ -14,9 +14,9 @@ function [p,absError,relError] = fixpt(a,y,n)
 end
 
 format long
-[p,absError,relError] = fixpt(2,30,6)
-loglog(1:6,absError, '-k')
+[p,absError,relError] = fixpt(0.344444444444444,10)
+loglog(1:10,absError, '-k')
 hold on
-loglog(1:6,relError,'--k')
+loglog(1:10,relError,'--k')
 hold off
 legend("Absolute Error", "Relative Error")
