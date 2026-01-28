@@ -23,6 +23,114 @@
     \maketitle
     \date{\today}
     \begin{onehalfspace}
-        Summary
+        In general across all the projects we explore below in this summary we have a general
+        framework around how one of these projects is structured.
+        Specifically the goal is to collaborate with biologist to understand research questions
+        and the current state of the field.
+        From this collaboration, our goal is to develop mathematical models that accommodate
+        using numerical techniques for solving them.
+        We use the biological data to paramaterize the model and/or run a sweep of the parameter
+        space.
+        Though it is worth noting that there is a natural trade-off between mathematical
+        complexity of the model and the solvability of the model.
+
+        The projects that we examined specifically were:
+        \begin{itemize}
+            \item Wound healing and inflamation
+            \item Wound healing in coral
+            \item Gut health and inflammation
+            \item Nematocyst firing
+            \item Phage therapy
+            \item Sickle Cell Pain Episode Prediction
+        \end{itemize}
+        Our summaries on projects 5. and 6. were generally short because those both were described i
+        n the last five-minutes of class.
+
+        \section{Wound healing and inflammation.} For this project the original data came from
+        an experiment that the original biologist did on himself (with medical assistance).
+        Spefically he had a ``PTFE'' (or vortex) tube inserted under his skin for a period
+        of time to create the wound in question as a mechanism for creating a standardized wound.
+        Not surprisingly, there were few other participants in the clinical trial.
+        That said, because it was biologist himself doing the experiment the richness of the data
+        is interesting.
+        For example, that there were even mounted slides from the experiment that showed the
+        PTFE tube matrix along with fibroblasts laying down collagen.
+
+        The model in question was a partial differential equation model based on the variables
+        $m$ for the density of damaged the tissue, $n$ for the activated inflammatory cells, $f$ for the
+        fibroblasts, and $c$ for new collagen deposition.
+        We have four model equations, starting with the first for phagocytosis:
+        \begin{displaymath}
+            \frac{\partial m}{\partial t} = -\mu_{mn} mn
+        \end{displaymath}
+        The second equation represented diffusion and chemotaxis and deactivation, given by:
+        \begin{displaymath}
+            \frac{\partial n}{\partial t} = \nabla \cdot\left[D_n \nabla n - n \chi_n\nabla m\right] - \mu_{mn}mn
+        \end{displaymath}
+        The third equation represented diffustion/motility and chemotaxis and cell division and cell death
+        \begin{displaymath}
+            \frac{\partial f}{\partial t} = \nabla \cdot\left[D_f\nabla f - f\chi_f\nabla n\right] + s_f(n)f\left(2 - \frac{f}{F_0}\right) - \mu_f f
+        \end{displaymath}
+        And the fourth model equation represents deposition by $f$ and collateral damage
+        \begin{displaymath}
+            \frac{\partial c}{\partial t} = k_c f(C_0 - c) - \mu_{cn}cn.
+        \end{displaymath}
+        We were then presented some plots that represented collagen and fibroblast levels versus days
+        with modeled data and real data ploted on the graphs.
+
+        \section{Wound healing in coral.}
+        The goal in this project is to consider coral in place of human tissue.
+        Biologically we know that the damage processes (laceration, avulsion, fracture),
+        inflammation processes, and physiological process for tissue regrowth behave in
+        a similar fashion to humans.
+        We noted that it was a convenient wound healing mechanism to study because the results
+        could indeed be produced with coral in the lab as well as naturally occurring coral.
+        We ask questions like whether the wound is regrowing or propagating.
+        There were two specefied aims of the project, namely cellular level-wound healing
+        versus tissue level-enegery focused
+
+        In both of the aims of the project we began examining whether coral bleaching had any
+        effect on the speed and mechanics of wound healing.
+        Though it is know that glycerol production as a photosyntehtic byproduct transferred to
+        mucus from the symbiotic algae yielded energy transfer to the calioblastic cells for
+        skeletal growth.
+
+        Potential future research projects out of this body of work could be examining
+        multiple stressors, other coral species and linked cellular and tissue level models.
+
+        \section{Gut health and inflammation.}
+        So it's known that gut health has a considerable amount to do with body health from
+        general inflammation, to mental health, to even levels of atherosclerosis.
+        Now gut inflammation is regulated by an enzyme called alkaline phosphate (specifically
+        intestinal alkaline phosphate or IAP).
+        And, the gram-negative bacteria in the colon produce lipopolysaccharides (LPS) which are
+        inflammatory agents.
+        So the interplay between IAP and LPS regulates how the gut performs and even the structural
+        integrity of wall of the bowel.
+
+        If I understand the slides correctly our goal here is to write a mathematical model that
+        effectively encompases the metabolic pathway for the breakdown of LPS by IAP, which was
+        given in a diagram in one of the slides. The equations that arise from this metabolic
+        pathway follow as:
+        \begin{eqnarray*}
+            \frac{dIAP}{dt} & = &  \alpha S_I - \rho_I IAP * LPS_G - \mu_I I\\
+            \frac{dP}{dt} & = & \theta_I\left(\frac{LPS_G}{X_{ad} + LPS_G}\right) - \theta_R\frac{P}{P+K_R} \\
+            \frac{dLPS_G}{dt} & = & \beta S_l - \rho_{L}IAP * LPS_G - P(LPS_G - LPS_B) \\
+            \frac{dLPS_B}{dt} & = & DP(LPS_G - LPS_B) - \mu_L LPS_B
+        \end{eqnarray*}
+        After getting these equations we saw a variety of plots.
+        The first plots were actual animal data taken from lab mice.
+        We looked at the differences between a ``chow'' diet and a ``western'' diet
+        over a multiple week period and how inflammation occurred in the animal.
+        Further we saw how changes in diet could affect inflammation.
+        Lastly, we were presented with a variety of numerical plots of data generated from the model
+        comparing a healthy diet, a continued ``western'' diet a partially healthy diet and then those
+        with stimulus where there was a stimulus to affect the production of IAP in a positive manner.
+
+        \section{Nematocyst firing.}
+
+        \section{Phage therapy.}
+
+        \section{Sickle cell pain episode prediction.}
     \end{onehalfspace}
 \end{document}
