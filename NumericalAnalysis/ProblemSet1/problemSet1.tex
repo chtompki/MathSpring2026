@@ -16,6 +16,10 @@
 {\begin{proof}[Solution]}
 {\end{proof}}
 
+\NewDocumentCommand{\vitem}{v}{%
+    \item[\texttt{#1}]%
+}
+
 \title{Numerical Analysis\\Problem Set 1}
 \author{Rob Tompkins}
 \date{\today}
@@ -25,66 +29,108 @@
     \date{\today}
     \begin{onehalfspace}
         % Problem 1
-        \textbf{1.}
+        \textbf{1.} The value of $\pi$ is given by the alternating series:
+        \begin{displaymath}
+            \pi = 4 \sum_{n=0}^{\infty} \frac{(-1)^n}{2n+1}
+            = 4 \left(1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7}+ \cdots\right)
+        \end{displaymath}
+
+        (a) Use this series to construct an algorithm to approximate the value of $\pi$ to within a specified
+        tolerance, $\varepsilon$. The algorithm should be general to allow for any $\varepsilon$. Provide a theoretical
+        upperbound $\epsilon$ on the error of your approximation. \underline{Hint.} It may be useful to recall known
+        properties of the partial sums of alternating series.
+
+        (b) Run your algorithm with a tolerance value of $\varepsilon = 5\times 10^{-3}$ and show that your result is
+        within $\varepsilon$ of $\pi = 3.1415926\ldots$
+
+        (c) Make a plot of $\varepsilon$ versus the number $N$ of reuired terms in your algorithm on a log-log scale.
+        What is the slope of the line that the resulting plot approaches a $N$ increases? Plot the actual error as a
+        function of $N$ on the same axes, you may treat the stored value of $\pi$ as ``exact.'' How does the actual
+        error compare to the estimated threshold?
         \begin{solution}
             Problem 1
         \end{solution}
 
         % Problem 2
-        \textbf{2.}
+        \textbf{2.} Numerically determine which of the following limits approaches 1 faster. Then confirm the
+        numerical evidence by determining the rate of convergences of each sequence
+        \begin{displaymath}
+            \lim_{n\rightarrow 0}\frac{\sin(x^2)}{x^2}\qquad\text{versus}\qquad\lim_{n\rightarrow 0}\frac{(\sin x)^2}{x^2}.
+        \end{displaymath}
         \begin{solution}
             Problem 2
         \end{solution}
 
         % Problem 3
-        \textbf{3.}
+        \textbf{3.} (a) Consider the function $f_c(x) = x^2 -12x + c$. What are the zeros of $f_c$ with $c = 35$? What
+        are the zeros of $f_c$ with the slight constant shift $c = 35 - 10^{-2}$? Relative to the size of change in
+        the constant term $c$, how big is the change in the zeros of the function?
+
+        (b) consider the function $g_c(x) = x^2 - 10x + c$. What are the zeros of $g_c$ with $c = 25$? What are the
+        zeros of $g_c$ with the slightest constant shift $c = 25 - 10^{-2}$? Relative to the size of change in the
+        constant term, how big is the change in the zeros of the function?
+
+        (c) Compare the nature of the roots of $f$ and $g$. How might this contribute to the relative changes in the
+        zeros for each function?
         \begin{solution}
             Problem 3
         \end{solution}
 
         % Problem 4
-        \textbf{4.}
+        \textbf{4.} Identify the potential roundoff error problems in the following algorithm for calculating
+        the roots of the quadratic equation $ax^2 + bx + c = 0$.
+        \begin{itemize}[label={}]
+            \centering
+            \vitem{GIVEN:} real coefficients $a, b, c$
+            \vitem{STEP 1:} calculate $disc = \sqrt{b^2 - 4ac}$
+            \vitem{STEP 2:} calculate $root1 = -2c/(b + disc)$
+            \vitem{STEP 3:} calculate $root2 = (-b/a) - root1$
+            \vitem{OUTPUT:} $root1$ and $root2$
+        \end{itemize}
+        Note that this algorithm uses the fact that the sum of the roots of $ax^2 + bx + c = 0$ is equal to $-b/a$.
         \begin{solution}
             Problem 4
         \end{solution}
 
         % Problem 5
-        \textbf{5.}
+        \textbf{5.} (a) Plot the function $f(x) = \text{ln}(1+ x) - \cos(x) - x + 1$ over the interval
+        $-5\times 10^{-6}\le x\le 5\times10^{6}$ using 1001 uniformly spaced points in $x$.
+
+        (b) Reformulate $f$ to avoid the cancellation error, and then repeat part (a).
+
+        (c) Describe the issues with the original formulation in part (a) and how they were resolved with the
+        reformulation in part (b).
         \begin{solution}
             Problem 5
         \end{solution}
 
         % Problem 6
-        \textbf{6.}
+        \textbf{6.} (a) Determine the third-degree Taylor polynomial associated remainder term for the function
+        $f(x) = \sqrt(1 + x)$. Use $x_0 = 0$.
+
+        (b) Using the result of part (a), approximate $\sqrt{1.5}$, and compute the theoretical error bound
+        associated with this approximation. Compare the theoretical error bound with the actual error.
+
+        (c) Compute the following limit and determine the corresponding rate of convergence:
+        \begin{displaymath}
+            \lim_{x\rightarrow 0} \frac{\sqrt{1+x} - 1 - \frac{1}{2}x}{x^2}
+        \end{displaymath}
         \begin{solution}
             Problem 6
         \end{solution}
 
         % Problem 7
-        \textbf{7.}
+        \textbf{7.} Consider the linear system $Ax=b$ with $A=\left[\begin{matrix}3.4 & 2.8 \\ 8.0 & 6.6\end{matrix}\right]$,
+        $x = \left[\begin{matrix}x_1 \\ x_2\end{matrix}\right]$, and $b = \left[\begin{matrix}3.4 \\ 8.0\end{matrix}\right]$.
+
+        (a) Determine the analytic solution by hand. (How do we know that it is unique, i.e. that the problem is well-posed?)
+
+        (b) Now solve the system with $b = \left[\begin{matrix}3.41 \\ 8.0\end{matrix}\right]$. You may use your computer.
+
+        (c) Given the difference in solutions for parts (a) and (b), comment on the conditioning of the problem. What is
+        $\text{det}[A]$ and for what values with the problem be ill-posed?
         \begin{solution}
             Problem 7
         \end{solution}
-
-        % Problem 8
-        \textbf{8.}
-        \begin{solution}
-            Problem 8
-        \end{solution}
-
-        % Problem 9
-        \textbf{9.}
-        \begin{solution}
-            Problem 9
-        \end{solution}
-
-        % Problem 10
-        \textbf{10.}
-        \begin{solution}
-            Problem 10
-        \end{solution}
-
-
-
     \end{onehalfspace}
 \end{document}
