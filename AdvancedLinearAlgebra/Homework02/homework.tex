@@ -448,6 +448,63 @@
         (b) Find $i,j,k \in \{1, 2, 3, 4\}$ such that $\text{span}\{\mathbf{a}_i, \mathbf{a}_j, \mathbf{a}_k\}=\mathbb{R}^3$. And
         find distinct $i,j,k\in\{1, 2, 3, 4\}$ such that $\text{span}\{\mathbf{a}_i, \mathbf{a}_j, \mathbf{a}_k\}$.
         \begin{solution}
+            (a) \emph{Claim.} $\{\mathbf{a}_1, \mathbf{a}_2, \mathbf{a_3}\}$ are linearly independent thus
+            $\text{span}\{\mathbf{a}_1, \mathbf{a}_2, \mathbf{a}_3\}=\mathbb{R}^3$. So we set
+            $X = [\begin{matrix}\mathbf{a}_1 & \mathbf{a}_2 & \mathbf{a_3}\end{matrix}]$, and we want to show that
+            $\text{det}(X)\neq 0$. So we expand in the following way:
+            \begin{eqnarray*}
+                \text{det}[X] & = &
+                \text{det}\left[\begin{matrix}
+                                    1 & 1 & 1 \\
+                                    0 & 1 & 1 \\
+                                    0 & 0 & 1
+                \end{matrix}\right] \\
+                & = & 1\cdot\text{det}\left[\begin{matrix}
+                                                1 & 1\\
+                                                0 & 1
+                \end{matrix}\right] +
+                1\cdot\text{det}\left[\begin{matrix}
+                                          0 & 1\\
+                                          0 & 1
+                \end{matrix}\right] +
+                1\cdot\text{det}\left[\begin{matrix}
+                                          0 & 1\\
+                                          0 & 0
+                \end{matrix}\right] \\
+                & = & 1 + 0 + 0 \\
+                & = & 1 \neq 0.
+            \end{eqnarray*}
+            So we see that $\{\mathbf{a}_1, \mathbf{a}_2, \mathbf{a_3}\}$ are linearly independent which implies that
+            $\text{col}(X) = \text{col}(A) = \mathbb{R}^3$
+
+            (b) For linear dependence, consider the column space
+            $X = [\begin{matrix}\mathbf{a}_1 & \mathbf{a}_3 & \mathbf{a_4}\end{matrix}]$. We want to see that $\text{det}[X] = 0$.
+            So we compute
+            \begin{eqnarray*}
+                \text{det}[X] & = &
+                \text{det}\left[\begin{matrix}
+                                    1 & 1 & 0 \\
+                                    0 & 1 & 1 \\
+                                    0 & 1 & 1
+                \end{matrix}\right] \\
+                & = & 1\cdot\text{det}\left[\begin{matrix}
+                                                1 & 1\\
+                                                1 & 1
+                \end{matrix}\right] +
+                1\cdot\text{det}\left[\begin{matrix}
+                                          0 & 1\\
+                                          0 & 1
+                \end{matrix}\right] +
+                1\cdot\text{det}\left[\begin{matrix}
+                                          0 & 1\\
+                                          0 & 1
+                \end{matrix}\right] \\
+                & = & 0 + 0 + 0 \\
+                & = & 0.
+            \end{eqnarray*}
+            So $[\begin{matrix}\mathbf{a}_1 & \mathbf{a}_3 & \mathbf{a_4}\end{matrix}]$ are not linearly independent. And,
+            in fact we could show
+            $\text{span}[\begin{matrix}\mathbf{a}_1 & \mathbf{a}_3 & \mathbf{a_4}\end{matrix}] = \mathbb{R}^2 \neq \mathbb{R}^3$.
         \end{solution}
     \end{onehalfspace}
 \end{document}
