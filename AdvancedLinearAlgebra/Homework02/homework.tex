@@ -350,7 +350,7 @@
                       7 & 8
             \end{matrix}\right]
             \left[\begin{matrix}
-                      1 & 0 & 1 \\
+                      1 & 0 & -1 \\
                       0 & 1 & 2
             \end{matrix}\right],
             \left[\begin{matrix}
@@ -359,7 +359,7 @@
                       8 & 9
             \end{matrix}\right]
             \left[\begin{matrix}
-                      2 & 0 & 1 \\
+                      2 & 1 & 0 \\
                       -1 & 0 & 1
             \end{matrix}\right],
             \left[\begin{matrix}
@@ -383,6 +383,56 @@
         \end{displaymath}
         (b) Which of the decompositions is the one described by Theorem 1.7.5? Why?
         \begin{solution}
+            (a) Let's simply expand the first two decompositions $XY$ to see if $XY = A$:
+            \begin{eqnarray*}
+                \left[\begin{matrix}
+                          1 & 2 \\
+                          4 & 5 \\
+                          7 & 8
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1 & 0 & -1 \\
+                          0 & 1 & 2
+                \end{matrix}\right] & = &
+                \left[\begin{matrix}
+                          1+0(2) & 1(0) + 2 & -1 + 4 \\
+                          4 + 0(5) & 0(4) + 1(5) & -4 + 10 \\
+                          7 + 0(8) & 0(7) + 1(8) & -7 + 16
+                \end{matrix}\right] \\
+                & = &
+                \left[\begin{matrix}
+                          1 & 2 & 3 \\
+                          4 & 5 & 6 \\
+                          7 & 8 & 9
+                \end{matrix}\right]
+            \end{eqnarray*}
+            and
+            \begin{eqnarray*}
+                \left[\begin{matrix}
+                          2 & 3 \\
+                          5 & 6 \\
+                          8 & 9
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          2 & 1 & 0 \\
+                          -1 & 0 & 1
+                \end{matrix}\right] & = &
+                \left[\begin{matrix}
+                          4 - 3 & 2 + 3(0) & 0(2)+ 3(1) \\
+                          2(5) - 1(6) & 1(5) + 0(6) & (0)5 + 1(6) \\
+                          2(8) - 1(9) & 1(8) + 0(9) & 0(8) + 1(9)
+                \end{matrix}\right] \\
+                & = &
+                \left[\begin{matrix}
+                          1 & 2 & 3 \\
+                          4 & 5 & 6 \\
+                          7 & 8 & 9
+                \end{matrix}\right]
+            \end{eqnarray*}
+
+            (b) We have that expansions 1,2, and 3 above are the pivot column decompositions because for each
+            $X$ in the decomposition $A=XY$, if we write $X=[\begin{matrix}\hat{x}_1 & \hat{x_2}\end{matrix}]$ we have
+            that for each of the $X$'s, $\hat{x}_1,\hat{x}_2\in\text{col}(A)$.
         \end{solution}
 
         % Problem P.1.27
