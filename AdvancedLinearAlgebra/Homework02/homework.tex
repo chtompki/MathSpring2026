@@ -246,11 +246,88 @@
         For what values of $s$ is $\beta$ linearly dependent. For what values of $t$
         is $\gamma$ linearly dependent.
         \begin{solution}
+            ($\beta$) We know that $\beta$ is linearly dependent when $\text{det}(M_\beta) = 0$, where $M_\beta$
+            represents the matrix with the vectors of $\beta$ as its columns. So let us compute the
+            following:
+            \begin{eqnarray*}
+                \text{det}\left[\begin{matrix}
+                                    1 & 4 & 7 \\
+                                    2 & s & 8 \\
+                                    3 & 6 & 9
+                \end{matrix}\right] & = & 0 \\
+                1\cdot\text{det}\left[\begin{matrix}
+                                     s & 8\\
+                                     6 & 9
+                \end{matrix}\right] +
+                4\cdot\text{det}\left[\begin{matrix}
+                                     2 & 8\\
+                                     3 & 9
+                \end{matrix}\right] +
+                7\cdot\text{det}\left[\begin{matrix}
+                                     2 & s\\
+                                     3 & 6
+                \end{matrix}\right] & = & 0\\
+                1(9s - 48) + 4(18 -24) + 7(12 - 3s) & = & 0 \\
+                9s - 48 + 72 - 96 + 84 - 21s & = & 0 \\
+                -12s + 12 & = & 0 \\
+                s & = & 1
+            \end{eqnarray*}
+            So when $s = 1$ $\beta$ is linearly dependent.
+
+            ($\gamma$) Let $M_\gamma$ be the matrix comprised of the vectors of $\gamma$ as columns. Similarly to above,
+            we attempt to compute $\text{det}(M_\gamma) = 0$. So we expand:
+            \begin{eqnarray*}
+                \text{det}\left[\begin{matrix}
+                                    4 & 1 & 2 \\
+                                    2 & t & -2 \\
+                                    6 & -1 & 3
+                \end{matrix}\right] & = & 0 \\
+                4\cdot\text{det}\left[\begin{matrix}
+                                          t & -2\\
+                                          -1 & 3
+                \end{matrix}\right] +
+                1\cdot\text{det}\left[\begin{matrix}
+                                          2 & -2\\
+                                          6 & 3
+                \end{matrix}\right] +
+                2\cdot\text{det}\left[\begin{matrix}
+                                          2 & t\\
+                                          6 & -1
+                \end{matrix}\right] & = & 0\\
+                4(3t - 2) + (6 + 12) + 2(-2 - 6t) & = & 0 \\
+                12t - 8 + 6 + 12 - 4 - 12t & = & 0 \\
+                6 & \neq & 0
+            \end{eqnarray*}
+            Because our terms $12t$ and $-12t$ cancel out and we get that $\text{det}(M_\gamma) = 6$, we have that
+            $\gamma$ is linearly independent for any value of $t$.
         \end{solution}
 
         % Problem P.1.12
         \noindent\textbf{P.1.12} Show that the set of $n\times n$ Hermitian matricies is a real vector space.
         \begin{proof}
+            Let $\mathcal{H}_n\subseteq\mathbf{M}_n(\mathbb{C})$ be the Hermitian. So by definition for
+            $A\in\mathcal{H}_n$, we have that $A^* = A$. Now we need to prove the vector space axioms using
+            $\mathbb{R}$ as our set of scalars. Begin by setting $A,B\in\mathcal{H}_n$ and $c\in\mathbb{R}$.
+
+            \emph{Closure under addition.} We simply perform some easy algebraic manipulation beginning with the
+            conjugate transpose of the addition $A + B$
+            \begin{displaymath}
+                (A + B)^* = A^* + B^* = A + B \in\mathcal{H}_n.
+            \end{displaymath}
+
+            \emph{Scalar multiplication.} For this vector space axiom, we begin with $(cA)^*$ and perform algebraic
+            manipulation as follows:
+            \begin{displaymath}
+                (cA)^* = \bar{c}A^* = cA^* = cA \in\mathcal{H}_n
+            \end{displaymath}
+            since $\bar{c} = c$ by $c\in\mathbb{R}$.
+
+            \emph{The zero vector.} This is trivially true as
+            \begin{displaymath}
+                \hat{0}^* = \hat{0} \in\mathcal{H}_n
+            \end{displaymath}
+
+            \emph{Note.} Notice $\mathcal{H_n}$ is not a complex vector space because $(iA)^* = -iA^* = -iA\neq iA$.
         \end{proof}
 
         % Problem P.1.13
