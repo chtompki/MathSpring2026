@@ -128,6 +128,52 @@
         with stimulus where there was a stimulus to affect the production of IAP in a positive manner.
 
         \section{Nematocyst firing.}
+        This problem I personally found more interesting than the rest, as we had a display of a
+        single cell organism firing off an organelle, that we call a nematocyst, into another single
+        cell organism, algae, for the purpose of capture.
+        More generally nematocysts are employed by cnidarians (hydra, jellyfish, corals) and
+        dinoflagellates (\emph{Polykrikos kofoiidi}), noting that the dinoflagellate mechanism
+        seem to have more parts involved.
+        Morphogensis of these organelles is mostly understood, but the mechanics of firing, on the other
+        hand, is not.
+        The firing is so fast that it is quite difficult to capture and analyze.
+
+        The mathematical model that we employ is that of an accelerating rod that is transposed into
+        the prey at velocity $V$. We have the variables $L$ as the length of the rod, $h$ as the distance
+        between the prey and the rod, and $D$ as the diameter of the prey. The model follows from
+        the non-dimensional NavierStokes equation
+        \begin{gather*}
+            \frac{\partial\mathbf{v}'}{\partial t'} +\mathbf{v}'\boldsymbol{\cdot}\nabla'\mathbf{v}' = -\nabla'p' + \frac{1}{\text{Re}}\nabla'^2\mathbf{v}'\\
+            \text{Re}  = \frac{\rho LV}{\mu}
+        \end{gather*}
+        And, note that the Navier-Stokes equation can be put into this dimensionless form using the following
+        definitions:
+        \begin{align*}
+            \mathbf{x}' &= \frac{\mathbf{x}}{L} & p' &= \frac{p}{\rho V^2} \\
+            \mathbf{v}' &= \frac{\mathbf{v}}{V} & t' &= t\frac{V}{L} \\
+            \nabla' &= L\nabla &
+        \end{align*}
+        where $L$ is the characteristic length and $V$ is the characteristic velocity.
+
+        We then went over the code that would be written beginning with the mesh generation that we
+        might create using finite element analysis or the finite difference method.
+        Then the object would be to move the boundary around to accommodate for muscles, biochemistry,
+        preferred curvature and other items.
+        We notice that the model is fairly elastic with two different angles upon which we look at it:
+        the first being a fiber based model where things hook together using beams and springs,
+        the second being a continuum model using finite elements.
+
+        We then considered a boundary layer approach where we model everything with spring mass dampers with a
+        multitude of little springs to represent the boundary layer of the fluid.
+        This lead to some interesting modeled results show as a video with a green background where the nematocysts
+        never actually punctured the prey.
+        We then looked at the difference across Reynolds numbers, namely for $\text{Re} = 0.02$ versus
+        $\text{Re} = 200$.
+        And we were mainly concerned with the ability of the nematocyst to reach the prey.
+        Which, we plotted in various other plots.
+
+        Ideas on future direction follow as: determine how nematocyst is ejected from the cell (applied
+        force or pressure), and to study the mechanics of how the capsule is triggered.
 
         \section{Phage therapy.}
 
