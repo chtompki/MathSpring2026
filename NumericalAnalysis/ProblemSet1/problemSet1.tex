@@ -11,6 +11,7 @@
 \usepackage{amsthm}
 \usepackage{enumitem}
 \usepackage{setspace}
+\usepackage{graphicx}
 
 \newenvironment{solution}
 {\begin{proof}[Solution]}
@@ -28,6 +29,8 @@
     \maketitle
     \date{\today}
     \begin{onehalfspace}
+        We begin by noting that all of the files referenced in this document are available at:
+        \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet1}
         % Problem 1
         \textbf{1.} The value of $\pi$ is given by the alternating series:
         \begin{displaymath}
@@ -48,7 +51,59 @@
         function of $N$ on the same axes, you may treat the stored value of $\pi$ as ``exact.'' How does the actual
         error compare to the estimated threshold?
         \begin{solution}
-            Problem 1
+            (a) Our algorithm is given in the file ``problem1.m'' but also below as it is simple:
+            \begin{verbatim}
+                function approximatePi = computePiPlotError(error)
+                    p = 0;
+                    sum = 0;
+                    index = 0;
+                    pApproximated = [];
+                    indexedError = [];
+                    while (abs(pi - p) > error)
+                        sum = sum + (-1)^index * 1/(2*index + 1);
+                        p = 4*sum;
+                        index = index + 1;
+                        pApproximated(index) = p;
+                        err = abs(pi - p);
+                        indexedError(index) = err;
+                    end
+                    approximatePi = p;
+                    loglog(1:index,indexedError,'--k')
+                    xlabel('Iteration Index n');
+                    ylabel('Error');
+                    title('Error in Pi Approximation');
+                end
+
+
+                format long
+                approx_pi = computePiPlotError(5e-3)
+                pi - approx_pi
+            \end{verbatim}
+            Note, an upper bound on $\varepsilon$ should be $|pi - 4| \approx 0.85840$.
+
+            (b) When we run this function we get the following output from matlab:
+            \begin{align*}
+                p &= 3.136592684838816 \\
+                \varepsilon &= 0.004999968750977
+            \end{align*}
+
+            (c) When we plot $\varepsilon$ versus the number of iterations of our algorithm to try to find $\pi$ we
+            get:
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{Problem_1_Figure.png}
+                \caption{Log-Log plot $\varepsilon$ versus $N$}
+            \end{figure}
+            I'm not exactly sure what we're going for here with the ``actual error''. The only thing that I can come up
+            with is considering the remainder of the tail of the summation after the $n^{\text{th}}$ iteration.
+            \begin{displaymath}
+                \text{err}^{\text{actual}}_n = 4 \sum_{k = n + 1}^{\infty} \frac{(-1)(^k)}{2k + 1}
+            \end{displaymath}
+            I suppose we could pick some huge $k$, say $10^{12}$ and iterate from our curren $n$ to there to get the
+            actual error. But to do so I would end up using the symbolic computation capabilities in matlab.
+            I've added a ``problem1b.m'' in the directory but the computational capacity on the ``symsum'' function
+            is insufficient for the problem.
+
         \end{solution}
 
         % Problem 2
@@ -58,7 +113,43 @@
             \lim_{n\rightarrow 0}\frac{\sin(x^2)}{x^2}\qquad\text{versus}\qquad\lim_{n\rightarrow 0}\frac{(\sin x)^2}{x^2}.
         \end{displaymath}
         \begin{solution}
-            Problem 2
+            We'll just run a table here for $\{10^0, 10^{-1}, 10^{-2},\ldots,10^{-9}\}$ to look at convergence of the
+            functions listed above. The code for this problem is minimal command line work using vectors with the scalar
+            versions of the $\sin$ and arithmatic functions. \\
+
+            \centering
+            \begin{tabular}{ccc}
+                $n$ & $\sin(x^2)/x^2$ & $(\sin x)^2/x^2$ \\
+                \hline
+                $10^0$    & -0.005063656411098 & 0.002959589690933 \\
+                $10^{-1}$ & 0.841470984807897 & 0.708073418273571 \\
+                $10^{-2}$ & 0.999983333416666 & 0.996671107937918 \\
+                $10^{-3}$ & 0.999999998333333 & 0.999966667111108 \\
+                $10^{-4}$ & 0.999999999999833 & 0.999999666666711 \\
+                $10^{-5}$ & 1.000000000000000 & 0.999999996666667 \\
+                $10^{-6}$ & 1.000000000000000 & 0.999999999966667 \\
+                $10^{-7}$ & 1.000000000000000 & 0.999999999999667 \\
+                $10^{-8}$ & 1.000000000000000 & 0.999999999999997 \\
+                $10^{-9}$ & 1.000000000000000 & 1.000000000000000
+            \end{tabular}
+
+            Now as to find the rate of convergence for the functions, we'll consider them one at a time.
+            For $\sin(x^2)/x^2$ notice that
+            \begin{displaymath}
+                \frac{\sin(x^2)}{x^2} \le \frac{1}{x^2}
+            \end{displaymath}
+            So our rate of convergence is $\mathcal{O}(1/x^2)$.
+
+            For $(\sin x)^2/x^2$ we first notice that
+            \begin{displaymath}
+                \lim_{x\rightarrow 0} \frac{\sin(x)}{x} = 1
+            \end{displaymath}
+            Therefore, we see that
+            \begin{displaymath}
+                \lim_{x\rightarrow 0} \frac{(\sin x)^2}{x^2} = \left( \lim_{x\rightarrow 0} \frac{\sin(x)}{x}\right)^2 = 1^2 = 1
+            \end{displaymath}
+            and our convergence is on the order of $\mathcal{O}(1/x)$.
+
         \end{solution}
 
         % Problem 3
