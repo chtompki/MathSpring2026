@@ -164,7 +164,32 @@
         (c) Compare the nature of the roots of $f$ and $g$. How might this contribute to the relative changes in the
         zeros for each function?
         \begin{solution}
-            Problem 3
+            (a) Using the quadratic formula we quikcly see that:
+            \begin{displaymath}
+                x_a = \frac{12 \pm \sqrt{144 - 4(35)}}{2} = \{7, 5\}
+            \end{displaymath}
+            but if we let $c = 35-10^2$, our zeros become (using matlab for the calculation):
+            \begin{displaymath}
+                x_b = \frac{12 \pm \sqrt{144 - 4(35)}}{2} = \{7.048808848170152,4.951191151829848\}
+            \end{displaymath}
+            and we note that the values came from the opposing fomulae. The shift in the zero is $x_a - x_b$ which
+            follows as
+            \begin{displaymath}
+                x_a - x_b = \{0.048808848170152,0.048808848170152\}.
+            \end{displaymath}
+
+            (b) Similarly to (a) we use the quadratic formula to quickly see that we have a singular root at:
+            \begin{displaymath}
+                x_a = \frac{10\pm\sqrt{100 - 4(25)}}{2} = 5
+            \end{displaymath}
+            However, if we let $c = 25-10^{-2}$, we get the following:
+            \begin{displaymath}
+                x_b = \frac{10\pm\sqrt{100 - 4(25-10^{-2})}}{2} = \{5.316227766016840, 4.683772233983160\}
+            \end{displaymath}
+            The shift in zero is $x_a - x_b = 0.316227766016840$.
+
+            (c) The nature of the roots differ from $f$ and $g$ in that $g$ is tangent to the $x$ axis at $5$, where
+            as $f$ has two distinct roots at $c = 35$, $5$ and $7$.
         \end{solution}
 
         % Problem 4
@@ -180,7 +205,21 @@
         \end{itemize}
         Note that this algorithm uses the fact that the sum of the roots of $ax^2 + bx + c = 0$ is equal to $-b/a$.
         \begin{solution}
-            Problem 4
+            If we're considering all the possibilities for roundoff error, we start by noticing that we initially
+            have the possibility for roundoff error in that the coefficients $a, b, c$ may infact be irrational needing
+            to be initially rounded.
+
+            In $\texttt{STEP 1}$ we can have rounding problems when $b^2\approx 4ac$ by subtracting numbers
+            that are nearly identical.
+
+            In $\texttt{STEP 2}$ we can have real problems when $b+ disc\approx 0$ because the denominator has
+            large relative error.
+            $root1$ in this case becomes highly inaccurate and may overflow. Also if $c$ is tiny $-2c$ could underflow.
+
+            In $\texttt{STEP 3}$ if we are dealing with subtraction of nearly equal numbers then we could have
+            roundoff error. The cases when this could occur would be if the roots are of vary different magnitudes
+            and the large one is $root1$.
+            Lastly notice that if $a$ is tiny, $-b/a$ can overflow.
         \end{solution}
 
         % Problem 5
@@ -192,8 +231,29 @@
         (c) Describe the issues with the original formulation in part (a) and how they were resolved with the
         reformulation in part (b).
         \begin{solution}
-            Problem 5
+            (a) Running the plot using this order of operations yields the plot in Figure 2.
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{Problem_5_Figure_1.png}
+                \caption{Plot of $\text{ln}(1+ x) - \cos(x) - x + 1$ using 1001 uniformly spaced points over the range}
+            \end{figure}
+
+            (b) If we simply rearrange the function to put the additions and subtractions in a different order, for example
+            \begin{displaymath}
+                f(x) = (\text{ln}(1+x) - x) + (1 - \cos(x))
+            \end{displaymath}
+            we get the graph in Figure 3, which we overlayed on top of part (a).
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{Problem_5_Figure_2.png}
+                \caption{Plot of $\text{ln}(1+ x) - \cos(x) - x + 1$ versus $(\text{ln}(1+x) - x) + (1 - \cos(x))$}
+            \end{figure}
+
+            (c) The main issue with the problem stemmed from roundoff error around the subtraction between $\cos(x)$
+            and $x$ because we're so close to 0.
+            So that essentially forces us into buckets as we see in the plot in Figure 2.
         \end{solution}
+
 
         % Problem 6
         \textbf{6.} (a) Determine the third-degree Taylor polynomial associated remainder term for the function
