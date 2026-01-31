@@ -13,6 +13,7 @@
 \usepackage{amsthm}
 \usepackage{enumitem}
 \usepackage{setspace}
+\usetikzlibrary{shadows,arrows,shapes,positioning,calc}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
@@ -21,7 +22,15 @@
 {\begin{proof}[Solution]}
 {\end{proof}}
 
-\title{Combinatorics\\Notes January 15, 2026}
+\tikzset{
+    ell/.style={draw,ellipse,minimum height=6em,minimum width=10em,align=center},
+    ellthin/.style={draw,ellipse,minimum height=2em,minimum width=10em,align=center},
+    line/.style={-,line width=0.5pt},
+    dot/.style = {draw,fill,circle,inner sep=0pt,outer sep=0pt,minimum size=2pt},
+    spot/.style = {draw,fill,circle,inner sep=0pt,outer sep=0pt,minimum size=0pt},
+}
+
+\title{Combinatorics\\Notes January 29, 2026}
 %\author{Rob Tompkins}
 \date{\today}
 
@@ -29,6 +38,70 @@
     \maketitle
     \date{\today}
     \begin{onehalfspace}
-
+        \section{Sterling Numbers. Con't}
+        Let $f:M\rightarrow B$ be a function where $M$ is a set of marbles and $B$ is a set of boxes.
+        Also let $m = |M|$ and $b = |B|$
+        We concern ourselves with the following counts.
+        \begin{enumerate}
+            \item We want the count of the number of relations from $M$ to $B$:
+                \begin{displaymath}
+                    \text{count} = 2^{|M\times B|} = 2^{|M||B|} = 2^{mb}
+                \end{displaymath}
+            \item We want the count of the number of general functions from $M$ to $B$ which follows as:
+                \begin{displaymath}
+                    \text{count} = b^m
+                \end{displaymath}
+            \item With $m\leq b$ we want to count the number of one-to-one functions from $M$ to $B$ which follows
+                  as:
+                \begin{displaymath}
+                    \text{count} = \leftindex_b P_m
+                \end{displaymath}
+            \item With $m \leq b$ we want to count the number of onto functions from $M$ to $B$, which follows as:
+                \begin{eqnarray*}
+                    \text{count} & = & b^m - \binom{b}{1}(b-1)^m + \binom{b}{2}(b-2)^m - \binom{b}{3}(b-3)^m + \cdots + (-1)^b\binom{b}{b}(b - b)^m \\
+                                 & = & b! \cdot \frac{1}{b!} \sum_{k=0}^b (-1)^k\binom{b}{k}(b-k)^m = b!\mathcal{S}(m,b)
+                \end{eqnarray*}
+            \item With $m = b $ we want to count the number of bijections from $M$ to $B$. This follows as
+                \begin{displaymath}
+                    \text{count} = m! = b!
+                \end{displaymath}
+        \end{enumerate}
+        Now we consider the diagram
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}
+                \node[spot](a) {};
+                \node[spot,right=4cm of a] (b){};
+                \node[dot,below=2cm of b] (c){};
+                \node[dot,left= 4cm of c] (d){};
+                \node[ell,rotate=90] at ($(b)!0.5!(c)$) {};
+                \node[ell,rotate=90] at ($(d)!0.5!(a)$) {};
+                \draw[->] (d) -- (c);
+            \end{tikzpicture}
+            \caption{Set mapping}
+        \end{figure}
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}
+                \node[dot](a) {};
+                \node[dot,right=2cm of a] (b){};
+                \node[dot,below=2cm of b] (c){};
+                \node[dot,left= 2cm of c] (d){};
+                \node[dot,yshift=-1cm] at ($(a)!0.5!(b)$)(e) {};
+                \node[dot] at ($(d)!0.5!(a)$)(f){};
+                \node[dot] at ($(f)!0.5!(a)$)(g){};
+                \node[dot] at ($(f)!0.5!(d)$)(){};
+                \node[dot] at ($(d)!0.15!(f)$)(){};
+                \node[dot] at ($(d)!0.3!(f)$)(){};
+                \node[ellthin] at ($(a)!0.5!(b)$) {};
+                \node[ellthin,rotate=90] at ($(b)!0.5!(c)$) {};
+                \node[ellthin] at ($(c)!0.5!(d)$) {};
+                \node[ellthin,rotate=90] at ($(d)!0.5!(a)$) {};
+                \draw[line] (e) -- (a);
+                \draw[line] (e) -- (b);
+                \draw[line] (e) -- (f);
+            \end{tikzpicture}
+            \caption{Something here}
+        \end{figure}
     \end{onehalfspace}
 \end{document}
