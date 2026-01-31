@@ -1,0 +1,146 @@
+%! Author = chtompki
+%! Date = 1/14/26
+% Example LaTeX document for GP111 - note % sign indicates a comment
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\title{Advanced Linear Algebra\\Homework 3}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+
+        % Problem P.1.32
+        \noindent\textbf{P.1.32} (a) Give an example of a nonzero $A\in\mathbf{M}_2(\mathbb{F})$ such that
+        $\text{col}(A) = \text{null}(A)$.
+        (b) Give an example of $A\in\mathbf{M}_2(\mathbb{F})$ such that
+        $\text{col}(A)\oplus\text{null}(A) = \mathbb{F}^2$.
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.1.39
+        \noindent\textbf{P.1.39} In $\mathbf{M}_n$, let $\mathcal{U}$ denote the set of strictly lower
+        triangular matrices and let $\mathcal{W}$ denote the set of strictly upper triangular matrices.
+        (a) Show that $\mathcal{U}$ and $\mathcal{W}$ are subspaces of $\mathbf{M_n}$.
+        (b) What is $\mathcal{U} + \mathcal{W}$? Is this sum a direct sum? Why?
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.1.41
+        \noindent\textbf{P.1.41} Let $f\in C[-1,1]$. Then if $f$ is \emph{even} if $f(-x) = f(x)$ for all $x\in[-1, 1]$,
+        and $f$ is \emph{odd} if $f(-x) = -f(x)$ for all $x\in[-1,1]$.
+        Let $\mathcal{U}$ denote the set of even functions in $C[-1,1]$ and let $\mathcal{V}$ denote the set of odd
+        functions in $C[-1,1]$.
+        Show that (a) $\mathcal{U}$ and $\mathcal{V}$ are subspaces of $C[-1,1]$, and (b)
+        $C[-1,1] = \mathcal{U}\oplus\mathcal{W}$.
+        \emph{Hint.} $f(x) = \frac{1}{2}(f(x)+f(-x)) + \frac{1}{2}(f(x) - f(-x))$.
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.1.44
+        \noindent\textbf{P.1.44} Let $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_r \in \mathbb{C}^n$ and let
+        $A\in\mathbf{M}_n$ be invertible.
+        Prove that $A\mathbf{v}_1, A\mathbf{v}_2, \cdots, A\mathbf{v}_r$ are linearly independent if and only if
+        $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_r \in \mathbb{C}^n$ are linearly independent.
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.2.1
+        \noindent\textbf{P.2.1} A full-rank factorization is not unique.
+        For example, let
+        \begin{displaymath}
+            A = \left[
+                    \begin{matrix}
+                        1 & 2 & 3 \\
+                        4 & 5 & 6 \\
+                        7 & 8 & 9
+                    \end{matrix}
+            \right]
+        \end{displaymath}
+        show that the following two decompositions work for $A$
+        \begin{displaymath}
+            \left[\begin{matrix}
+                      5 & 8 \\
+                      23 & 38 \\
+                      41 & 68
+            \end{matrix}\right]
+            \left[\begin{matrix}
+                      1 & 6 & 11 \\
+                      -\frac{1}{2} & -\frac{7}{2} & \frac{13}{2}
+            \end{matrix}\right],
+            \left[\begin{matrix}
+                      14 & -19 \\
+                      32 &-43 \\
+                      50 & -67
+            \end{matrix}\right]
+            \left[\begin{matrix}
+                      \frac{11}{2} & \frac{3}{2} & -\frac{5}{2} \\
+                      4 & 1 & -2
+            \end{matrix}\right]
+        \end{displaymath}
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.2.2
+        \noindent\textbf{P.2.2} Let $A\in\mathbf{M}_n$ with $a_{ij} = 1$ if $i = j$ or $i + j = n$, and $a_{ij} = 0$
+        otherwise.
+        Compute $\text{rank}(A)$, and find a basis for $\text{col}(A)$.
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.2.3
+        \noindent\textbf{P.2.3} Let $A\in\mathbf{M}_n$ with $a_{ij} = 1$ if $i + j$ is even and $a_{ij} = 0$ if $i + j$.
+        Compute $\text{rank}(A)$ and find a basis for $\text{col}(A)$.
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.2.4
+        \noindent\textbf{P.2.4} Let $A\in\mathbf{M}_n$ with $a_{ij} = 1$ if $1\in\{i,j\}$ or $n\in\{i,j\}$. Compute
+        $\text{rank}(A)$ and find a basis for $\text{col}(A)$.
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.2.5
+        \noindent\textbf{P.2.5} $\mathbf{x}\in\mathbb{F}^m$ and $\mathbf{y}\in\mathbb{F}^n$ be nonzero vectors.
+        Compute $\text{rank}(\textbf{x}\textbf{y}^\top)$
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.2.6
+        \noindent\textbf{P.2.6} Let $A = \left[\begin{matrix}a & b\\ c & d\end{matrix}\right]\in\mathbf{M}$ and suppose that
+        $\text{dim}(\text{row}(A)) = 1$. If $[\begin{matrix}a & b\end{matrix}] = \lambda[\begin{matrix}c & d\end{matrix}]$,
+        how are the columns $\left[\begin{matrix}a \\ c\end{matrix}\right]$ and $\left[\begin{matrix}b \\ d\end{matrix}\right]$
+        related?
+        \begin{solution}
+            Sol
+        \end{solution}
+
+    \end{onehalfspace}
+\end{document}
