@@ -1,0 +1,81 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{leftindex}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\title{Combinatorics\\Assignment 2}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        % Problem 6
+        \noindent\textbf{6.} Prove that $$P(n,k) = k!\binom{n}{k}$$
+        \begin{solution}
+
+        \end{solution}
+
+        % Problem 10
+        \textbf{10.} Prove that:
+        \begin{displaymath}\sum_{k=0}^n r^{n-k}\binom{n}{k} = (r + 1)^n
+        \end{displaymath}
+        \begin{solution}
+        \end{solution}
+
+        % Problem 16
+        \textbf{16.} Prove Vandermonde's Identity:
+        \begin{displaymath}
+            \binom{m+n}{r} = \sum_{k=0}^r \binom{m}{k}\binom{n}{r-k}
+        \end{displaymath}
+        \begin{solution}
+        \end{solution}
+
+        % Problem 19
+        \textbf{19.} Prove the identity:
+        \begin{displaymath}
+            \binom{n+1}{r+1} = \sum_{k=r}^n \binom{k}{r}
+        \end{displaymath}
+        \begin{solution}
+        \end{solution}
+
+        % Problem 20
+        \textbf{20.} Prove the identity:
+        \begin{displaymath}
+            2_n - 1 = \sum_{k=0}^{n-1} 2^k
+        \end{displaymath}
+        \begin{solution}
+        \end{solution}
+
+        % Problem 22
+        \textbf{22.} Prove the identity:
+        \begin{displaymath}
+            \binom{n}{k}\binom{k}{t} = \binom{n}{t}\binom{n-t}{k-t}
+        \end{displaymath}
+        \begin{solution}
+        \end{solution}
+
+        % Problem 24
+        \textbf{24.} Prove the identity:
+        \begin{displaymath}
+            \sum_{k=0}^m\binom{m}{k}\binom{n}{r+k} = \binom{m+n}{m+r}
+        \end{displaymath}
+        \begin{solution}
+        \end{solution}
+    \end{onehalfspace}
+\end{document}
