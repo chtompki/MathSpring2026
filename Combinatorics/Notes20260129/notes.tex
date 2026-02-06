@@ -9,11 +9,12 @@
 \usepackage{amsmath}
 \usepackage{leftindex}
 \usepackage{amssymb}
+\usepackage{mathrsfs}
 \usepackage{tikz}
 \usepackage{amsthm}
 \usepackage{enumitem}
 \usepackage{setspace}
-\usetikzlibrary{shadows,arrows,shapes,positioning,calc}
+\usetikzlibrary{shadows,arrows,arrows.meta,shapes,positioning,calc,patterns}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
@@ -24,6 +25,7 @@
 
 \tikzset{
     ell/.style={draw,ellipse,minimum height=6em,minimum width=10em,align=center},
+    inner_ell/.style={draw,ellipse,minimum height=4em,minimum width=6em,align=center},
     ellthin/.style={draw,ellipse,minimum height=2em,minimum width=10em,align=center},
     line/.style={-,line width=0.5pt},
     dot/.style = {draw,fill,circle,inner sep=0pt,outer sep=0pt,minimum size=2pt},
@@ -66,42 +68,53 @@
                     \text{count} = m! = b!
                 \end{displaymath}
         \end{enumerate}
-        Now we consider the diagram
+        Now we consider the diagram of the mapping $f:M\rightarrow b$
         \begin{figure}
             \centering
-            \begin{tikzpicture}
-                \node[spot](a) {};
-                \node[spot,right=4cm of a] (b){};
-                \node[dot,below=2cm of b] (c){};
-                \node[dot,left= 4cm of c] (d){};
-                \node[ell,rotate=90] at ($(b)!0.5!(c)$) {};
-                \node[ell,rotate=90] at ($(d)!0.5!(a)$) {};
-                \draw[->] (d) -- (c);
+            \begin{tikzpicture}[>=Latex, every node/.style={font=\small}, set/.style={draw, thick}, inner/.style={draw, thick, pattern=north east lines, pattern color=gray!70}, map/.style={->, thick} ]
+% Title
+                \node[font=\large] at (5,4.2) {Linear Functions};
+% --- Domain (left) ---
+                \node at (2,3.2) {Domain};
+% Outer oval M
+                \draw[set] (2,1.5) ellipse (1.4 and 2.0);
+                \node at (2,-0.8) {$M$};
+% Inner shaded oval = kernel
+                \draw[inner] (2,1.5) ellipse (0.65 and 1.35);
+% Labels on left
+                \node[align=left] at (0.1,1.6) {Kernel\\(Nullspace)};
+                \node[align=left] at (0.4,2.45) {Pre-image};
+% Sample points in domain
+                \fill (1.85,2.1) circle (1.1pt) node[below left] {$m_1$};
+                \fill (2.15,1.5) circle (1.1pt) node[below right] {$m_2$};
+                \fill (1.95,0.9) circle (1.1pt) node[below left] {$m_3$};
+% --- Codomain (right) ---
+                \node at (8,3.2) {Codomain};
+% Outer oval B
+                \draw[set] (8,1.5) ellipse (1.4 and 2.0);
+                \node at (8,-0.8) {$B$};
+% Inner shaded oval = image/range
+                \draw[inner] (8,1.5) ellipse (0.75 and 1.15);
+% Labels on right
+                \node[align=left] at (9.9,2.25) {$f(M)$\\Range};
+                \node[align=left] at (9.65,1.55) {Image};
+% Sample points in image
+                \fill (7.9,1.95) circle (1.1pt) node[below left,label=270:$f(m_1)$] {};
+                \fill (8.2,1.55) circle (1.1pt);
+                \fill (7.85,1.10) circle (1.1pt);
+% Label f over arrows
+                \node[font=\normalsize] at (5,2.1) {$f$};
+% --- Mapping arrows ---
+                \draw[map] (1.85,2.1) .. controls (4.2,2.6) and (6.0,2.3) .. (7.9,1.95);
+                \draw[map] (2.15,1.5) .. controls (4.0,1.8) and (6.2,1.9) .. (8.2,1.55);
+                \draw[map] (1.95,0.9) .. controls (4.0,1.1) and (6.0,1.2) .. (7.85,1.10);
+% Extra faint arrows to mimic the sketch
+                \draw[->, thin, gray!60] (2.7,2.7) .. controls (4.8,2.4) and (6.8,2.7) .. (8.7,2.1);
+                \draw[->, thin, gray!60] (2.7,0.4) .. controls (4.7,0.9) and (6.7,0.6) .. (8.7,1.0);
             \end{tikzpicture}
-            \caption{Set mapping}
-        \end{figure}
-        \begin{figure}
-            \centering
-            \begin{tikzpicture}
-                \node[dot](a) {};
-                \node[dot,right=2cm of a] (b){};
-                \node[dot,below=2cm of b] (c){};
-                \node[dot,left= 2cm of c] (d){};
-                \node[dot,yshift=-1cm] at ($(a)!0.5!(b)$)(e) {};
-                \node[dot] at ($(d)!0.5!(a)$)(f){};
-                \node[dot] at ($(f)!0.5!(a)$)(g){};
-                \node[dot] at ($(f)!0.5!(d)$)(){};
-                \node[dot] at ($(d)!0.15!(f)$)(){};
-                \node[dot] at ($(d)!0.3!(f)$)(){};
-                \node[ellthin] at ($(a)!0.5!(b)$) {};
-                \node[ellthin,rotate=90] at ($(b)!0.5!(c)$) {};
-                \node[ellthin] at ($(c)!0.5!(d)$) {};
-                \node[ellthin,rotate=90] at ($(d)!0.5!(a)$) {};
-                \draw[line] (e) -- (a);
-                \draw[line] (e) -- (b);
-                \draw[line] (e) -- (f);
-            \end{tikzpicture}
-            \caption{Something here}
+            \caption{Linear Functions}
         \end{figure}
     \end{onehalfspace}
+
+
 \end{document}

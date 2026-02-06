@@ -1,0 +1,55 @@
+%! Author = chtompki
+%! Date = 1/14/26
+% Example LaTeX document for GP111 - note % sign indicates a comment
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta} % Required for the Circle and Triangle arrow tips
+\usepackage{setspace}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\title{Seminar Summary:\\February 3, 2026 - Allison Moore\\Cutting Knots Down to Size}
+\author{Rob Tompkins}
+\date{\today}
+
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        The goal behind the talk was to inspect tangle decomposition as a tool for understanding 3-manifold theory
+        and $\mathbb{R}^3$ topology.
+        We begin by considering a few definitions.
+
+        \begin{definition}\;
+            \begin{enumerate}[i]
+                \item A \emph{knot} is an embedding of a circle into $\mathbb{R}^3$ space or an embedding into a 3-sphere.
+                \item A \emph{link} $L$ is union of knots.
+                \item A \emph{link diagram} is a projection of $L$ into the plane with over-crossing and under-crossings
+                      explicitly labeled.
+                \item \emph{Spacial graphs} or a \emph{spacial representation} $\mathcal{R}(G)$, of a graph $G$, is the
+                      embedded image of $G$ in $\mathbb{R}^3$ where the vertices of $G$ are distinct points in
+                      $\mathbb{R}^3$ and the edges between them are simple Jordan curves between them in such a way that
+                      any two curves either are disjoint or they meet in a common end point.
+                \item A \emph{theta curve} (or $\theta$-curve) is a spacial embedding of the theta-graph in
+                      $\mathbb{R}^3$ (specifically in the 3-sphere $S^3$ or Euclidean space $\mathbb{R}^3$).
+                \item \emph{Ambient Isotopy} defines when two knots are considered equivalent by determining if one can
+                      be continuously deformed into the other within $\mathbb{R}^3$ without cutting, breaking, or
+                      passing the string through itself.
+            \end{enumerate}
+        \end{definition}
+
+
+    \end{onehalfspace}
+\end{document}
