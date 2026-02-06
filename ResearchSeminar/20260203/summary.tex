@@ -47,9 +47,107 @@
                 \item \emph{Ambient Isotopy} defines when two knots are considered equivalent by determining if one can
                       be continuously deformed into the other within $\mathbb{R}^3$ without cutting, breaking, or
                       passing the string through itself.
+                \item A 3-manifold is a topological space where every ball has a neighborhood homomorphic to a
+                      3-dimensional Euclidean ball.
             \end{enumerate}
         \end{definition}
 
+        We then were given a list of problems of interest:
+        \begin{enumerate}
+            \item Define and calculate invariants - to clarify, quantify, or tabulate invariants or to solve bigger
+                  problems.
+            \item Studying unknotting operations - what subject is simplest? How is a structure formed?
+            \item Explore connections - (a) apply 3-manifold topology to study knots; (b) apply knot theory to
+                  study 3-manifolds
+            \item Apply topology problems in molecular biology (DNA and protien folding)
+        \end{enumerate}
 
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.5]{tangleDecomposition.png}
+            \caption{Basis for tangle tecomposition}
+        \end{figure}
+
+        A list of tangle decompositions follow as:
+        \begin{enumerate}
+            \item Decoposition: $(S^3,K) = T_1 \cup T_2$
+            \item Two-string tangle: $T_i = (\mathcal{R]^3},t_i)$
+            \item Conway sphere: $S \cap K \rightarrow$ 4-point sphere.
+            \item Numerator closure: $N(T_1 + T_2) = S$
+        \end{enumerate}
+
+        And, Figure 2 gives a classical knot example represented using tangle decomposition.
+
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.4]{overhandAndCross.png}
+            \caption{Example for tangle tecomposition}
+        \end{figure}
+
+        \noindent\textbf{The Jones Polynomial.} Using tangle decomposition and Figure 1, we get the following
+        representations
+        \begin{eqnarray*}
+            N(T_1 + T_2) & = & L \\
+            \langle T \rangle & = & f_{\mathrm{T}}[0] + g_{\Gamma}[\infty] \\
+            \langle D_L \rangle & = & [\begin{matrix}f_{r_1} & g_{r_1}\end{matrix}]
+            \left[\begin{matrix}
+                      \delta & 1 \\
+                      1 & \delta
+            \end{matrix}\right]
+            \left[\begin{matrix}f_{r_2} \\ g_{r_2}\end{matrix}\right]
+        \end{eqnarray*}
+
+        \noindent\textbf{A fancier technique.} Use a tangle decomposition to ``modularize'' a complicated homology
+        calculation.
+        Algebraic invariants associated to tangles have geometric rationalizations aw immersed multi-curves.
+        We use a strategy to calculate KH using a technique developed by Bar-Natan, and Kotelskiy-Watson-Zibrowius.
+        Further, we use a strategy to calculate HFK by Zibrowius.
+        Also, we consider the following tangle decompositions:
+        \begin{enumerate}
+            \item Knot Floer homology: $\widehat{HFK}(K) = \bigoplus_i^n \mathbb{F}_{(m_i,a_i)}^d$
+            \item Zibrowius's Peculiar Modules: $T \Rightarrow \text{ Heegaard diagram } \Rightarrow CFT^\delta \Rightarrow HFT(T)$
+            \begin{itemize}
+                \item Decorations involve bigradings, local systems
+                \item Punctured sphere is parameterized
+                \item This peculiar is a curved type $D$ structure over an algebra - a type of Heegaard Floer module.
+            \end{itemize}
+        \end{enumerate}
+
+        \noindent\textbf{Theorem.} (Zibrowius, The Pairing Theorem) Let $\Gamma_i = HFT(T_i)$ be the immersed curve
+        representing the peculiar module of the tangle $T_i$.
+        Then the Knot Floer homology of $K = T_1 \cup T_2$ can be obtained by the Lagrangian intersection homology on
+        the 4-punctured sphere:
+        \begin{displaymath}
+            \widehat{HFK}(K) \otimes V \cong HF(\Gamma_1,\Gamma_2^*).
+        \end{displaymath}
+
+        \noindent\textbf{Theorem.} (Lidman-Moore-Zibrowius, 2022) $L$-space knots have no essential Conway spheres.
+
+        We then considered branched covering space examples
+        \begin{enumerate}
+            \item The wedge of two circles is a 2-fold cover of the circle branched over one point.
+            \item The cylinder is a 2-fold cover of the disc branched over two points.
+            \item $\Sigma_2(B^3,T)$: The double cover of a ball branched over a 2-string tangle is a 3-manifold with
+            a torus boundry.
+            \item $\Sigma_2(S^3,K)$: The double cover of a 3-sphere branched over a knot is a closed 3-manifold.
+        \end{enumerate}
+
+        \noindent\textbf{Theorem.} (Monsanto's ``Trick'', 1976) Correspondence between rational Dehn fillings of
+        the 3-manifold $\Sigma_2(B, T)$ and rational tangle fillings $N(B + T)$.
+        (Some heavy drawings, have to refer to the slides here for the theorem).
+
+        We then spent time talking about the applications of Knot Theory regarding two biological applications,
+        DNA and protien folding. We noted that Specific Site Recombinase is a knot with 15 crossings and is a
+        well known standard knot in the literature.
+
+        We then proceeded to go over ``The Tangle Calculus'' which is a method for solving tangle equations due to
+        Ernst and Summers (1980s) that relies on Dehn surgeries. The following set of equations was given
+        \begin{eqnarray*}
+            N(S + T) & = & \text{ substrate knot} \\
+            N(S + R) & = & \text{ product knot}
+        \end{eqnarray*}
+
+        Lastly we went into the idea of ``unknotting-number'' which has some quickly describable open problems
+        associated with it and the decipline was pioneered by Scharlemann (for more reading).
     \end{onehalfspace}
 \end{document}
