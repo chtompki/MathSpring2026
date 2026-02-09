@@ -44,8 +44,21 @@
         \textbf{10.} Prove that:
         \begin{displaymath}\sum_{k=0}^n r^{n-k}\binom{n}{k} = (r + 1)^n
         \end{displaymath}
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+            We'll go ahead and consider the general case here for $(x+y)^n$.
+            We expand as:
+            \begin{displaymath}
+                \underbrace{(x+y)(x+y)\cdots(x+y)}_{n\text{-terms}}
+            \end{displaymath}
+            which if we multiply out, we get $2^n$ terms each of which can be arranged as $x^{n-k}y^k$ for $k\in[n]$.
+            We obtain the coefficient for the $x^{n-k}y^k$ term by choosing $y$ in $k$ of the $n$ factors and $x$
+            necessarily in the remaining $n-k$ factors. Thus the coefficient on $x^{n-k}y^k$ becomes the $k$-subsets
+            of $n$ factors or $\binom{n}{k}$. So we have
+            \begin{displaymath}
+                (x + y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k.
+            \end{displaymath}
+            For the case in the problem we simply set $x=r$ and $y=1$, and we are done.
+        \end{proof}
 
         % Problem 16
         \textbf{16.} Prove Vandermonde's Identity:
@@ -55,8 +68,8 @@
         \begin{proof}
             The left-hand side counts all the $k$-element subsets of $[m + n]$.
             The right-hand side does the same thing according to the number of elements chosen from $[n]$.
-            Indeed, we can first choose $i$ elements from $[n]$ in $\binom{n}{i}$ ways, then choose the remaining
-            $k - i$ elements from the set $\{n+1, n+2, \ldots, n + m \}$ in $\binom{n}{i}$ ways.
+            Indeed, we can first choose $k$ elements from $[m]$ in $\binom{m}{k}$ ways, then choose the remaining
+            $r - k$ elements from the set $\{m+1, m+2, \ldots, m+n \}$ in $\binom{n}{r-k}$ ways.
         \end{proof}
 
         % Problem 19
@@ -67,7 +80,7 @@
         \begin{proof}
             Let's go ahead and expand out the right hand side here so we see that:
             \begin{displaymath}
-                \binom{n+1}{r+1} = \binom{r}{r} + \binom{r+1}{r} + \binom{r+2}{r} + \cdots + \binom{n}{k} = \binom{n+1}{k+1}
+                \binom{n+1}{r+1} = \binom{r}{r} + \binom{r+1}{r} + \binom{r+2}{r} + \cdots + \binom{n}{r}
             \end{displaymath}
             Now with regards to the identity in question, the left-hand side clearly counts all the $r+1$-element subsets
             of $[n+1]$.
@@ -119,8 +132,32 @@
         \begin{displaymath}
             \sum_{k=0}^m\binom{m}{k}\binom{n}{r+k} = \binom{m+n}{m+r}
         \end{displaymath}
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+            Let $A$ and $B$ be disjoint sets with $|A|=m$ and $|B|=n$.
+            We want to find the number of ways to chose $S\subseteq A\cup B$ with $|S| = m+r$, clearly
+            $\binom{m+n}{m+r}$.
+
+            Now to find the right-hand side we count by spltting according to how many are chosen from $A$.
+            For any such subset $S$, let $k=|S\cap A|$. We see the following
+            \begin{itemize}
+                \item $j\in\{0,\ldots,m\}$, and
+                \item once $j$ is fixed we must choose:
+                \begin{itemize}
+                    \item $j$-elements from $A$: $\binom{m}{j}$ ways, and
+                    \item the remaining $((m+r)-j)$-elements from $B$ in $\binom{n}{(m+r)-j}$ ways.
+                \end{itemize}
+            \end{itemize}
+            So the total count follows as:
+            \begin{displaymath}
+                \sum_{j=0}^m\binom{m}{j}\binom{n}{(m+n)-j}
+            \end{displaymath}
+            Now we re-index setting $k=m-j$ yielding $(m+n)-j = r+k$ with $\binom{m}{j}=\binom{m}{m-j} = \binom{m}{k}$,
+            and sum becomes:
+            \begin{displaymath}
+                \sum_{k=0}^m\binom{m}{k}\binom{n}{m+k}
+            \end{displaymath}
+            and we are done.
+        \end{proof}
 
         % Problem 26
         \textbf{26.} Prove the identity:
