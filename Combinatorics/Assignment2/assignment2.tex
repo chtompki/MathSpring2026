@@ -164,8 +164,29 @@
         \begin{displaymath}
             \sum_{k=0}^n k^2\binom{n}{k} = n(n-1)2^{n-2} + n2^{n-1} = n(n+1)2^{n-2}
         \end{displaymath}
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+            Begin with the binomial theorem for $(x+1)^n$, which follows as:
+            \begin{displaymath}
+                (x+1)^n = \sum_{k=0}^n \binom{n}{k}x^k
+            \end{displaymath}
+            Now differentiate both sides, and we get
+            \begin{displaymath}
+                n(x+1)^{n-1} = \sum_{k=1}^n k\binom{n}{k}x^{k-1}
+            \end{displaymath}
+            Now multiply both sides of the equation by $x$ yielding:
+            \begin{displaymath}
+                nx(1+x)^{n-1} = \sum_{k=1}^n k\binom{n}{k}x^{k}
+            \end{displaymath}
+            Differentiating again we get
+            \begin{displaymath}
+                n[(x+1)^{n-1} + (n-1)x(1+x)^{n-2}] = \sum_{k=1}^n k^2\binom{n}{k}x^{k-1}
+            \end{displaymath}
+            Now if we substitute in $x=1$ we get
+            \begin{eqnarray*}
+                n[(2)^{n-1} + (n-1)x(2)^{n-2}] & = & \sum_{k=1}^n k^2\binom{n}{k} \\
+                n(n+1)2^{n-2} & = & \sum_{k=1}^n k^2\binom{n}{k}
+            \end{eqnarray*}
+        \end{proof}
 
         % Problem 33
         \textbf{33.} Prove the identity:
