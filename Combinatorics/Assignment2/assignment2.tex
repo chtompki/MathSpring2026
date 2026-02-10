@@ -29,7 +29,7 @@
         \noindent\textbf{6.} Prove that $$P(n,k) = k!\binom{n}{k}.$$
         \begin{proof}
             First let's consider how we choose our $k$-permutations of $[n]$.
-            We begin by choosing $n$ elements, then $n-1$, then all the way down to $n-k+1$, so we see that
+            We begin by choosing the first element with $n$ choices, the second with $n-1$ choices, then all the way down to the $k^{\text{th}}$ element with $n-k+1$ choices, so we see that
             \begin{displaymath}
                 P(n,k) = n(n-1)(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}.
             \end{displaymath}
@@ -46,18 +46,75 @@
         \end{displaymath}
         \begin{proof}
             We'll go ahead and consider the general case here for $(x+y)^n$.
-            We expand as:
+            We want to proove:
             \begin{displaymath}
-                \underbrace{(x+y)(x+y)\cdots(x+y)}_{n\text{-terms}}
+                (x+y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k
             \end{displaymath}
             which if we multiply out, we get $2^n$ terms each of which can be arranged as $x^{n-k}y^k$ for $k\in[n]$.
-            We obtain the coefficient for the $x^{n-k}y^k$ term by choosing $y$ in $k$ of the $n$ factors and $x$
-            necessarily in the remaining $n-k$ factors. Thus the coefficient on $x^{n-k}y^k$ becomes the $k$-subsets
-            of $n$ factors or $\binom{n}{k}$. So we have
+            We obtain the coefficient for the $x^{n-k}y^k$ term by thinking about each of our $2^n$ terms written out
+            without using exponents.
+            That is, that each term is a string of length $n$ of individual $x$'s and $y$'s (which are allowed to repeat).
+            Now our goal is to count up the terms number of $x$'s is a specific value and the number of $y$'s is a specific value.
+            Let the number of $y$'s appearing be $k$ for convenience.
+            Then we are chosing the number of $k$-subsets from $[n]$, which we know to be $\binom{n}{k}$.
+            So we have
             \begin{displaymath}
                 (x + y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k.
             \end{displaymath}
             For the case in the problem we simply set $x=r$ and $y=1$, and we are done.
+
+            \paragraph{\emph{Proof by induction of the Binomial Theorem.}}
+
+            When \(n=0\), both sides equal \(1\), since \(x^{0}=1\) and
+            \[
+                \binom{0}{0}=1.
+            \]
+
+            Now suppose the equality holds for a given \(n\); we will prove it for \(n+1\).
+            For \(j,k \ge 0\), let \([f(x,y)]_{j,k}\) denote the coefficient of \(x^{j}y^{k}\)
+            in the polynomial \(f(x,y)\).
+            By the inductive hypothesis, \((x+y)^n\) is a polynomial in \(x\) and \(y\) such that
+            \[
+                [(x+y)^n]_{j,k} =
+                \begin{cases}
+                    \binom{n}{k}, & \text{if } j+k=n,\\
+                    0, & \text{otherwise}.
+                \end{cases}
+            \]
+
+            The identity
+            \[
+                (x+y)^{n+1} = x(x+y)^n + y(x+y)^n
+            \]
+            shows that \((x+y)^{n+1}\) is also a polynomial in \(x\) and \(y\), and
+            \[
+                [(x+y)^{n+1}]_{j,k}
+                =
+                [(x+y)^n]_{j-1,k}
+                +
+                [(x+y)^n]_{j,k-1}.
+            \]
+
+            If \(j+k=n+1\), then \((j-1)+k=n\) and \(j+(k-1)=n\). Hence the right-hand side is
+            \[
+                \binom{n}{k} + \binom{n}{k-1}
+                =
+                \binom{n+1}{k},
+            \]
+            by Pascal’s identity.
+
+            If \(j+k \ne n+1\), then \((j-1)+k \ne n\) and \(j+(k-1) \ne n\), so both terms are zero.
+
+            Thus,
+            \[
+                (x+y)^{n+1}
+                =
+                \sum_{k=0}^{n+1}
+                \binom{n+1}{k}
+                x^{\,n+1-k} y^{\,k},
+            \]
+            which is the inductive hypothesis with \(n+1\) substituted for \(n\), completing the
+            inductive step.
         \end{proof}
 
         % Problem 16
