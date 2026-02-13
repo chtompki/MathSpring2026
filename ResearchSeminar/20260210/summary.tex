@@ -13,7 +13,7 @@
 \usepackage{pgfplots}
 \usepackage{enumerate}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta} % Required for the Circle and Triangle arrow tips
+\usetikzlibrary{shadows,arrows,arrows.meta,shapes,positioning,calc}% Required for the Circle and Triangle arrow tips
 \usepackage{setspace}
 
 \theoremstyle{definition}
@@ -42,10 +42,123 @@
         disease's symptoms were so mild during the period of contagion for an individual and the symptoms of the
         disease were so mild for a considerable portion of the population we were largely unable to do anything about
         it via these processes.
-        Where we see hugely effective contact tracing is in populations where the disease is far more leathal and the
+        Where we see hugely effective contact tracing is in populations where the disease is far more lethal and the
         mechanism of transfer between patients is non-airbourne and more based in physical contact.
         For example in Africa, the infrastructure and knowledge around contact tracing due to Ebola is profoundly better
-        than anywhere else in the world.
+        than anywhere else in the world, and it remains the bed of knowle
+
+        The project compares a Watts-Strogatz Network model with the standard ordinary differential equation model.
+        The Watts-Strogatz Network model is a probabilistic mechanism for developing edges on an order $N$ graph.
+        The input variables for the edge generation algorithm (which we will omit as it is widely available in the
+        literature) are $N$ as the number of nodes in the graph, $K$ is the average degree, and $\beta$ is a
+        rough probability of connection (note we have intentionally been imprecise).
+        An example of a graph generated in this fashion follows as:
+
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.6]{WattsStrogatzModel.png}
+            \label{Figure1}
+            \caption{A Watts-Strogats graph}
+        \end{figure}
+
+        Our model we then put through a series of states as given in Figure \ref{Figure2}.
+        Furthermore, the model assumes that symptomatic individuals get tested at some rate $\sigma$ then get
+        quarantined, and for individuals in quarantine, their contacts are tested at a rate $\tau$.
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}[
+                >=Stealth,
+                node distance=12mm and 14mm,
+                box/.style={draw, rounded corners=2mm, minimum width=12mm, minimum height=9mm, align=center},
+            lab/.style={font=\itshape},
+            arr/.style={->, line width=0.6pt},
+            darr/.style={<->, line width=0.6pt}
+                ]
+
+% --- top node
+                \node[box, minimum width=10mm, lab] (A) {A};
+
+% --- middle row
+                \node[box, below left=18mm and 42mm of A, lab] (S) {S};
+                \node[box, right=of S, lab] (E) {E};
+                \node[box, right=of E, lab] (T) {$T_R$};
+                \node[box, right=of T, lab] (R) {R};
+                \node[box, right=of R, lab] (TQ) {T$_Q$};
+                \node[box, right=of TQ, lab] (Q) {Q};
+                \node[box, right=of Q, lab] (RQ) {R$_Q$};
+
+% --- lower nodes
+                \node[box, below=of S, lab] (TS) {T$_S$};
+                \node[box, below=of T, lab] (I) {I};
+
+% --- arrows along middle row
+                \draw[arr]  (S) -- (E);
+                \draw[darr] (T) -- (R);
+                \draw[arr]  (TQ) -- (Q);
+                \draw[arr]  (Q) -- (RQ);
+
+% --- vertical / diagonal links
+                \draw[darr] (S) -- (TS);
+
+                \draw[arr] (E) -- (I);
+                \draw[arr] (I) -- (R);
+                \draw[arr] (I) -- (TQ);
+
+% --- A links
+                \draw[arr] (E) -- (A);
+                \draw[arr] (A) -- (R);
+                \draw[arr] (A) -- (TQ);
+
+% --- bottom L-shaped influence
+                \coordinate (Edown) at ($(E.south)+(0,-24mm)$);
+                \coordinate (TQdown) at ($(TQ.south)+(0,-24mm)$);
+                \draw[arr] (E.south) -- (Edown) -- (TQdown) -- (TQ.south);
+
+            \end{tikzpicture}
+            \caption{Model Diagram}
+            \label{Figure2}
+        \end{figure}
+
+        In Figure \ref{Figure2}, each variable represents a population at a stage in the process of infection.
+        For a population $X$, $T_X$ represents the individuals of population $X$ that test for the disease.
+        The populations in the diagram follow as $S$-the susceptible, $E$-the exposed, $A$-the asymptomatic,
+        $I$-the infected, $R$-the recovered, and $Q$-the quarantined.
+
+        \emph{Experimentation.} The main question that explored was ``how often did an outbreak occur?''
+        We looked at heap plots with $K=20$ and $K=40$ over $(\tau,\sigma)$, and what we found was that that if people frequently
+        self-identify, and they test well then we don't see disease outbreaks.
+        On the other hand, if people don't self-identify and don't test then we have disease outbreaks.
+        The ODE model for this case of frequency of outbreak did quite poorly because it assumes a complete graph
+        on our nodes as opposed to the Watts-Strogatz model.
+        In fact, it predicted that there would be an outbreak in every case regardless of whether there was
+        testing and self-identifying.
+
+        Instead of considering just how often did an outbreak occur, some other variables were considered for
+        comparing models namely: length of the epidemic, the number of waves the epidemic had, considering if everyone
+        was infected, and considering if everyone tested regularly.
+        When we looked at the length of the epidemic ad the number of waves plots, the gradients for the ODE models
+        particularly stood out as useful.
+        Though, when everyone was infected the models behaved in a similar fashion to the original outlook of
+        frequency of outbreaks, the ODE model went back to having close to a singleton for the entire heap.
+        Interestingly, when testing was involved, the dynamic of the epidemic changed in regard to
+
+        \emph{Learnings.} The first point realized was the type of model quite matters.
+        Though, that's merely for us mathematicians.
+        What we really noticed though was that self-reporting (and education) matters, effective accurate timely testing
+        matters, and social distancing matters.
+        So apparently those lessons we learned as a global community from Ebola translate to airbourne diseases as well.
+
+        \section{Student Support Networks}
+        This project seemed to be a psychology study.
+        It looked like there was some valuable data and good lessons to learn.
+
+        \section{Instructor Student Interaction}
+        I suppose that it does make sense that we would have a wealth of data about MATH200 classes, and that we
+        could use some linear difference equations.
+        That said, the data that I'm most interested in personally is the student data from BIOL 300
+        (Cellular \& Mollecular Biology) mainly because it has a reputation from outside of class of being quite a
+        rich set of data that spans the Covid pandemic.
+        I had not learned until class that the data spans dempgraphics, grades, seating, and technology use.
 
 
 
