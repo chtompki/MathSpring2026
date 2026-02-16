@@ -29,7 +29,8 @@
         Note, all the files associated with Guided Lab 2 are checked into the : \\
         \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab2}
 
-        % Problem 1
+        \qquad\\
+        % Exercise 1
         \textbf{Exercise 1.} We've added the code files to github at the following links:
         \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/gram_schmidt.m}{gram\_schmidt.m}
         \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/problem1.m}{problem1.m}
@@ -93,8 +94,9 @@ end
         (e) It's quite impossible for $Q$ to be orthogonal because $Q\top Q\in M_{3\times 3}(\mathbb{R})$ and
         $QQ^\top\in M_{4\times 4}(\mathbb{R})$, and $QQ^\top$ has non-zero entries off the diagonal.
 
-        % Problem 2
-        \textbf{Exercise 2.} (a)For our ``gs_factor'' algorithm (given in the file
+\qquad\\
+        % Exercise 2
+        \textbf{Exercise 2.} (a)For our ``gs\_factor'' algorithm (given in the file
         \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/gs_factor.m}{gs\_factor.m})
         that does the full decomposition $X=QR$ using the algorithm above
         we simply need to add $R$ to the return values of the function. We can simply do this in the following manner:
@@ -122,11 +124,51 @@ function [Q, R] = gs_factor( X )
     end
     R(:,m+1:n) = Q'*X(:,m+1:n);
 end
-
-
         \end{verbatim}
         \end{tiny}
 
+        (b) We used our matlab code for the following computation of the decomposition of the matrix in to $X=QR$:
+        \begin{gather*}
+            X  =  \left[\begin{matrix}
+                          1 & 1 & 1\\
+                          1 & 1 & 0\\
+                          1 & 0 & 0
+            \end{matrix}\right] \\
+            Q  =  \left[\begin{matrix}
+                      0.577350269189626 & 0.408248290463863 & 0.707106781186547\\
+                      0.577350269189626 & 0.408248290463863 & -0.707106781186548\\
+                      0.577350269189626 & -0.816496580927726 &                 0
+            \end{matrix}\right]\\
+            R  =  \left[\begin{matrix}
+                      1.732050807568877 &   1.154700538379252 &   0.577350269189626\\
+                      0  &  0.816496580927726 &   0.408248290463863\\
+                      0  &                 0  &  0.707106781186547
+            \end{matrix}\right]
+        \end{gather*}
+
+        (c) We let $A=\text{rand}(100)$ in Matlab, and we ran $[Q1, R1]=\text{gs\_factor}(A)$. Then we ran the subsequent
+        calculations for the sake of verifying various qualities of $Q1$ and $R1$:
+        \begin{tiny}
+        \begin{verbatim}
+[Q,R] = gs_factor([ 1 1 1; 1 1 0; 1 0 0 ])
+Q*R
+
+A = rand(100,100);
+det(A)
+[Q1,R1] = gs_factor(A);
+det(Q1*R1)
+norm(A)
+norm(Q1*R1)
+
+norm(Q1'*Q1 - eye(100))
+norm(Q1*Q1' - eye(100))
+norm(R - triu(R))
+        \end{verbatim}
+        \end{tiny}
+        The results all came out as we would expect with $Q1$ being orthogonal, $R1$ being upper triangular, and
+        $X=QR$.
+        The calculations and answers can all be seen in the file
+        \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/problem2.m}{problem2.m}.
 
         % Problem 3
         \textbf{3.}
