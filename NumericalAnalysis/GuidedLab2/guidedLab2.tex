@@ -171,11 +171,140 @@ norm(R - triu(R))
         \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/problem2.m}{problem2.m}.
 
         % Problem 3
-        \textbf{3.}
+        \textbf{Exercise 3.} We went about coding up the Householder QR decomposition. The files follow as:
+        \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/householderDecomposition.m}{householderDecomposition.m}, and
+        \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/problem3.m}{problem3.m}.
+        The code follows as:
+        \begin{tiny}
+        \begin{verbatim}
+function [R,U] = householderDecomposition(A)
+    % Householder reflections for QR decomposition.
+    % [R,U] = house_qr(A) returns
+    % R, the upper triangular factor, and
+    % U, the reflector generators for use by house_apply.
+    % By Cleve Moler, October 3, 2016
+    % https://blogs.mathworks.com/cleve/2016/10/03/householder-reflections-and-the-qr-decomposition/
+    H = @(u,x) x - u*(u'*x);
+    [m,n] = size(A);
+    U = zeros(m,n);
+    R = A;
+    for j = 1:min(m,n)
+        u = house_gen(R(j:m,j));
+        U(j:m,j) = u;
+        R(j:m,j:n) = H(u,R(j:m,j:n));
+        R(j+1:m,j) = 0;
+    end
+end
+
+function u = house_gen(x)
+    % u = house_gen(x)
+    % Generate Householder reflection.
+    % u = house_gen(x) returns u with norm(u) = sqrt(2), and
+    % H(u,x) = x - u*(u'*x) = -+ norm(x)*e_1.
+
+    % Modify the sign function so that sign(0) = 1.
+    sig = @(u) sign(u) + (u==0);
+
+    nu = norm(x);
+    if nu ~= 0
+        u = x/nu;
+        u(1) = u(1) + sig(u(1));
+        u = u/sqrt(abs(u(1)));
+    else
+        u = x;
+        u(1) = sqrt(2);
+    end
+end
+        \end{verbatim}
+        \end{tiny}
+        and some quick runs of the code against our matrix:
+        \begin{displaymath}
+            \left[\begin{matrix}
+                1 & 1 & 1 \\
+                1 & 1 & 0 \\
+                1 & 0 & 0
+            \end{matrix}\right]
+        \end{displaymath}
+        give the decomposition $QR$ in the following form, which we found suspect because we had the following:
+        \begin{gather*}
+            Q  =  \left[\begin{matrix}
+                            -1.732050807568877 &  -1.154700538379251  & -0.577350269189626\\
+                             0 & -0.816496580927726 & -0.408248290463863\\
+                             0       &            0  &  0.707106781186547
+            \end{matrix}\right]\\
+            R  =  \left[\begin{matrix}
+                            1.255926060399109  &                 0 &                   0 \\
+                            0.459700843380983 & 1.121971053593862  &                0 \\
+                            0.459700843380983 & -0.860918669153759 & -1.414213562373095
+            \end{matrix}\right]\\
+            QR =
+            R  =  \left[\begin{matrix}
+                           -2.971552964179200 & -0.798488954244471 & 0.816496580927726 \\
+                           -0.563016250305247 & -0.564616954248820 & 0.577350269189626\\
+                           0.325057583671868 & -0.608761429008720 & -1.000000000000000
+            \end{matrix}\right]\\
+        \end{gather*}
+        We also computed the values for (c) from exercise 2, but found inconsistencies leaving us suspect with the
+        algorithm or its implementations.
+        That said, the blog had some salient points about how these decompositions are necessarily approximate
+        because of round off error and depending on how close to colinear our columns are we
 
         % Problem 4
-        \textbf{4.}
+        \textbf{Exercise 4.} As specified in the guided lab we are working with the fact that for solving a system
+        of lienar equations we can use the following breakdown because of our $QR$-decomposition:
+        \begin{eqnarray*}
+            \centering
+            Ax & = & b \\
+            QRx & = & b\\
+            Q^{\top}QRx & = & Q^{\top}b \\
+            Rx  & = & Q^{\top}b
+        \end{eqnarray*}
+        So for us to effectively solve our equations we have two mechanisms, the first being the decomposition,
+        the second being solving the upper triangular matrix problem. So our solution which we have in files
+        \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/problem4.m}{problem4.m}, and
+        \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/qrSolve.m}{qrSolve.m}.
 
+        The interesting bit is the implementation of ``qrSolve.m'' which follows as:
+        \begin{tiny}
+        \begin{verbatim}
+function x = qrSolve(Q, R, b)
+    % x = qrSolve(Q, R, b)
+    % Q - an n by n matrix that is the left hand side of a QR decomposition
+    % R - an n by n matrix that is the right hand side of the QR
+    % b - the vector on the right hand side of our equation Xx=b or QRx = b
+    % The goal here is to solve our linear set of equations relying upon a
+    % QR decomposition. This is equivalent to writing an algorithm
+    % for solving an upper triangular equation because our equation is also
+    % seen as Q'QRx = Q'b => Rx = Q'b
+    % by Rob Tompkins, 20260215
+    n = length(b);
+    V = Q'*b;
+    x = zeros(n,1);
+    x(n) = V(n)/R(n,n);
+    for k=n-1:-1:1
+        x(k) = (V(k) - R(k, k+1:n) * x(k+1:n)) / R(k, k);
+    end
+end
+        \end{verbatim}
+        \end{tiny}
 
+        A quick run of the following code (which was given by the problem)
+        \begin{tiny}
+        \begin{verbatim}
+n=7;
+A=magic(n);
+x=[1:n]';
+b=A*x;
+[Q,R]=gs_factor(A);
+x1 = qrSolve(Q,R,b);
+norm(x - x1)
+        \end{verbatim}
+        \end{tiny}
+        yields the result that $\lVert x - x_1 \lVert = 4.111978925869794\times 10^{-14}$ effectively zero so our answer
+        does work.
+
+        \qquad\\
+        % Exercise 5
+        \textbf{Exercise 5.}
     \end{onehalfspace}
 \end{document}
