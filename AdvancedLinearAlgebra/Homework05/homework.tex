@@ -1,0 +1,87 @@
+%! Author = chtompki
+%! Date = 1/14/26
+% Example LaTeX document for GP111 - note % sign indicates a comment
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\title{Advanced Linear Algebra\\Homework 5}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+
+        % Problem P.3.1
+        \noindent\textbf{P.3.1} Let $X = [X_1 X_2]\in\mathbf{M}_{m\times n}$ in which $X_1 \in\mathbf{M}_{m\times n_1}$
+        $X_2 \in\mathbf{M}_{m\times n_2}$, and $n_1 + n_2 = n$. Compute $X^\top X$ and $XX^\top$.
+        \begin{proof}
+            Sol
+        \end{proof}
+
+        % Problem P.3.12
+        \noindent\textbf{P.3.12} Compute
+        \begin{displaymath}
+            \text{det}\left[\begin{matrix}
+                0 & 0 & 0 & 1 & 4 & 6\\
+                0 & 0 & 0 & 0 & 2 & 5\\
+                0 & 0 & 0 & 0 & 0 & 3\\
+                3 & 5 & 6 & 0 & 0 & 0\\
+                0 & 2 & 4 & 0 & 0 & 0\\
+                0 & 0 & 1 & 0 & 0 & 0
+            \end{matrix}\right]
+        \end{displaymath}
+        \begin{solution}
+            Sol
+        \end{solution}
+
+        % Problem P.3.26
+        \noindent\textbf{P.3.26} Let $A,B\in\mathbf{M}_{m\times n}$ and suppose that $r = \text{rank}(A)\ge 1$.
+        Show that the following are equivalent:
+        \begin{enumerate}[label=(\alph*)]
+            \item $\text{col}(A) = \text{col}(B)$.
+            \item There are full rank matrices $X\in\mathbf{M}_{m\times r}$ and $Y,Z\in\]mathbf{M}_{r\times n}$ such that
+                  $A=XY$ and $B=XZ$.
+            \item There is an invertible $S\in\mathbf{M}_{n}$ such that $B=AS$.
+        \end{enumerate}
+        \emph{Hint:} If $A=XY$ is a full-rank factorization, then $A=[X 0_{n\times(n-r)}]W$, in which
+        $W=\left[\begin{matrix}Y_1 \\ Y_2\end{matrix}\right]\in\mathbf{M}_n$ is invertible.
+        \begin{proof}
+            Sol
+        \end{proof}
+
+        % Problem P.3.27
+        \noindent\textbf{P.3.27} Let $A,C\in\mathbf{M}_m$ and $B,D\in\mathbf{M}_n$.
+        Show that there is an invertible $Z\in\mathbf{M}_{m+n}$ such that $A\oplus B = (C\oplus D)Z$ if and only if
+        there are invertible $X\in\mathbf{M}_m$ and $Y\in\mathbf{M}_n$ such that $A=CX$ and $B=DY$.
+        \begin{proof}
+            Sol
+        \end{proof}
+
+        % Problem P.3.29
+        \noindent\textbf{P.3.29} Let $A,B\in\mathbf{M}_{m\times n}$ and suppose there is a $X\in\mathbf{M}_n$ such that
+        $A=BX$.
+        If $\text{rank}(A)=n$ show that $\text{rank}(B)=n$ and $X$ is invertible.
+        What can you say about the converse?
+        \begin{proof}
+            Sol
+        \end{proof}
+
+    \end{onehalfspace}
+\end{document}
