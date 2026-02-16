@@ -249,6 +249,7 @@ end
         That said, the blog had some salient points about how these decompositions are necessarily approximate
         because of round off error and depending on how close to colinear our columns are we
 
+        \qquad\\
         % Problem 4
         \textbf{Exercise 4.} As specified in the guided lab we are working with the fact that for solving a system
         of lienar equations we can use the following breakdown because of our $QR$-decomposition:
@@ -305,6 +306,45 @@ norm(x - x1)
 
         \qquad\\
         % Exercise 5
-        \textbf{Exercise 5.}
+        \textbf{Exercise 5.} Generally we are concerned with the decomposition of
+        $A\in\mathbf{M}_{m\times n}(\mathbb{C})$ into three matrices $U$, $S$, and $V$ such that
+        \begin{displaymath}
+            A = USV^*
+        \end{displaymath}
+        where $U\in\mathbf{M}_{m\times m}(\mathbb{C})$ with $U^* U=UU^*=I_m$ and $V\in\mathbf{M}_{n\times n}(\mathbb{C})$
+        with $V^* V = VV^* = I_n$ and $S$ be an $m\times n$ matrix with
+        \begin{displaymath}
+            S = [s_{kl}]
+            \begin{cases}
+                \sigma_k & \text{ for } k = l\\
+                0 & \text{ for } k \neq l
+            \end{cases}
+        \end{displaymath}
+        with $\sigma_k \ge \sigma_{k-1}$ for $k=2,\ldots,r$.
+        The number $r$ is the rank of $A$ and $r\le\text{min}\{m,n\}$.
+        Note that the singular values $\sigma_k$ are positive real numbers and they are the eigenvalues of the
+        hermitian matrix $A^* A$.
+        Now this curiously provides us a mechanism for ``solving'' the equation $Ax=b$ despite the fact that $A$ is not
+        a square matrix.
+        Before we begin we want to define the following matrix $S^+$
+        \begin{displaymath}
+            S^+ = [s_{kl}]^+ =
+            \begin{cases}
+                \frac{1}{\sigma_k} & \text{ for } k = l\\
+                0 & \text{ for } k \neq l.
+            \end{cases}
+        \end{displaymath}
+        We can then proceed with the following algebraic manipulation to solve for $x$ in $Ax=b$
+        \begin{eqnarray*}
+            Ax  & = & b \\
+            USV^* x & =  & b \\
+            U^* USV^* x & = & U^* b\\
+            SV^* x & = & U^* b\\
+            S^+ SV^* x & = & S^+ U^* b\\
+            V^* x & = & S^+ U^* b\\
+            VV^* x & = & VS^+ U^* b\\
+            x & = & VS^+ U^* b.
+        \end{eqnarray*}
+        So we now have a kind of solution for $x$.
     \end{onehalfspace}
 \end{document}
