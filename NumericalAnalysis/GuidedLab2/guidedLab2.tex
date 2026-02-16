@@ -346,5 +346,80 @@ norm(x - x1)
             x & = & VS^+ U^* b.
         \end{eqnarray*}
         So we now have a kind of solution for $x$.
+
+        \qquad\\
+        % Exercise 6
+        \textbf{Exercise 6.} We have been given the linked file
+        \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/M515GL2ex6gh.m}{M515GL2ex6gh.m}
+        for the purposes of computing all the different pieces of the exercise we used the following code:
+        \begin{tiny}
+        \begin{verbatim}
+%%
+rgbGH=imread('GraceHopper.jpg');
+figure();
+image(rgbGH), axis image;  %plot color image
+
+bwGH=rgb2gray(rgbGH); %convert to grayscale
+imGH=double(bwGH); %convert from unsigned integers to double for calculutions
+
+
+%plt grayscale image
+figure();
+colormap(gray(256));
+image(imGH);
+daspect([1 1 1]) %this preserves aspect ratio, could also use "axis image"
+title('Original');
+
+
+%Compute singular value decomposition
+[U S V]=svd(imGH);
+
+%plot singular values on semilog scale.
+%Notice how quickly the magnitude drops.
+figure;
+semilogy(diag(S))
+ylabel('Singular Values')
+xlabel('n')
+
+
+%pick number of singular values to use for reconstructing image
+Nsvals=[200, 100, 50, 25, 10];
+
+%plot "compressed" images by only include the largest ns singular values
+for jj=1:length(Nsvals)
+    ns=Nsvals(jj);
+
+    imNs=U(:,1:ns)*S(1:ns,1:ns)*V(:,1:ns)';
+
+    figure();
+    colormap(gray(256));
+    image(imNs);
+    daspect([1 1 1])
+    title([num2str(ns)  ' singular values']);
+
+end
+        \end{verbatim}
+        \end{tiny}
+
+        Running this code on the image, stored in our repo, ``GraceHopper.jpg'', when we had only 25 singular
+        values we resulted in the following image compression (see Figure \ref{figure1})
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.4]{exercise6figure1.png}
+            \caption{SLT Compression of the GraceHopper.jpg image with 25 singular values}
+            \label{figure1}
+        \end{figure}
+
+        We also got a semi-log plot of our singular values with respect to $n$, given in Figure \ref{figure2}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.4]{exercise6figure2.png}
+            \caption{Semi-log plot of our singular values}
+            \label{figure2}
+        \end{figure}
+
+
     \end{onehalfspace}
 \end{document}
