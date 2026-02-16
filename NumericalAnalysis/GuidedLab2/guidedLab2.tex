@@ -349,7 +349,16 @@ norm(x - x1)
 
         \qquad\\
         % Exercise 6
-        \textbf{Exercise 6.} We have been given the linked file
+        \textbf{Exercise 6.} Our goal was to take the photo in Figure \ref{figureHopper} and decompose it using SVD.
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.4]{GraceHopper.jpg}
+            \caption{Photo of Grace Hopper to be used as a matrix}
+            \label{figureHopper}
+        \end{figure}
+
+        We have been given the linked file
         \href{https://github.com/chtompki/MathSpring2026/blob/main/NumericalAnalysis/GuidedLab2/M515GL2ex6gh.m}{M515GL2ex6gh.m}
         for the purposes of computing all the different pieces of the exercise we used the following code:
         \begin{tiny}
@@ -407,7 +416,7 @@ end
         \begin{figure}[!ht]
             \centering
             \includegraphics[scale=0.4]{exercise6figure1.png}
-            \caption{SLT Compression of the GraceHopper.jpg image with 25 singular values}
+            \caption{SVD Compression of the GraceHopper.jpg image with 25 singular values}
             \label{figure1}
         \end{figure}
 
@@ -420,6 +429,28 @@ end
             \label{figure2}
         \end{figure}
 
-
+        \qquad\\
+        % Exercise 7
+        \textbf{Exercise 7.} We conducted a similar study as in exercise 6, but instead we used the photo in Figure
+        \ref{figureGreatFalls}.
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.25]{GreatFalls2.jpg}
+            \caption{An arbitrary photo for SVD decomposition}
+            \label{figureGreatFalls}
+        \end{figure}
+        This yielded the following figures \ref{ex7fig1} and \ref{ex7fig2}.
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.4]{exercise7figure1.png}
+            \caption{SVD Compression of the photo from Figure \ref{figureGreatFalls} image with 50 singular values}
+            \label{ex7fig1}
+        \end{figure}
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.4]{exercise7figure2.png}
+            \caption{Semi-log plot of our singular values from the waterfall photo}
+            \label{ex7fig2}
+        \end{figure}
     \end{onehalfspace}
 \end{document}
