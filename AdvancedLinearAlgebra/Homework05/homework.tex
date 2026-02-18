@@ -29,11 +29,22 @@
     \begin{onehalfspace}
 
         % Problem P.3.1
-        \noindent\textbf{P.3.1} Let $X = [X_1 X_2]\in\mathbf{M}_{m\times n}$ in which $X_1 \in\mathbf{M}_{m\times n_1}$
+        \noindent\textbf{P.3.1} Let $X = [\begin{matrix}X_1 & X_2\end{matrix}]\in\mathbf{M}_{m\times n}$ in which $X_1 \in\mathbf{M}_{m\times n_1}$
         $X_2 \in\mathbf{M}_{m\times n_2}$, and $n_1 + n_2 = n$. Compute $X^\top X$ and $XX^\top$.
-        \begin{proof}
-            Sol
-        \end{proof}
+        \begin{solution}
+            We begin by computing $X X^{\top}$:
+            \begin{displaymath}
+                X X^{\top} = \left[\begin{matrix}X_1 & X_2\end{matrix}\right] \left[\begin{matrix}X_1^\top \\ X_2^\top\end{matrix}\right] = X_1 X_1^{\top} + X_2 X_2^{\top}.
+            \end{displaymath}
+            Now compute the opposite order $X^\top X$ as
+            \begin{eqnarray*}
+                X^{\top} X & = & \left[\begin{matrix}X_1^\top \\ X_2^\top\end{matrix}\right] \left[\begin{matrix}X_1 & X_2\end{matrix}\right] \\
+                 & = & \left[\begin{matrix}
+                                 X_1^{\top} X_1 & X_1^{\top} X_2\\
+                                 X_2^{\top} X_1 & X_2^{\top} X_2
+                \end{matrix}\right].
+            \end{eqnarray*}
+        \end{solution}
 
         % Problem P.3.12
         \noindent\textbf{P.3.12} Compute
@@ -48,7 +59,31 @@
             \end{matrix}\right]
         \end{displaymath}
         \begin{solution}
-            Sol
+            Before computing the determinant we do some row permutations.
+            Each time we do a row permutation we have to multiply our determinant by $-1$.
+            Let $r_i$ represent a row.
+            Our goal is to take our matrix and make it upper triangular, so that all we need do is multiply the values
+            on the main diagonal together to compute the determinant.
+            The row permutations follow as $r_1 \leftrightarrow r_4$, $r_2 \leftrightarrow r_5$, and $r_3 \leftrightarrow r_6$.
+            Thus, we get
+            \begin{displaymath}
+                \text{det}\left[\begin{matrix}
+                                    0 & 0 & 0 & 1 & 4 & 6\\
+                                    0 & 0 & 0 & 0 & 2 & 5\\
+                                    0 & 0 & 0 & 0 & 0 & 3\\
+                                    3 & 5 & 6 & 0 & 0 & 0\\
+                                    0 & 2 & 4 & 0 & 0 & 0\\
+                                    0 & 0 & 1 & 0 & 0 & 0
+                \end{matrix}\right] =
+                -\text{det}\left[\begin{matrix}
+                                    3 & 5 & 6 & 0 & 0 & 0\\
+                                    0 & 2 & 4 & 0 & 0 & 0\\
+                                    0 & 0 & 1 & 0 & 0 & 0\\
+                                    0 & 0 & 0 & 1 & 4 & 6\\
+                                    0 & 0 & 0 & 0 & 2 & 5\\
+                                    0 & 0 & 0 & 0 & 0 & 3
+                \end{matrix}\right] = -36
+            \end{displaymath}
         \end{solution}
 
         % Problem P.3.26
@@ -60,10 +95,52 @@
                   $A=XY$ and $B=XZ$.
             \item There is an invertible $S\in\mathbf{M}_{n}$ such that $B=AS$.
         \end{enumerate}
-        \emph{Hint:} If $A=XY$ is a full-rank factorization, then $A=[X 0_{n\times(n-r)}]W$, in which
+        \emph{Hint:} If $A=XY$ is a full-rank factorization, then $A=[\begin{matrix}X & 0_{n\times(n-r)}\end{matrix}]W$, in which
         $W=\left[\begin{matrix}Y_1 \\ Y_2\end{matrix}\right]\in\mathbf{M}_n$ is invertible.
         \begin{proof}
-            Sol
+            We will proceed by showing (b) $\Rightarrow$ (c) $\Rightarrow$ (a) $\Rightarrow$ (b) which by circular implication
+            completes the equivalence of the three statements.
+
+            (b) $\Rightarrow$ (c): Let $A=XY$ be a full rank factorization.
+            Then,
+            \begin{displaymath}
+                A = \left[\begin{matrix}X & 0_{n\times(n-r)}\end{matrix}\right]\left[\begin{matrix}Y\\ Y_2\end{matrix}\right]
+                \qquad\text{with}\qquad\left[\begin{matrix}Y\\ Y_2\end{matrix}\right]=W\in\mathbf{M}_n.
+            \end{displaymath}
+            And, $W$ is invertible. But, then $n-r = 0$ and we see that $X,Y\in\mathbf{M}_n$ with $Y$ invertible.
+            We also have $B=XZ$ as a full rank factorization, so by a similar argument $Z$ is invertible.
+            Now substitute in $X = AY^{-1}$ into our $B$ equation and we get
+            \begin{displaymath}
+                B = AY^{-1}Z,
+            \end{displaymath}
+            and $Y^{-1}Z$ is invertible because both $Y$ and $Z$ are invertible.
+            So if we let $S=Y^{-1}Z$ from our (c) statement, we are done.
+
+            (c) $\Rightarrow$ (a): Assume $B=AS$ with $S\in\mathbf{M}_n$ invertible.
+            We know that $\text{col}(AS)\subseteq\text{col}(A)$.
+            So, $\text{col}(B)\subseteq\text{col}(A)$.
+            Similarly, since $S$ is invertible $A = BS^{-1}$, so $\text{col}(A)\subseteq\text{col}(B)$.
+            Now because $\text{col}(B)\subseteq\text{col}(A)$ and $\text{col}(A)\subseteq\text{col}(B)$, we see that
+            $\text{col}(A)=\text{col}(B)$, and we are done.
+
+            (a) $\Rightarrow$ (b): Assume that $\text{col}(A)=\text{col}(B)$, and let $A = \left[\begin{matrix}X & P\end{matrix}\right]$
+            with columns of $X$ being a basis for $\text{col}(A)$.
+            Notice $\text{col}(X) = \text{col}(A)$ woth dimension $r$.
+            Each column of $A$ is a linear combination of columns of $X$, so we can write $A=XY$ for some
+            $Y\in\mathbf{M}_{r\times n}$.
+            Now our goal is to find a $Z\in\mathbf{M}_{r\times n}$ for $B$ similarly so that $B=XZ$.
+            Since $\text{rank}(A)=r$ and $A=XY$ we have
+            \begin{displaymath}
+                r = \text{rank}(XY) \le \text{rank}(Y) \le r \quad\Rightarrow\quad \text{rank}(Y)=r.
+            \end{displaymath}
+            Which is full row rank for $XY$.
+            Similarly $\text{rank}(B) = r$ by $\text{col}(A)=\text{col}(B)$ which gives us
+            \begin{displaymath}
+                r = \text{rank}(XZ) \le \text{rank}(Z) \le r \quad\Rightarrow\quad \text{rank}(Z)=r.
+            \end{displaymath}
+            So $B=XZ$ has full row rank, and we are done.
+
+            Lastly we notice that (b) $\Rightarrow$ (c) $\Rightarrow$ (a) $\Rightarrow$ (b) so our equivalence holds.
         \end{proof}
 
         % Problem P.3.27
@@ -71,7 +148,7 @@
         Show that there is an invertible $Z\in\mathbf{M}_{m+n}$ such that $A\oplus B = (C\oplus D)Z$ if and only if
         there are invertible $X\in\mathbf{M}_m$ and $Y\in\mathbf{M}_n$ such that $A=CX$ and $B=DY$.
         \begin{proof}
-            Sol
+            ($\Leftarrow$)
         \end{proof}
 
         % Problem P.3.29
@@ -80,7 +157,22 @@
         If $\text{rank}(A)=n$ show that $\text{rank}(B)=n$ and $X$ is invertible.
         What can you say about the converse?
         \begin{proof}
-            Sol
+            Assume $A,B\in\mathbf{M}_{m\times n}$, $X\in\mathbf{M}_n$, and $\text{rank}(A)=n$.
+            Write
+            \begin{displaymath}
+                A = \left[\begin{matrix}C \\ P\end{matrix}\right] \quad\text{where}\quad C\in\textbf{M}_n,
+            \end{displaymath}
+            with $P\in\mathbf{M}_{(m-n)\times n}$.
+            But because $\text{rank}(A) = n$, $m-n=0$ or $m=n$.
+            So now we have that $BX\in\mathbf{M}_n$, and we know that $X\in\mathbf{M}_n$ by our assumptions, so $
+            B\in\mathbf{M}_n$.
+            Now we have that $A=BX$ is a full rank factorization of $A$, so $X$ must be invertible by problem 3.26.
+            Furthermore, we can write $B=AX^{-1}$ with $AX^{-1}\in\mathbf{M}_n$, so $B\in\mathbf{M}_n$.
+            Given that we have $\text{rank}(A) = n$, and $\text{rank}(X^{-1})=n$ (by invertibility) we must have
+            $\text{rank}(B) = n$ and we are done.
+
+            Regarding the converse it's true, but we leave it as an exercise for the reader :-p (note, it's an
+            analogous proof to 3.26).
         \end{proof}
 
     \end{onehalfspace}
