@@ -148,7 +148,80 @@
         Show that there is an invertible $Z\in\mathbf{M}_{m+n}$ such that $A\oplus B = (C\oplus D)Z$ if and only if
         there are invertible $X\in\mathbf{M}_m$ and $Y\in\mathbf{M}_n$ such that $A=CX$ and $B=DY$.
         \begin{proof}
-            ($\Leftarrow$)
+            We begin by noting that we can write the following
+            \begin{displaymath}
+                A\oplus B = \left[\begin{matrix}
+                                      A & 0\\
+                                      0 & B
+                \end{matrix}\right]
+                \quad\text{and}\quad
+                C\oplus D = \left[\begin{matrix}
+                                      C & 0\\
+                                      0 & D
+                \end{matrix}\right]
+            \end{displaymath}
+            ($\Leftarrow$) Assume that we have $Z$ invertible in the following fashion
+            \begin{displaymath}
+                Z = X\oplus Y = \left[\begin{matrix}
+                                          X & 0\\
+                                          0 & Y
+                \end{matrix}\right].
+            \end{displaymath}
+            We then expand in the following fashion
+            \begin{displaymath}
+                (C\oplus D)Z =
+                \left[\begin{matrix}
+                          C & 0\\
+                          0 & D
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          X & 0\\
+                          0 & Y
+                \end{matrix}\right] =
+                \left[\begin{matrix}
+                                         CX & 0\\
+                                         0 & DY
+                \end{matrix}\right] =
+                \left[\begin{matrix}
+                                         A & 0\\
+                                         0 & B
+            \end{matrix}\right] = A\oplus B.
+            \end{displaymath}
+
+            ($\Rightarrow$) Assume $(C\oplus D)Z = A\oplus B$ with $Z$ invertible as stated in the problem statement.
+            Notice that we can write
+            \begin{displaymath}
+                Z = \left[\begin{matrix}
+                              Z_{11} & Z_{12}\\
+                              Z_{21} & Z_{22}
+                \end{matrix}\right].
+            \end{displaymath}
+            with $Z_{11}\in\mathbf{M}_m$, $Z_{22}\in\mathbf{M}_{n}$, $Z_{12}\in\mathbf{M}_{m\times n}$,
+            $Z_{21}\in\mathbf{M}_{n\times m}$.
+            So we can expand in the following manner
+            \begin{displaymath}
+                (C\oplus D)Z =
+                \left[\begin{matrix}
+                    C & 0\\
+                    0 & D
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                    Z_{11} & Z_{12}\\
+                    Z_{21} & Z_{22}
+                \end{matrix}\right] =
+                \left[\begin{matrix}
+                          CZ_{11} & CZ_{12}\\
+                          DZ_{21} & DZ_{22}
+                \end{matrix}\right] =
+                \left[\begin{matrix}
+                          A & 0\\
+                          0 & B
+                \end{matrix}\right] = A\oplus B.
+            \end{displaymath}
+            So we quickly can see that $Z_{12} = 0$ and $Z_{21} = 0$.
+            Furthermore, we can see that $A = CZ_{11}$ and $B=DZ_{22}$.
+            Because we have that $Z$ is block diagonal and invertible, we have that $Z_{11}$ and $Z_{22}$ are invertible.
+            So with regards to the problem statement we can set $Z_{11} = X$ and $Z_{22} = Y$, and we are done.
         \end{proof}
 
         % Problem P.3.29
