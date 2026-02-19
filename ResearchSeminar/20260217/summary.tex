@@ -139,5 +139,56 @@
         is as easy as plugging them into $f$, a polynomial-time task.
         Oddly, every \emph{known} $\mathbf{NP}$-hard problem reduces to SAT, and we call these problems
         $\mathbf{NP}$-complete.
+        Four classical examples of problems that are $NP$-complete are: the Hamiltonian Path problem, 3SAT (the boolean
+        satisfaction problem factored into 3 blocs of ands or'd together or vice versa), the Independent Set Problem,
+        and the Travelling Salesman Problem.
+
+        We went over the definition of the Independent Set problem (which personally I had not seen before and found
+        quite interesting).
+        We consider graphs of the form given in Figure \ref{figureIndepSet}, and the following definition.
+        \begin{definition}
+            A subset of vertices $S\subseteq V$ in a graph $G = (V,E)$ is an \emph{independent set} for all $u,v\in S$
+            if the edge $\{u,v\}\notin E$.
+        \end{definition}
+        The decision problem is stated as: given a graph $G$ and $k\in\mathbb{Z}$, does $G$ contain an independent set
+        of size$\;\ge k$?
+
+        \begin{figure}
+            \centering
+            \begin{tikzpicture}[line width=0.9pt, scale=1,
+                vertex/.style={circle, fill=black, inner sep=1.6pt}
+            ]
+
+% --- coordinates (tweak if you want different proportions) ---
+                \coordinate (T)  at (0,3.6);      % top junction of the Y
+                \coordinate (L1) at (-1.6,5.2);   % top-left end
+                \coordinate (R1) at ( 1.6,5.2);   % top-right end
+
+                \coordinate (M)  at (0,1.8);      % middle junction on the vertical
+                \coordinate (A)  at (0,0.9);      % triangle apex (same as M? no, small drop)
+
+                \coordinate (BL) at (-1.7,-0.4);  % triangle base left
+                \coordinate (BR) at ( 1.7,-0.4);  % triangle base right (also junction to tail)
+                \coordinate (D)  at ( 1.7,-2.6);  % bottom of the tail
+
+% --- edges ---
+                \draw (L1)--(T)--(R1);   % top Y arms
+                \draw (T)--(M);          % vertical down from top junction
+
+                \draw (M)--(BL)--(BR)--cycle; % triangle (M is the apex)
+                \draw (BR)--(D);              % tail down from bottom-right vertex
+
+% --- intersection points (vertices) ---
+                \node[vertex] at (T)  {};
+                \node[vertex] at (M)  {};
+                \node[vertex] at (BL) {};
+                \node[vertex] at (BR) {};
+
+            \end{tikzpicture}
+            \caption{A graph}
+            \label{figureIndepSet}
+        \end{figure}
+
+        \section{Quantum Computing}
     \end{onehalfspace}
 \end{document}
