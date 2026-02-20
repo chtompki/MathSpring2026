@@ -20,6 +20,9 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
+\theoremstyle{question}
+\newtheorem{question}{Question}
+
 \title{Seminar Summary:\\February 17, 2026 - Marco Aldi\\NP Problems and their Quantum Analogues}
 \author{Rob Tompkins}
 \date{\today}
@@ -73,7 +76,9 @@
             (with respect to the language $L$ and the machine $M$).
         \end{definition}
 
-        \noindent\textbf{Question.} Does $\mathbf{P} = \mathbf{NP}$?\\
+        \begin{question}
+            Does $\mathbf{P} = \mathbf{NP}$?
+        \end{question}
 
         Over the years multiple different fields have all made their own progress on the problem.
         Figure \ref{figureFields} gives us a venn-diagram of some of the more important fields involved in
@@ -189,6 +194,55 @@
             \label{figureIndepSet}
         \end{figure}
 
+        \section{The RSA Algorithm} (1977, Rivest–Shamir–Adleman)
+        We briefly went over the RSA algorithm which is one of the most widely used algorithms on the planet and
+        furthermore it's used for transmitting sensitive data.
+        Essentially (without the modular arithmetic work), it's a public private key process where
+        the private key is two large prime numbers $p,q$ and the public key is $pq=n$ their product.
+        On the other hand, it is still not known whether integer factorization is $\mathbf{NP}$-hard, so we have the whole of
+        cryptography (yes mainly talking about https).
+        Thought, there has been found to be a polynomial time algorithm for integer factorization in the quantum
+        computing realm.
+        That said, by 1994 because of the work of Peter Shor, we got an algorithm for more quickly factorizing integers
+
         \section{Quantum Computing}
+        So what is a Quantum Computer?
+        Well, effectively it works in the same manner as a turing machine except instead of having a finite set of
+        states for the machine and only $\{0,1\}$ as the alphabet for our tape, we have that both the set of states
+        and the tape alphabet are Hilbert spaces with the tape alphabet being a Hilbert space where the value on the tape
+        is given by
+        \begin{displaymath}
+            |\psi\rangle = \alpha |0 \rangle + \beta |1 \rangle,
+        \end{displaymath}
+        a linear combination of these two bipolar states represented on the blok sphere which we refer to as a
+        \emph{qubit}.
+
+        Regarding quantum computing, we know a few things: first thing is that we have a quantum analogue to the
+        boolean satisfaction problem, which is referred to as the Quantum Merlin Arthur complexity class or QMA for
+        short.
+        We naturally start building a list comparing quantum computing and it's natural analogues
+        \\
+        \begin{center}
+        \begin{tabular}{c|c}
+            \text{Classical} & \text{Quantum} \\
+            \hline
+            $\{0,1\}$ & $\alpha|0\rangle + \beta|1\rangle$ \\
+            \hline
+            $\mathbf{NP}$ & $\mathbf{QMA}$ \\
+            \hline
+            \vdots & \vdots
+        \end{tabular}
+        \end{center}
+        One might naturally want to extend this table to include the Karp list.
+        A reasonable attempt at creating a mechanic or process by which to extend this list began in 2004 with
+        the work of Dani, Meera, and Mainkar.
+        The idea is to find a linear transformation $\mathcal{L}$ from the graph space to the 2-step nilpotent Lie algebra space
+        such that isomorphism is preserved.
+        Note that the graph space is generally fully embedded within the Lie algebra space.
+
+        Lastly and most importantly in 2024, a linear transformation $\mathcal{L}$ was found and defined for the
+        independent set problem.
+        And, Dr. Aldi along with Gharibian and Rudolph proved that there exists a quantum
+        analog for the independent set problem, the first on the Karp list to make it over into the quantum space.
     \end{onehalfspace}
 \end{document}
