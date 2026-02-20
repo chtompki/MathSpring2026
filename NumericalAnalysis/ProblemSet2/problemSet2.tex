@@ -12,6 +12,7 @@
 \usepackage{enumitem}
 \usepackage{setspace}
 \usepackage{graphicx}
+\usepackage{hyperref}
 
 \newenvironment{solution}
 {\begin{proof}[Solution]}
@@ -31,6 +32,8 @@
     \begin{onehalfspace}
         We begin by noting that all of the files referenced in this document are available at: \\
         \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet2}
+
+        \quad\\
         % Problem 1
         \textbf{1.} Use the command \texttt{magic(n)}, for $n=100,200,300,\ldots,10^4$ to construct the magic square
         matrices of order $n$.
@@ -38,6 +41,243 @@
         or diagonals are identical.
         Then compute their determinants by the command \texttt{det()}.
         Use the command \texttt{cputime} to get the CPU time that is needed fore this computation.
-        \bf{Be patient, it may take around 10 minutes to compute these determinants.}
+        \textbf{Be patient, it may take around 10 minutes to compute these determinants.}
+
+        Find a constant $C$ such that the computation time $t_n$ scales approximately as $t_n ~ Cn^3$.
+        Plot your data and approximate scaling using \texttt{semilogy()}.
+        Think back to the methods you learned for computing determinants in your Linear Algebra class.
+        What method do you suspect Matlab is using and why?
+        How can you be sure it isn't using cofactor expansion?
+        \begin{solution}
+            We begin by noticing that for any $A=\texttt{magic(n)}$ where $n$ is even, $\text{det}(A)=0$.
+            So we are less concerned with keeping the valued of the determinants, and are more interested
+            in the number of seconds that it takes to calculate the $i^{\text{th}}$-determinant.
+            A sample of the code
+            (given in file
+            \underline{\href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet2/ps2prob1.m}{ps2prob1.m}})
+            that we are using follows as:
+            \begin{verbatim}
+determinants=zeros(1,100);
+cpuTime=zeros(1,100);
+for n=100:100:10000
+    A = magic(n);
+    tstart = cputime;
+    det(A);
+    cpuTime(n/100) = cputime - tstart;
+end
+plotN=1:100;
+figure;hold on; semilogyi(plotN, 0.000008.*plotN.^3, '--x', plotN, cpuTime, '-x');
+xlabel('Matrix Size (n/100)');
+ylabel('Value');
+legend('Cn^3','CpuTime');
+title('Determinants and CPU Time vs. Matrix Size');
+            \end{verbatim}
+            Notice that around the determinant calculation we are taking the system time and doing a subtraction to get the
+            duration of the determinant algorithm.
+            The figure that we get from plotting the cputime follows in Figure \ref{problem1figure1}
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.4]{problem1figure1.png}
+                \caption{Determinant Runtime by Matrix Size}
+                \label{problem1figure1}
+            \end{figure}
+            Lastly we notice that for $C=2.5\times 10^{-5}$, which we found by fiddling around with the algorithm to get the value
+            using the bisector method by hand so to speak.
+        \end{solution}
+
+        \quad\\
+        % Problem 2
+        \noindent\textbf{2.} Consider the matrix $A = \left(\begin{matrix}201 & 199\\199 & 201\end{matrix}\right)$.
+        \begin{enumerate}[label=(\alph*)]
+            \item Compute the spectral radius of $\rho(A)$.
+            \item Computer the condition number $K(A)$.
+                  You may choose any natural matrix norm, but be sure to specify which one you are using.
+            \item Assume some numerical method has been applied to obtain the approximate solution $\hat{x} = (-0.5,0.5)^\top$
+                  to the system $Ax = B$ for $b = (-2,2)^\top$.
+                  Use the residual $r=A\hat{x} - b$ and known inequalities to provide a bound on the norm of the
+                  relative error $\frac{\|\hat{x} - x\|}{\|x\|}$.
+            \item Find the exact solution to the above system (you may use any method you prefer, but show you work).,
+                  Compare the relative error estimate from above to the actual relative error.
+            \item In general, when can you expect the residual $r$ to provide a tight bound on the error?
+        \end{enumerate}
+        \begin{solution}
+            For the problem generally we'll use the $L_2$-norm.
+
+            (a) To compute the spectral radius $\rho(A)$, we go after the eigenvalues of $A$.
+            So, let's compute the characteristic polynomial.
+            \begin{displaymath}
+                p(t) = \left|\begin{matrix}
+                                 201-t & 199\\
+                                 199 & 201 -t
+                \end{matrix}\right| = t^2-402t-40401-39601 = t^2-402t+800.
+            \end{displaymath}
+            So we solve for $p(t)=0$, and we get the following roots $\lambda_1,\lambda_2$ from the quadratic formula:
+            \begin{displaymath}
+                \lambda_1,\lambda_2 = \frac{402\pm\sqrt{161604-3200}}{2} = \frac{402\pm 398}{2} = 2, 400.
+            \end{displaymath}
+            So for (a), our spectral radius follows as:
+            \begin{displaymath}
+                \rho(A) = \text{max}\{\lambda_1,\lambda_2\} = 400.
+            \end{displaymath}
+
+            (b) We'll continue to use the $L_2$-norm here. Notice that $A\in\text{symm}(\mathbb{R})$, so we know that
+            the eigenvalues $\lambda_1,\lambda_2$ set up as:
+            \begin{displaymath}
+                \|A\|_2 = 400 \quad\text{and}\quad \|A^{-1}\|_2 = \frac{1}{2}.
+            \end{displaymath}
+            So by definition of $K(A)$, we have
+            \begin{displaymath}
+                K_2(A) = \|A\|_2\|A^{-1}\|_2 = \frac{400}{2} = 200.
+            \end{displaymath}
+
+            (c) We start with some matrix multiplication to see what our vectors $\hat{x},b$ from the problem statement
+            give us. So we see that
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          201 & 199\\
+                          199 & 201
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          -0.5\\
+                          0.5
+                \end{matrix}\right]
+                =
+                \left[\begin{matrix}
+                          201(-0.5) + 199(0.5)\\
+                          199(-0.5) + 201(0.5)
+                \end{matrix}\right]
+                =
+                \left[\begin{matrix}
+                          -1\\
+                          1
+                \end{matrix}\right].
+            \end{displaymath}
+            So write the residual as
+            \begin{displaymath}
+                r = A\hat{x} - b =
+                \left[\begin{matrix}
+                          -1\\
+                          1
+                \end{matrix}\right] -
+                \left[\begin{matrix}
+                          -2\\
+                          2
+                \end{matrix}\right]
+                =
+                \left[\begin{matrix}
+                          1\\
+                          -1
+                \end{matrix}\right]
+            \end{displaymath}
+            So we let the error be $\hat{x}-x$.
+            Notice
+            \begin{displaymath}
+                r=A\hat{x} - b = A\hat{x} - Ax = A(\hat{x}-x).
+            \end{displaymath}
+            Also, we see that
+            \begin{displaymath}
+                \|\hat{x}-x\|\le\|A^{-1}\|\|r\|
+            \end{displaymath}
+        \end{solution}
+
+        \quad\\
+        % Problem 3
+        \noindent\textbf{3.} Consider the linear system $Ax=b$ with
+        \begin{displaymath}
+            A = \left[\begin{matrix}
+                          2 & -2 & 0\\
+                          \epsilon-2 & 2 & 0 \\
+                          0 & -1 & 3
+            \end{matrix}\right]
+        \end{displaymath}
+        \begin{enumerate}[label=(\alph*)]
+            \item Compute the $LU$ factorization of the given $A$ by hand using Gaussian Elimination, and show that the
+                  matrix $L$ has the element $\ell_{32}=-1/\epsilon$.
+            \item Compute the $LU$ factorization by hand using the Crout algorithm, and show the matrix $L$ has the
+                  element $\ell_{22}=\epsilon$ in this case.
+            \item Compute the condition number $K(A)$.
+                  You may use any norm you like, but be sure to specify which one you use.
+            \item Multiply $Ax$ for $x=[\begin{matrix}1 1 1\end{matrix}]^\top$ to find the corresponding $b$ for which
+                  $x=[\begin{matrix}1 1 1\end{matrix}]^\top$ is a solution to $Ax=b$.
+                  Your answer should depend upon $\epsilon$.
+                  For values $\epsilon=10^{-k},$ with $k=0,\ldots,9$ numerically implement the Crout method of $LU$
+                  decomposition to solve the system $Ax=b$.
+                  Compute the relative error as a function of $\epsilon$.
+                  Compare your results based on the Crout algorithm to results obtained using the build in
+                  \texttt{lu(A)} function.
+            \item Repeat the process above for $x=[\begin{matrix}\text{log}(2.5) & 1 & 1\end{matrix}]^\top$ for values
+                  $\epsilon=1/3\times 10^{-k}$, $k=0,\ldots,9$.
+                  Compare the relative error for this choice of $b$ to the previous case.
+                  Why didn't you see the impact of roundoff error in the previous case, but you do in this case?
+                  Discuss your numerical error results for this case in the context of theoretical error estimates
+                  based on your computation of the condition number $K(A)$.
+        \end{enumerate}
+        \begin{solution}
+        \end{solution}
+
+        \quad\\
+        % Problem 4
+        \noindent\textbf{4.} Consider the matrix as follows
+        \begin{displaymath}
+            A = \left[\begin{matrix}
+                          1 & 1+0.5\times 10^{-15} & 3\\
+                          2 & 2 & 20 \\
+                          3 & 6 & 4
+            \end{matrix}\right].
+        \end{displaymath}
+        Compute the $LU$ decomposition by Crout's method (without pivoting).
+        You may carry out the procedure in Matlab, but show your code and the output after iterating through each stage.
+        Compute the residual $R=A-LU$.
+        Compare the result to the residual for $LUP$ decomposition obtained with pivoting by using the Matlab command
+        \texttt{[L U] = lu(A)} and computing $R_P = PA-LU$.
+        \begin{solution}
+            sol
+        \end{solution}
+
+        \quad\\
+        % Problem 5
+        \noindent\textbf{5.} Consider the following matrix:
+        \begin{displaymath}
+            A = \left[\begin{matrix}
+                          1 & 1-\epsilon & 3\\
+                          2 & 2 & 2 \\
+                          3 & 6 & 4
+            \end{matrix}\right].
+        \end{displaymath}
+        \begin{enumerate}[label=(\alph*)]
+            \item Find the values of $\varepsilon$ for which $LU$ decomposition (without pivoting) is not possible.
+            \item Find the $LU$ decomposition for the value of $\varepsilon$ for which $A$ is singular.
+            \item What in the $LU$ decomposition signals that $A$ is singular for this case?
+        \end{enumerate}
+        \begin{solution}
+        \end{solution}
+
+        \quad\\
+        % Problem 6
+        \noindent\textbf{6.} Show that for a symmetric positive definite matrix $A$ we have $K_2(A^2)=(K_2(A))^2$.\\
+        \emph{Hint.} Make use of the relation between the minimum and maximum eigenvalues $\lambda_{min},\lambda_{max}$
+        and condition number $K_2(A)$ associated to the $L^2$ natrual matrix norm for a symmetrix positive definite
+        matrix A.
+        \begin{proof}
+        \end{proof}
+
+        \quad\\
+        % Problem 7
+        \noindent\textbf{7.} Prove that the following are symmetric positive definite matrices.
+        Implement the Cholesky decomposition algorithm and use it to compute the Cholesky decomposition for each.
+        \begin{displaymath}
+            A = \left[\begin{matrix}
+                          16 & -28 & 0\\
+                          -28 & 53 & 10 \\
+                          0 & 10 & 29
+            \end{matrix}\right],
+            \quad\text{ }\quad
+            B = \left[\begin{matrix}
+                          1 & -2 & 3 & -2\\
+                          -2 & 20 & -2 & 8\\
+                          3 & -2 & 11 & -5\\
+                          -2 & 8 & -5 & 9
+            \end{matrix}\right].
+        \end{displaymath}
     \end{onehalfspace}
 \end{document}
