@@ -341,25 +341,64 @@ title('Determinants and CPU Time vs. Matrix Size');
             \end{displaymath}
             which as stipulated has $\ell_{32}=-1/\epsilon$.
 
-            (b) Not much work needs to happen from the work above to get a Crout decomposition, simply migrate
-            the diagonal from the right hand side to the left hand side leaving $1$'s on the right's leading diagonal.
-            So let's write the last matrix from the Gaussian elimination problem:
+            (b) The Crout decomposition is an iterative process with a goal to result in the following decomposition
             \begin{displaymath}
-                \left[\begin{array}{ccc|ccc}
-                          1 & 0 & 0 & 2 & -2 & 0\\
-                          \frac{-\epsilon}{2}+1 & 1 & 0 & 0 & \epsilon & 0\\
-                          \frac{1}{2}-\frac{1}{\epsilon} & -\frac{1}{\epsilon} & 1 & 0 & 0 & 3
-                \end{array}\right],
+                \left[\begin{matrix}
+                          a_{11} & a_{12} & a_{13}\\
+                          a_{21} & a_{22} & a_{23}\\
+                          a_{31} & a_{32} & a_{33}
+                \end{matrix}\right] =
+                \left[\begin{matrix}
+                          \ell_{11} & 0 & 0 \\
+                          \ell_{21} & \ell_{22} & 0\\
+                          \ell_{31} & \ell_{32} & \ell_{33}
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1 & u_{12} & u_{13}\\
+                          0 & 1 & u_{23}\\
+                          0 & 0 & 1
+                \end{matrix}\right].
             \end{displaymath}
-            and let's perform $r_1:r_1/2$, $r_2:r_2/\epsilon$, and $r_3:r_3/3$.
-            This gives us,
+             which we do by approaching the matrix by its rows, moving from the top down.
+             We begin by having the following
             \begin{displaymath}
-                \left[\begin{array}{ccc|ccc}
-                          \frac{1}{2} & 0 & 0 & 1 & -1 & 0\\
-                          \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0 & 0 & 1 & 0\\
-                          \frac{1}{6}-\frac{1}{3\epsilon} & -\frac{1}{3\epsilon} & \frac{1}{3} & 0 & 0 & 1
-                \end{array}\right],
+                \ell_{11}=a_{11}=2\quad\text{and}\quad\ell_{21}=a_{21}=\epsilon-2\quad\text{and}\quad\ell_{31}=a_{31}=0.
             \end{displaymath}
+            Next we go after $\ell_{12}$ and $\ell_{13}$ for our $j=1$ step, in the following manner
+            \begin{displaymath}
+                \ell_{12} = \frac{a_{12}}{\ell_{12}} = -\frac{2}{2} = -1.
+                \ell_{13} = \frac{a_{13}}{\ell_{13}} = \frac{0}{2} = 0
+            \end{displaymath}
+            We then move to the $j=2$ step and compute $\ell_{22}$ and $\ell_{32}$
+            \begin{eqnarray*}
+                \ell_{22} & = & a_{22} - \ell_{21}u_{12} = 2 - (\epsilon - 2)(-1) = 2 + (\epsilon -2) = \epsilon\\
+                \ell_{32} & = & a_{32} - \ell_{31}u_{12} = -1 - 0(-1) = -1
+            \end{eqnarray*}
+            Lastly for $j=3$ we have
+            \begin{displaymath}
+                \ell_{33} = a_{33}-(\ell_{31}u_{13} + \ell_{32}u_{23}) = 3 - (0\cdot 0)
+            \end{displaymath}
+            So we see that
+            \begin{displaymath}
+                A = \left[\begin{matrix}
+                              1 & 0 & 0\\
+                              \frac{\epsilon-2}{2} & 1 0\\
+                              0 & -\frac{1}{\epsilon} & 1
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1 & 0 & 0\\
+                          \frac{\epsilon-2}{2} & 1 0\\
+                          0 & -\frac{1}{\epsilon} & 1
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          2 & -2 & 0\\
+                          0 & \epsilon & 0\\
+                          0 & 0 & 3
+                \end{matrix}\right]
+            \end{displaymath}
+            as the $LU$decomposition for the matrix.
+
+            (c)
         \end{solution}
 
         \quad\\
