@@ -254,6 +254,7 @@ title('Determinants and CPU Time vs. Matrix Size');
         \end{enumerate}
         \begin{solution}
             \emph{Whoops I did a full Gauss Jordan elimination and left it instead of deleting it.}
+            We begin with our augmented matrix:
             \begin{displaymath}
                 \left[\begin{array}{ccc|ccc}
                           2 & -2 & 0 & 1 & 0 & 0\\
@@ -311,8 +312,54 @@ title('Determinants and CPU Time vs. Matrix Size');
                 \end{array}\right].
             \end{displaymath}
             Well dang it, I wrote all that out and I know that it's not $LU$ decomposition.
-            We'll have another go, but I didn't want to erase that work either.
+            We'll have another go, see below.
 
+            (a) We begin with our augmented matrix with the identity on the left hand side:
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & 0 & 0 & 2 & -2 & 0\\
+                          0 & 1 & 0 & \epsilon-2 & 2 & 0\\
+                          0 & 0 & 1 & 0 & -1 & 3
+                \end{array}\right].
+            \end{displaymath}
+            We want to clear the element at $2\times 1$, so we perform the row operation $r_2:(-\epsilon/2 + 1)r_1 + r2$
+            which gives us
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & 0 & 0 & 2 & -2 & 0\\
+                          \frac{-\epsilon}{2}+1 & 1 & 0 & 0 & \epsilon & 0\\
+                          0 & 0 & 1 & 0 & -1 & 3
+                \end{array}\right].
+            \end{displaymath}
+            To finish off our $LU$ Gaussian factorization, we perform the row operation $r_3:(-1/\epsilon)r_2 + r_3$ as
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & 0 & 0 & 2 & -2 & 0\\
+                          \frac{-\epsilon}{2}+1 & 1 & 0 & 0 & \epsilon & 0\\
+                          \frac{1}{2}-\frac{1}{\epsilon} & -\frac{1}{\epsilon} & 1 & 0 & 0 & 3
+                \end{array}\right],
+            \end{displaymath}
+            which as stipulated has $\ell_{32}=-1/\epsilon$.
+
+            (b) Not much work needs to happen from the work above to get a Crout decomposition, simply migrate
+            the diagonal from the right hand side to the left hand side leaving $1$'s on the right's leading diagonal.
+            So let's write the last matrix from the Gaussian elimination problem:
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & 0 & 0 & 2 & -2 & 0\\
+                          \frac{-\epsilon}{2}+1 & 1 & 0 & 0 & \epsilon & 0\\
+                          \frac{1}{2}-\frac{1}{\epsilon} & -\frac{1}{\epsilon} & 1 & 0 & 0 & 3
+                \end{array}\right],
+            \end{displaymath}
+            and let's perform $r_1:r_1/2$, $r_2:r_2/\epsilon$, and $r_3:r_3/3$.
+            This gives us,
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          \frac{1}{2} & 0 & 0 & 1 & -1 & 0\\
+                          \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0 & 0 & 1 & 0\\
+                          \frac{1}{6}-\frac{1}{3\epsilon} & -\frac{1}{3\epsilon} & \frac{1}{3} & 0 & 0 & 1
+                \end{array}\right],
+            \end{displaymath}
         \end{solution}
 
         \quad\\
