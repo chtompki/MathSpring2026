@@ -169,15 +169,55 @@ title('Determinants and CPU Time vs. Matrix Size');
                           -1
                 \end{matrix}\right]
             \end{displaymath}
-            So we let the error be $\hat{x}-x$.
+            So we let the error be $e=\hat{x}-x$.
             Notice
             \begin{displaymath}
-                r=A\hat{x} - b = A\hat{x} - Ax = A(\hat{x}-x).
+                r=A\hat{x} - b = A\hat{x} - Ax = A(\hat{x}-x)= Ae.
             \end{displaymath}
-            Also, we see that
+            We can use our condition number theorem for this bit of the problem now where we notice that
             \begin{displaymath}
-                \|\hat{x}-x\|\le\|A^{-1}\|\|r\|
+                \frac{\|e\|}{\|x\|} \le K(A) \frac{\|r\|}{\|b\|}.
             \end{displaymath}
+            We already have $K(A)$, so we only need calculate $\|r\|/\|b\|$.
+            But we can do a quick calculation on those values as:
+            \begin{displaymath}
+                \|r\| = \sqrt{1^2 + (-1)^2}=\sqrt{2}\quad\text{and}\quad \|b\|=\sqrt{((2)^2 + (-2)^2)} = 2\sqrt{2}
+            \end{displaymath}
+            So we have that
+            \begin{displaymath}
+                \frac{\|\hat{x} - x\|}{\|x\|} \le 200\cdot\frac{1}{2} = 100.
+            \end{displaymath}
+
+            (d) If we compute the actual error what do we get?
+            Begin by noticing that
+            \begin{displaymath}
+                e = \hat{x} - x = \left[\begin{matrix}
+                                            -0.5\\
+                                            0.5
+                \end{matrix}\right]
+                -
+                \left[\begin{matrix}
+                          -1\\
+                          1
+                \end{matrix}\right]
+                =
+                \left[\begin{matrix}
+                          0.5\\
+                          -0.5
+                \end{matrix}\right]
+            \end{displaymath}
+            So we can simply now compute $\|e\| = 1/\sqrt{2}$, and $\|x\| = \sqrt{2}$, so the actual error is
+            \begin{displaymath}
+                \frac{\|\hat{x} - x\|}{\|x\|} = \frac{1}{2}
+            \end{displaymath}
+
+            (e) We go back to our theorem:
+            \begin{displaymath}
+                \frac{\|e\|}{\|x\|} \le K(A) \frac{\|r\|}{\|b\|}.
+            \end{displaymath}
+            For our bound to be tight, we need the inequalities above to be close to equalities. And for these equalities
+            to be close we need that $K(A)$ be well conditioned and $\|r\|/\|b\|$
+
         \end{solution}
 
         \quad\\
@@ -213,6 +253,66 @@ title('Determinants and CPU Time vs. Matrix Size');
                   based on your computation of the condition number $K(A)$.
         \end{enumerate}
         \begin{solution}
+            (a) We begin by assuming that $r_1$, $r_2,$, and $r_3$ are the rows of the augmented matrix below.
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          2 & -2 & 0 & 1 & 0 & 0\\
+                 \epsilon-2 & 2 & 0 & 0 & 1 & 0\\
+                          0 & -1 & 3 & 0 & 0 & 1
+                \end{array}\right]
+            \end{displaymath}
+            Perform the row operation $r2:(-\epsilon/2+1)r_1 + r_2$, where ``:'' denotes replacement, seen as follows
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          2 & -2 & 0 & 1 & 0 & 0\\
+                          0 & \epsilon & 0 & \frac{-\epsilon}{2}+1 & 1 & 0\\
+                          0 & -1 & 3 & 0 & 0 & 1
+                \end{array}\right]
+            \end{displaymath}
+            Let's now get rid of $\epsilon$ on the left hand side of our matrix by the row substitution $r_2:r_2/\epsilon$,
+            giving us
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          2 & -2 & 0 & 1 & 0 & 0\\
+                          0 & 1 & 0 & \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & -1 & 3 & 0 & 0 & 1
+                \end{array}\right]
+            \end{displaymath}
+            Let's now look at making the leading entry in the matrix one, by $r_1:r_1/2$ as:
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & -1 & 0 & \frac{1}{2} & 0 & 0\\
+                          0 & 1 & 0 & \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & -1 & 3 & 0 & 0 & 1
+                \end{array}\right].
+            \end{displaymath}
+            Perform $r_1:r_2 + r_1$ as
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & 0 & 0 & \frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & 1 & 0 & \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & -1 & 3 & 0 & 0 & 1
+                \end{array}\right].
+            \end{displaymath}
+            Similarly, perform $r_3:r_2 + r_3$ given by
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & 0 & 0 & \frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & 1 & 0 & \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & 0 & 3 & -\frac{1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 1
+                \end{array}\right].
+            \end{displaymath}
+            Lastly perform $r_3:r_3/3$ as:
+            \begin{displaymath}
+                \left[\begin{array}{ccc|ccc}
+                          1 & 0 & 0 & \frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & 1 & 0 & \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                          0 & 0 & 1 & -\frac{1}{6}+\frac{1}{3\epsilon} & \frac{1}{3\epsilon} & \frac{1}{3}
+                \end{array}\right].
+            \end{displaymath}
+            Well dang it, I wrote all that out and I know that it's not $LU$ decomposition.
+            We'll have another go, but I didn't want to erase that work either.
+
         \end{solution}
 
         \quad\\
