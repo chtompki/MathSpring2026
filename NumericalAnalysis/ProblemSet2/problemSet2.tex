@@ -381,24 +381,54 @@ title('Determinants and CPU Time vs. Matrix Size');
             So we see that
             \begin{displaymath}
                 A = \left[\begin{matrix}
-                              1 & 0 & 0\\
-                              \frac{\epsilon-2}{2} & 1 0\\
+                              2 & 0 & 0\\
+                              \epsilon-2 & \epsilon 0\\
                               0 & -\frac{1}{\epsilon} & 1
                 \end{matrix}\right]
                 \left[\begin{matrix}
-                          1 & 0 & 0\\
-                          \frac{\epsilon-2}{2} & 1 0\\
-                          0 & -\frac{1}{\epsilon} & 1
-                \end{matrix}\right]
-                \left[\begin{matrix}
-                          2 & -2 & 0\\
-                          0 & \epsilon & 0\\
-                          0 & 0 & 3
+                          1 & -1 & 0\\
+                          0 & 1 & 0\\
+                          0 & 0 & 1
                 \end{matrix}\right]
             \end{displaymath}
             as the $LU$decomposition for the matrix.
 
-            (c)
+            (c) To compute the conditinon number $K(A)$, we're going to use the $L_1$-norm
+            so that $K(A)=\|A\|_1\|A^{-1}\|_1$.
+            The column sums of $A$ follow as
+            \begin{itemize}
+                \item[-] Column 1: $|2| + |\epsilon - 2| + 0 = 2 + |\epsilon - 2|$
+                \item[-] Column 2: $|-2| + |2| + |-1| = 5$
+                \item[-] Column 3: $3$
+            \end{itemize}
+            So $\|A\|_1 = \text{max}\{2 + |\epsilon - 2|, 3, 5\}$, which for $\epsilon>0$ small
+            we have $\|A\|_1 = \text{max}\{2 + |\epsilon - 2|, 3, 5\} = 5$.
+
+            We have, out of shear luck, have already calculated $A^{-1}$ by accident in (a)
+            as
+            \begin{displaymath}
+                A^{-1} = \left[\begin{matrix}
+                                   \frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                                   \frac{-1}{2}+\frac{1}{\epsilon} & \frac{1}{\epsilon} & 0\\
+                                   -\frac{1}{6}+\frac{1}{3\epsilon} & \frac{1}{3\epsilon} & \frac{1}{3}
+                \end{matrix}\right].
+            \end{displaymath}
+            We to compute $\|A^{-1}\|_1$, like the first portion of (c), go about computing the column sums of $A^{-1}$ as
+            \begin{itemize}
+                \item[-] Column 1: $1/\epsilon - 1/2 + 1/\epsilon - 1/6 + 1/(3\epsilon) = -2/3 + 7/(3\epsilon)$
+                \item[-] Column 2: $1/\epsilon + 1/\epsilon + 1/(3\epsilon) = 7/(3\epsilon)$
+                \item[-] Column 3: $1/(3\epsilon)$.
+            \end{itemize}
+            Thus, we have
+            \begin{displaymath}
+                \|A^{-1}\|_1 = \text{max}\{-\frac{2}{3} + \frac{7}{3\epsilon},\frac{7}{3\epsilon},\frac{1}{3\epsilon}\}
+            \end{displaymath}
+            For $0<\epsilon\le 1$, $\|A^{-1}\|_1 = 7/(3\epsilon)$.
+            So,
+            \begin{displaymath}
+                K(A)=\|A\|_1\|A^{-1}\|_1 = 5\cdot\frac{7}{3\epsilon} \qquad (0<\epsilon\le 1),
+            \end{displaymath}
+            which has $K(A)$ blows up as $1/\epsilon$.
         \end{solution}
 
         \quad\\
