@@ -429,6 +429,133 @@ title('Determinants and CPU Time vs. Matrix Size');
                 K(A)=\|A\|_1\|A^{-1}\|_1 = 5\cdot\frac{7}{3\epsilon} \qquad (0<\epsilon\le 1),
             \end{displaymath}
             which has $K(A)$ blows up as $1/\epsilon$.
+
+            (d) Now I don't know if there's a typographical error in the problem statement such that what is given as $x$
+            should have been given as $b$.
+            We have worked the problem as best we could, given the statement, if I understand correctly.
+            We do the algebraic expansion of $b=Ax$ with $x=[\begin{matrix}1 & 1& 1\end{matrix}]^\top$ as
+            \begin{displaymath}
+                b = \left[\begin{matrix}
+                          2 & -2 & 0\\
+                          \epsilon-2 & 2 & 0 \\
+                          0 & -1 & 3
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1\\
+                          1\\
+                          1
+                \end{matrix}\right]
+                = \left[\begin{matrix}
+                            2 - 2 + 0\\
+                            (\epsilon - 2) + 2\\
+                            -1 + 3
+                \end{matrix}\right]
+                = \left[\begin{matrix}
+                            0\\
+                            \epsilon\\
+                            2
+                \end{matrix}\right]
+            \end{displaymath}
+            We are confused here with the problem, because it asks to ``solve'' the equation
+            $Ax=b$ when we have been given $A$ and $x$.
+            This makes it seem as if we are to perform a computation of a multiplication
+            as opposed to solving to try to find a solution.
+            To complete the problem we set $\epsilon=10^{-k}$.
+            This yields
+            \begin{displaymath}
+                b = \left[\begin{matrix}
+                            0\\
+                            10^{-k}\\
+                            2
+                \end{matrix}\right]
+            \end{displaymath}
+            which we can compute for a variety of $k$'s.
+            For example, we have
+            \begin{displaymath}
+                b = \left[\begin{matrix}
+                              0\\
+                              1\\
+                              2
+                \end{matrix}\right],
+                \left[\begin{matrix}
+                          0\\
+                          \frac{1}{10}\\
+                          2
+                \end{matrix}\right],
+                \ldots,
+                \left[\begin{matrix}
+                          0\\
+                          \frac{1}{10^9}\\
+                          2
+                \end{matrix}\right],
+            \end{displaymath}
+            How we're to use this to do a comparison on Gauss Jordan eludes us.
+            We lastly note that $b$ converges to the vector
+            \begin{displaymath}
+                b = \left[\begin{matrix}
+                              0\\
+                              0\\
+                              2
+                \end{matrix}\right].
+            \end{displaymath}
+
+            (e) We can repeat the same process in (d) with the vector
+            $x=[\begin{matrix} \log(2.5) & 1 & 1\end{matrix}]^\top$.
+            Our computation for $b$ becomes
+            \begin{displaymath}
+                b = \left[\begin{matrix}
+                              2 & -2 & 0\\
+                              \epsilon-2 & 2 & 0 \\
+                              0 & -1 & 3
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          \log(2.5)\\
+                          1\\
+                          1
+                \end{matrix}\right]
+                = \left[\begin{matrix}
+                            2\log(2.5) - 2 + 0\\
+                            (\epsilon - 2)\log(2.5) + 2\\
+                            -1 + 3
+                \end{matrix}\right]
+                = \left[\begin{matrix}
+                            2\log(2.5) - 2\\
+                            (\epsilon - 2)\log(2.5) + 2\\
+                            2
+                \end{matrix}\right].
+            \end{displaymath}
+            Now we set $\epsilon=1/3\times 10^{-k}$ and run $k=0,\ldots,9$.
+            The solutions again fall out as:
+            \begin{eqnarray*}
+                b & = & \left[\begin{matrix}
+                              2\log(2.5) - 2\\
+                              (\frac{1}{3} - 2)\log(2.5) + 2\\
+                              2
+                \end{matrix}\right],\\
+                 & & \left[\begin{matrix}
+                               2\log(2.5) - 2\\
+                               (\frac{1}{30} - 2)\log(2.5) + 2\\
+                               2
+                \end{matrix}\right],\ldots,\\
+                & & \left[\begin{matrix}
+                          2\log(2.5) - 2\\
+                          (\frac{1}{3\times 10^9} - 2)\log(2.5) + 2\\
+                          2
+                \end{matrix}\right].
+            \end{eqnarray*}
+            Which gives us a collection of $b$ vectors that converge on the following vector:
+            \begin{displaymath}
+                b = \left[\begin{matrix}
+                              2\log(2.5) - 2\\
+                              (-2)\log(2.5) + 2\\
+                              2
+                \end{matrix}\right]
+            \end{displaymath}
+            Lastly, we know that the condition number $K(A) = 5\cdot\frac{7}{3\epsilon}$ makes sense because all of
+            our solutions $b$ vary in the disappearance of a term.
+
+            \emph{Note.} We wrote a Crout LU solver while fiddling with this problem which is committed
+            \href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet2/lucrout.m}{lucrout.m}
         \end{solution}
 
         \quad\\
