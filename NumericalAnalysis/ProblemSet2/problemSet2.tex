@@ -597,6 +597,11 @@ function [L,U] = lucrout(A)
     end
 end
             \end{verbatim}
+            The file for this code is:
+            \href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet2/lucrout.m}{lucrout.m},
+            with the solution for the problem at
+            \href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet2/ps2prob4.m}{ps2prob4.m},
+
             When we did the decomposition on $A$ from the problem statement, we ended up with
             \begin{gather*}
                 A = \left(1.0\times 10^{16}\left[\begin{matrix}
@@ -757,5 +762,65 @@ end
                           -2 & 8 & -5 & 9
             \end{matrix}\right].
         \end{displaymath}
+        \begin{solution}
+            Note we have code for the solution of the problem available at:
+            \href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet2/ps2prob7.m}{ps2prob7.m}
+
+            Consider the arbitrary $\mathbb{R}^3$ vector $q=[\begin{matrix}x & y & z\end{matrix}]^\top$.
+            We'll now epand $x^\top Ax$, calling it $Q(x)$ for convenience as
+            \begin{displaymath}
+                Q(x,y,z) = x^\top Ax = 53y^3-28xy+10yz+16x^2-28xy+10yz+29z^2 = 16 x^2 - 56 x y + 53 y^2 + 20 y z + 29 z^2.
+            \end{displaymath}
+            We'll need to do some algebraic manipulation to get what we are looking for:
+            \begin{eqnarray*}
+                16x^2-56xy & = & 16\left(x^2 - \frac{56}{10}xy\right) = 16(x^2-\frac{7}{2}xy) \\
+                x^2 - \frac{7}{2}xy & = & \left(x-\frac{7}{4}y\right)^2 - \frac{49}{16}y^2\\
+            \end{eqnarray*}
+            Substituting this all back into $Q$ we see that
+            \begin{displaymath}
+                Q = 16\left(x -\frac{7}{4}y\right)^2 +4y^2+20yz+29z^2.
+            \end{displaymath}
+            Now we complete the square in $y,z$.
+            Consider $4y^2+20xy-29z^2=4(y^2-5xy) + 29z^2$.
+            A little manipulation gets us to
+            \begin{displaymath}62
+                4y^2+20xy+29z^2 = 4\left(y\frac{5}{2}z\right) + 4z^2
+            \end{displaymath}
+            So we can finally construct
+            \begin{displaymath}
+                Q(x,y,z) = 16\left(x-\frac{7}{4}y)^2\right) + 4\left(y + \frac{5}{2}z\right)^2 + 4z^2.
+            \end{displaymath}
+            This is the sum of squared terms so it can't be zero or negative.
+
+            Another technique for showing a matrix symmetric positive definite is using
+            Leading Principal Submatrix factorization.
+            The leading principal factors follow as
+            \begin{itemize}
+                \item[-] $\Delta_1 = b_{11} = 1 >0$
+                \item[-] $\Delta_2 = \text{det}\left[\begin{matrix}1 & -2\\-2 & 20\end{matrix}\right] = 16 >0$
+                \item[-] $\Delta_3 = \text{det}\left[\begin{matrix}1 & -2 & 3\\-2 & 20 & -2\\3 & -2 & 11\end{matrix}\right] = 16 > 0$
+                \item[-] $\Delta_4 = \text{det}(B) = 64 >0$
+            \end{itemize}
+            So we are positive definite.
+
+            We've added in the algorithm for the Cholesky method at:
+            \href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet2/cholesky.m}{cholesky.m}
+            The resulting matricies $L_A$, and $L_B$, computed using the Cholesky method and Matlab follow as:
+            \begin{displaymath}
+                L_A = \left[\begin{matrix}
+                              4 & 0 & 0\\
+                              -7 & 2 & 0 \\
+                              0 & 5 & 2
+                \end{matrix}\right],
+                \quad\text{ }\quad
+                L_B = \left[\begin{matrix}
+                                1   &  0  &   0  &   0\\
+                               -2   &  4  &   0  &   0\\
+                                3   &  1  &   1  &   0\\
+                               -2   &  1  &   0  &   2
+                \end{matrix}\right].
+            \end{displaymath}
+
+        \end{solution}
     \end{onehalfspace}
 \end{document}
