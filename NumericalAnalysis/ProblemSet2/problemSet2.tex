@@ -663,6 +663,41 @@ end
             \item What in the $LU$ decomposition signals that $A$ is singular for this case?
         \end{enumerate}
         \begin{solution}
+            Before we discuss (a), (b), or (c), we go to Matlab to perform the decomposition using
+            \texttt{[L, U, P]=lu(A)} given as:
+            \begin{displaymath}
+                A = \left[\begin{matrix}
+                              1 & 1-\epsilon & 3\\
+                              2 & 2 & 2 \\
+                              3 & 6 & 4
+                \end{matrix}\right]
+                = \left[\begin{matrix}
+                            1 & 0 & 0\\
+                            2 & 1 & 0\\
+                            3 & \frac{3}{2}-\frac{3}{2\epsilon} & 1
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1 & 1 - \epsilon & 3\\
+                          0 & 2\epsilon & -4\\
+                          0 & 0 & 1 +\frac{6}{\epsilon}
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1 & 0 & 0\\
+                          0 & 1 & 0\\
+                          0 & 0 & 1
+                \end{matrix}\right]
+            \end{displaymath}
+
+            (a) When we send $\epsilon\rightarrow 0$ we have $\ell_{22} = 2\epsilon = 0$.
+
+            (b) If we want to have $A$ singular we can set $u_{33} = 1 +\frac{6}{\epsilon} = 0$ so that the dimension
+            of the row space being at most 2 by the third row being all zeros.
+            Solving our $u_{33}$ equation for $\epsilon$ gives $\epsilon = -6$.
+
+            (c) The key for a $LU$ decomposition to be singular is to consider the non-one's diagonal of either $L$ or
+            $U$ depending on the decomposition algorithm.
+            If any of these non-ones values is zero, then the whole decomposition is singular because the determinant
+            of the original matrix is zero.
         \end{solution}
 
         \quad\\
