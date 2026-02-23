@@ -707,6 +707,36 @@ end
         and condition number $K_2(A)$ associated to the $L^2$ natrual matrix norm for a symmetrix positive definite
         matrix A.
         \begin{proof}
+            We'll perform the proof relying on the $L_2$-norm.
+            Note that if $A$ is symmetric positive definite, then we have a matricies $Q$ and $\Lambda$ such that
+            $A=Q\Lambda Q^\top$, where $\Lambda = \text{diag}(\lambda_1,\ldots,\lambda_n)$, $\lambda_i>0$.
+            For symmetric matrices the singular values equal $|lambda_i|$.
+            Now notice,
+            \begin{displaymath}
+                \|A\|_2 = \text{max}_i \lambda_i = \lambda_{\text{max}}\quad\text{and}\quad
+                \|A^{-1}\|_2 = \text{max}_{i}\frac{1}{\lambda_i} = \frac{1}{\lambda_{\text{min}}}.
+            \end{displaymath}
+            Thus we have,
+            \begin{displaymath}
+                K_2(A) = \frac{\lambda_{\text{max}}}{\lambda_{\text{min}}}.
+            \end{displaymath}
+
+            Now we want to compute $A^2$ to see what we get.
+            So consider
+            \begin{displaymath}
+                A^2 = (Q\lambda Q^\top)(Q\lambda Q^\top) = Q\lambda^2 Q^\top
+            \end{displaymath}
+            So the eigenvalues of $\Lambda^2$ are $\lambda_i^2$ which are all positive.
+            Thus, we see that,
+            \begin{displaymath}
+                \|A^2\|_2 = \lambda_{\text{max}}^2,\qquad \|(A^2)^{-1}\|_2 = \|(A^{-1})^2\|_2 = \frac{1}{\lambda_{\text{min}^2}}.
+            \end{displaymath}
+            And, so
+            \begin{displaymath}
+                K_2(A^2) = \|A^2\|_2\|(A^2)^{-1}\|_2 = \lambda_{\text{max}}^2\frac{1}{\lambda_{\text{min}^2}}
+                =\left(\frac{\lambda_{\text{max}}}{\lambda_{\text{min}}}\right)^2 = (K(A))^2,
+            \end{displaymath}
+            and we are done.
         \end{proof}
 
         \quad\\
