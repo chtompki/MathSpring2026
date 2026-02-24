@@ -33,6 +33,32 @@
         \noindent\textbf{P.4.9.} If $A\in\mathbf{M}_n$ is to be represented as $A=XY^\top$ for some
         $X,Y\in\mathbf{M}_{n\times r}$, explain why $r$ cannot be smaller than $\text{rank}(A)$.
         \begin{solution}
+            We claim that the columns of $A$ must lie in the column space of $X$.
+            To see this we write
+            \begin{displaymath}
+                Y^{\top} = \left[\begin{matrix}
+                                     y_1^{\top}\\
+                                     y_2^{\top}\\
+                                     \vdots\\
+                                     y_r^{\top}
+                \end{matrix}\right],
+            \end{displaymath}
+            where $y_i\in\mathbb{F}^n$ are columns of $Y$. Then we have that
+            \begin{displaymath}
+                XY^{\top} = \sum_{k=1}^r x_k y_k^{\top}.
+            \end{displaymath}
+            Now choose an arbitrary vector $v\in\mathbb{F}^n$,
+            \begin{displaymath}
+                Av = XY^{\top}v = X(Y^\top v)
+            \end{displaymath}
+            with $Y^\top v\in\mathbb{F}^r$.
+            So $Av$ is a linear combination of the $r$ columns of $X$, which gives us
+            $\text{col}(A)\subseteq\text{col}(X)$.
+            So
+            \begin{displaymath}
+                \text{rank}(A) = \text{dim}(\text{col}(A)) \le \text{dim}(\text{col}(X)) = \text{rank}(X)\le r
+            \end{displaymath}
+            So $\text{rank}(A)\le r$, and we are done.
         \end{solution}
 
         % P.4.10
