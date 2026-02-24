@@ -12,6 +12,7 @@
 \usepackage{pgfplots}
 \usepackage{tikz}
 \usepackage{amsthm}
+\usepackage{eufrak}
 \usepackage{enumitem}
 \usepackage{setspace}
 
@@ -44,30 +45,68 @@
                     \text{rank}(A) + \text{rank}(B) - k \le \text{rank}(AB)
                 \end{displaymath}
                   is equivalent to
-                \begin{displaymath}
+                \begin{equation}
                     \nu(AB) \le \nu(A) + \nu(B).
-                \end{displaymath}
+                    \label{p410one}
+                \end{equation}
             \item If $A,B\in\mathbf{M}_{n}$, show that the rank inequality given by
             \begin{displaymath}
-                \text{rank}(AB) \le \text{min}\{\text{rank}(A), \text{rank}(B)\}.
+                \text{rank}(AB) \le \min\{\text{rank}(A), \text{rank}(B)\}.
             \end{displaymath}
             is equivalent to
+            \begin{equation}
+                \max\{\nu(A),\nu(B)\}\le\nu(AB)
+                \label{p410two}
+            \end{equation}
+            The inequalities (\ref{p410one}) and (\ref{p410two}) are known as \emph{Sylvester's law of nullity}.
+            \item Consider $A = [\begin{matrix}0 & 1\end{matrix}]$ and $B = [\begin{matrix}1 & 0\end{matrix}]^\top$.
+                  Show that the inequality (\ref{p410two}) need not be valid if the matrices are not square.
         \end{enumerate}
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+        \end{proof}
 
         % P.4.13
-        \noindent\textbf{P.4.13.}
+        \noindent\textbf{P.4.13.} Let $\mathcal{V}$ be a nonzero $n$-dimensional vector space over the field
+        $\mathbb{F}$, and let $T\in\mathfrak{L}(\mathcal{V},\mathbb{F})$ be a nonzero linear transformation.
+        Why is $\text{dim}(\text{ker}(T)) = n-1$
         \begin{solution}
         \end{solution}
 
         % P.4.35
-        \noindent\textbf{P.4.35.}
+        \noindent\textbf{P.4.35.} For each of the following matrices, compute its reduced row echelon form, its pivot
+        column decomposition, and bases for its column space and null space.
+        \begin{displaymath}
+            \text{(a)}\;\;\left[\begin{matrix}
+                                    -1 & -2 & 2 & 3 & 3\\
+                                    3 & 6 & 1 & 5 & -1\\
+                                    2 & 4 & -1 & 0 & 2
+            \end{matrix}\right]
+            \qquad\qquad
+            \text{(b)}\;\;\left[\begin{matrix}
+                                    1 & -1 & 2 & 1 & 3\\
+                                    1 & 0 & 1 & 1 & 1\\
+                                    3 & 2 & 2 & 3 & 2
+            \end{matrix}\right].
+        \end{displaymath}
         \begin{solution}
         \end{solution}
 
         % P.4.38
-        \noindent\textbf{P.4.38.}
+        \noindent\textbf{P.4.38.} Suppose that $A\in\mathbf{M}_{6\times 4}$ is row equivalent to
+        \begin{displaymath}
+            B = \left[\begin{matrix}
+                          1 & 0 & 0 & 1\\
+                          0 & 2 & 3 & 2\\
+                          0 & 0 & 0 & 4\\
+                          0 & 0 & 0 & 0\\
+                          0 & 0 & 0 & 0\\
+                          0 & 0 & 0 & 0\\
+            \end{matrix}\right].
+        \end{displaymath}
+        \begin{enumerate}[label=(\alph*)]
+            \item Find a basis for $\text{null}(A)$.
+            \item What is $\text{dim}(\text{null}(A^\top))$
+        \end{enumerate}
         \begin{solution}
         \end{solution}
 
