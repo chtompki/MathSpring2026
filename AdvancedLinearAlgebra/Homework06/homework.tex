@@ -400,15 +400,61 @@
                           0 & 0 & 1 & 0 & 3
                 \end{matrix}\right]
             \end{displaymath}
-            $r_1:r_1-2r_3$, and $r1:r1+r2$
+            Finally, we perform $r_1:r_1-2r_3$, and $r1:r1+r2$
             \begin{displaymath}
                 \left[\begin{matrix}
                           1 & 0 & 0 & 1 & -2\\
                           0 & 1 & 0 & 0 & 1\\
                           0 & 0 & 1 & 0 & 3
-                \end{matrix}\right]
+                \end{matrix}\right].
             \end{displaymath}
-
+            The pivot columns here are $1,2,3$.
+            So our basis from our original matrix follows as:
+            \begin{displaymath}
+                \left\{
+                    \left[\begin{matrix}
+                              1\\
+                              1\\
+                              3
+                    \end{matrix}\right],
+                    \left[\begin{matrix}
+                              -1\\
+                              0\\
+                              2
+                    \end{matrix}\right],
+                    \left[\begin{matrix}
+                              2\\
+                              1\\
+                              2
+                    \end{matrix}\right]
+                \right\}.
+            \end{displaymath}
+            To get a basis for the nullity of $B$ we expand $Bx=0$, giving us the following equations
+            \begin{gather*}
+                x_1 + x_4 - 2x_5 = 0\\
+                x_2 + x_5 = 0
+                x_3 + 3x_5 = 0
+            \end{gather*}
+            So $x_1 = -x_4 + 2x_5$, $x_2 = x_5$, and $x_3 = -3x_5$.
+            Then we let $x_4$ and $x_5$ range freely to see that the basis for our null space is
+            \begin{displaymath}
+                \left\{
+                    \left[\begin{matrix}
+                              -1\\
+                              0\\
+                              0\\
+                              1\\
+                              0
+                    \end{matrix}\right],
+                    \left[\begin{matrix}
+                              2\\
+                              -1\\
+                              -3\\
+                              0\\
+                              1
+                    \end{matrix}\right]
+                \right\}
+            \end{displaymath}
 
         \end{solution}
 
