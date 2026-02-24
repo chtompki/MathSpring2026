@@ -89,14 +89,148 @@
                   Show that the inequality (\ref{p410two}) need not be valid if the matrices are not square.
         \end{enumerate}
         \begin{proof}
+            (a) By the rank-nullity theorem
+            \begin{eqnarray*}
+                \text{rank}(X) + \nu(X) & = & n\\
+                \text{rank}(X) & = & n - \nu(X)\\
+                \text{rank}(X^\top) + \nu(X^\top) & = & m\\
+                \text{rank}(X^\top) & = & m - \nu(X^\top)\\
+            \end{eqnarray*}
+            Yet we know that $\text{rank}(X) = \text{rank}(X^\top)$.
+            So we have:
+            \begin{displaymath}
+                \nu(X^\top) = \nu(X) + m - n.
+            \end{displaymath}
+
+            (b) Similar to (a) we write out the rank equations for the matrices
+            \begin{equation}
+                \begin{aligned}
+                    \text{rank}(A) & = k - \nu(A)\\
+                    \text{rank}(B) & = n - \nu(B)\\
+                    \text{rank}(AB) & = n - \nu(AB).
+                \end{aligned}
+                \label{410b}
+            \end{equation}
+            Substituting into $\text{rank}(A) + \text{rank}(B) - k \le \text{rank}(AB)$ we
+            get
+            \begin{eqnarray*}
+                \text{rank}(A) + \text{rank}(B) - k & \le & \text{rank}(AB)\\
+                (k-\nu(A)) + (n-\nu(B)) - k & \le & n-\nu(AB) \\
+                n - \nu(A) - \nu(B) & \le & n \nu(AB)\\
+                \nu(A) + \nu(B) & \ge & \nu(AB),
+            \end{eqnarray*}
+            where in that last step we both subtracted both sides by $n$ and
+            multiplied both sides of the inequality by $-1$ switching its direction.
+            And we are done.
+
+            (c) Similarly to (b) let's consider equation (\ref{410b}).
+            If we consider what $\text{rank}(AB) \le \min\{\text{rank}(A), \text{rank}(B)\}$ is actually saying
+            we have that we have both $\text{rank}(AB) \le \text{rank}(A)$ and $\text{rank}(AB) \le \text{rank}(B)$.
+            We see that
+            \begin{gather*}
+                n - \nu(AB) \le n - \nu(A) \qquad\Longleftrightarrow\qquad \nu(A)\le\nu(AB), \\
+                n - \nu(AB) \le n - \nu(B) \qquad\Longleftrightarrow\qquad \nu(B)\le\nu(AB). \\
+            \end{gather*}
+            So we have
+            \begin{displaymath}
+                \max\{\nu(A),\nu(B)\}\le\nu(AB)
+            \end{displaymath}
+
+            (d) We compute $AB$ and $BA$ for the sake of discussion
+            \begin{displaymath}
+                AB = \left[\begin{matrix}
+                               0 & 1
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1 \\ 0
+                \end{matrix}\right] = 0
+                \quad\text{and}\quad
+                BA = \left[\begin{matrix}
+                               1 \\ 0
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          0 & 1
+                \end{matrix}\right] =
+                \left[\begin{matrix}
+                          0 & 1\\
+                          0 & 0
+                \end{matrix}\right]
+            \end{displaymath}
+            We also look at what the null spaces of the respective matrices are.
+            So we describe our linear transformations as functions
+            \begin{displaymath}
+                A = \left[\begin{matrix}
+                              0 & 1
+                \end{matrix}\right]
+                = (x,y)\longmapsto y
+                \quad\text{and}\quad
+                B = \left[\begin{matrix}
+                              1 \\ 0
+                \end{matrix}\right] =
+                \hat{x}\longmapsto
+                \left[\begin{matrix}
+                          \hat{x} & \hat{0}
+                \end{matrix}\right],
+            \end{displaymath}
+            where $\hat{x} = [\begin{matrix}x_1 & \cdots & x_n\end{matrix}]$ and $\hat{0}$ is the $n$-ary
+            zero vector.
+            Given that $\text{ker}(A) = \{(x,0): x\in\mathbb{F}\}$ we have that $\nu(A)=1$.
+            Also, notice $\text{ker}(B) = \{\hat{0}\}$, so $\nu(B)=0$.
+            Lastly notice that both $\nu(AB)=1$ by $AB$ being the zero map, and $\nu(BA)=1$ by
+            single element linear transformation.
+            But then we have $\max\{0,1\}\le 1$ in either case which does not help us. Hm.
+
+            So we consider the following counterexample
+            \begin{displaymath}
+                A = \left[\begin{matrix}
+                              1 & 0 & 0\\
+                              0 & 1 & 0
+                \end{matrix}\right]
+                \quad\text{and}\quad
+                B = \left[\begin{matrix}
+                              1 & 0\\
+                              0 & 1\\
+                              0 & 0
+                \end{matrix}\right].
+            \end{displaymath}
+            So,
+            \begin{displaymath}
+                AB = \left[\begin{matrix}
+                              1 & 0 & 0\\
+                              0 & 1 & 0
+                \end{matrix}\right]
+                \left[\begin{matrix}
+                          1 & 0\\
+                          0 & 1\\
+                          0 & 0
+                \end{matrix}\right]
+                = \left[\begin{matrix}
+                            1 & 0\\
+                            0 & 1\\
+                \end{matrix}\right].
+            \end{displaymath}
+            The nullity of $A$ is $1$ because our rank is 2.
+            The nullity of $B$ is $0$,
+            and finally the nullity of $AB$ is $0$ because it's invertible.
+            So we truly are stuck with
+            $\max\{0,1\}\le 0$ which doesn't hold.
         \end{proof}
 
         % P.4.13
         \noindent\textbf{P.4.13.} Let $\mathcal{V}$ be a nonzero $n$-dimensional vector space over the field
         $\mathbb{F}$, and let $T\in\mathfrak{L}(\mathcal{V},\mathbb{F})$ be a nonzero linear transformation.
-        Why is $\text{dim}(\text{ker}(T)) = n-1$
-        \begin{solution}
-        \end{solution}
+        Why is $\text{dim}(\text{ker}(T)) = n-1$?
+        \begin{proof}
+            Let $T:\mathcal\rightarrow\mathbb{F}$ be a linear transformation.
+            Now the $\text{rank}(T)\le 1$, and because $T$ is nonzero, we must have
+            $\text{rank}(T) = 1$.
+            By the rank nullity theorem we see that
+            \begin{eqnarray*}
+                1 + \nu(T) & = & n \\
+                \nu(T) & = & n - 1.
+            \end{eqnarray*}
+            Done.
+        \end{proof}
 
         % P.4.35
         \noindent\textbf{P.4.35.} For each of the following matrices, compute its reduced row echelon form, its pivot
@@ -115,6 +249,167 @@
             \end{matrix}\right].
         \end{displaymath}
         \begin{solution}
+            (a) We begin by performing Gauss-Jordan elimination on the matrix without augmentation.
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          -1 & -2 & 2 & 3 & 3\\
+                          3 & 6 & 1 & 5 & -1\\
+                          2 & 4 & -1 & 0 & 2
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_1:-r_1$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 2 & -2 & -3 & -3\\
+                          3 & 6 & 1 & 5 & -1\\
+                          2 & 4 & -1 & 0 & 2
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_2:r_2-3r_1$, and $r_3:r_3-2r_1$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 2 & -2 & -3 & -3\\
+                          0 & 0 & 7 & 14 & 8\\
+                          0 & 0 & 3 & 6 & 8
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_2:r_2/7$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 2 & -2 & -3 & -3\\
+                          0 & 0 & 1 & 2 & \frac{8}{7}\\
+                          0 & 0 & 3 & 6 & 8
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_3:r_3-3r_2$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 2 & -2 & -3 & -3\\
+                          0 & 0 & 1 & 2 & \frac{8}{7}\\
+                          0 & 0 & 0 & 0 & \frac{32}{7}
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_3:7/32r_3$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 2 & -2 & -3 & -3\\
+                          0 & 0 & 1 & 2 & \frac{8}{7}\\
+                          0 & 0 & 0 & 0 & 1
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_1:r1+3r_3$, and $r_2:r_2 - (8/7)r_3$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 2 & -2 & -3 & 0\\
+                          0 & 0 & 1 & 2 & 0\\
+                          0 & 0 & 0 & 0 & 1
+                \end{matrix}\right]
+            \end{displaymath}
+            Finish with $r_1:r1+2r_2$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 2 & 0 & 1 & 0\\
+                          0 & 0 & 1 & 2 & 0\\
+                          0 & 0 & 0 & 0 & 1
+                \end{matrix}\right].
+            \end{displaymath}
+            The pivot columns indices are $1,3,5$.
+            We can write $2a_1=a_2$ and $a_4=a_1 + 2a_3$.
+            We take our basis for $\text{col}(A)$ as the original columns in our pivot
+            column indices as
+            \begin{displaymath}
+                \left\{
+                    \left[\begin{matrix}
+                              -1\\
+                              3\\
+                              2
+                    \end{matrix}\right],
+                    \left[\begin{matrix}
+                              2\\
+                              1\\
+                              -1
+                    \end{matrix}\right],
+                    \left[\begin{matrix}
+                              3\\
+                              -1\\
+                              2
+                    \end{matrix}\right]
+                \right\}.
+            \end{displaymath}
+            For the null space, we need to solve $Ax=0$.
+            Letting $x=[x_i]$ with $i =1,\ldots,5$, we expand to get
+            \begin{gather*}
+                x_1 + 2x_2+x_4 = 0\\
+                x_3 + 2x_4 = 0\\
+                x_5 = 0
+            \end{gather*}
+            For simplicity, we remove subscripts as $x_2=y$ and $x_4=z$ which gives us
+            \begin{displaymath}
+                x_1 = -2y-z,\qquad x_3=-2z,\qquad x_5=0
+            \end{displaymath}
+            This gives us a basis for our null space as:
+            \begin{displaymath}
+                \left\{
+                    \left[\begin{matrix}
+                              -2\\
+                              1\\
+                              0\\
+                              0\\
+                              0
+                    \end{matrix}\right],
+                    \left[\begin{matrix}
+                              -1\\
+                              0\\
+                              -2\\
+                              1\\
+                              0
+                    \end{matrix}\right]
+                \right\}.
+            \end{displaymath}
+
+            (b) We begin by again using Gauss-Jordan elimination for our row-reduction algorithm.
+            The computation follows:
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & -1 & 2 & 1 & 3\\
+                          1 & 0 & 1 & 1 & 1\\
+                          3 & 2 & 2 & 3 & 2
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_2:r_2-r_1$ and $r_3:r_3-3r_1$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & -1 & 2 & 1 & 3\\
+                          0 & 1 & -1 & 0 & -2\\
+                          0 & 5 & -4 & 0 & -7
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_3:r3-5r_2$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & -1 & 2 & 1 & 3\\
+                          0 & 1 & -1 & 0 & -2\\
+                          0 & 0 & 1 & 0 & 3
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_2:r_2+r_3$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & -1 & 2 & 1 & 3\\
+                          0 & 1 & 0 & 0 & 1\\
+                          0 & 0 & 1 & 0 & 3
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_1:r_1-2r_3$, and $r1:r1+r2$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 0 & 0 & 1 & -2\\
+                          0 & 1 & 0 & 0 & 1\\
+                          0 & 0 & 1 & 0 & 3
+                \end{matrix}\right]
+            \end{displaymath}
+
+
         \end{solution}
 
         % P.4.38
