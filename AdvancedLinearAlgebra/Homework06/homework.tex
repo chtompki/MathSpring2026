@@ -475,6 +475,60 @@
             \item What is $\text{dim}(\text{null}(A^\top))$
         \end{enumerate}
         \begin{solution}
+            (a) We first find the $\text{rank}(B)$.
+            We do this by doing row-reduction on $B^\top$, which follows as
+            \begin{displaymath}
+                B^{\top} =
+                \left[\begin{matrix}
+                          1 & 0 & 0 & 0 & 0 & 0\\
+                          0 & 2 & 0 & 0 & 0 & 0\\
+                          0 & 3 & 0 & 0 & 0 & 0\\
+                          1 & 2 & 4 & 0 & 0 & 0
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_4:r_4-r_1$, $r_2:1/2r_2$, $r_3:r_3 - 3/2r_2$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 0 & 0 & 0 & 0 & 0\\
+                          0 & 1 & 0 & 0 & 0 & 0\\
+                          0 & 0 & 0 & 0 & 0 & 0\\
+                          0 & 2 & 4 & 0 & 0 & 0
+                \end{matrix}\right]
+            \end{displaymath}
+            $r3 \leftrightarrow r_4$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 0 & 0 & 0 & 0 & 0\\
+                          0 & 1 & 0 & 0 & 0 & 0\\
+                          0 & 2 & 4 & 0 & 0 & 0\\
+                          0 & 0 & 0 & 0 & 0 & 0
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_3:r_3-2r_2$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 0 & 0 & 0 & 0 & 0\\
+                          0 & 1 & 0 & 0 & 0 & 0\\
+                          0 & 0 & 4 & 0 & 0 & 0\\
+                          0 & 0 & 0 & 0 & 0 & 0
+                \end{matrix}\right]
+            \end{displaymath}
+            $r_4:1/4 r_4$
+            \begin{displaymath}
+                \left[\begin{matrix}
+                          1 & 0 & 0 & 0 & 0 & 0\\
+                          0 & 1 & 0 & 0 & 0 & 0\\
+                          0 & 0 & 1 & 0 & 0 & 0\\
+                          0 & 0 & 0 & 0 & 0 & 0
+                \end{matrix}\right]
+            \end{displaymath}
+            So we have $\text{rank}(B^\top) = 3 = \text{rank}(B)$, and
+            $\text{rank}(B) + \nu(B) = 4$.
+            Thus, we have that $\nu(B) = 1$.
+            A basis for $\nu(A)$ would be $e_4$ as our row-reduction above contains $e_1,e_2,e_3$.
+
+            (b) Similarly to in (a) $\nu(A^\top) = 1$ which is the dimension of the nullity.
+
         \end{solution}
 
     \end{onehalfspace}
