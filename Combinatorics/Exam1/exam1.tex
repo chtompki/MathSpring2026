@@ -1,0 +1,51 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{leftindex}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\title{Combinatorics\\Exam 1}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        % Problem 1
+        \noindent\textbf{1.} Answer the following using simple counting reasoning
+        \begin{enumerate}[label=(\alph*)]
+            \item How many different 7-digit numbers (non-negative integers) are there?
+                  (Leading zeros are not allowed).
+            \item How many even 7-digit numbers are there?
+            \item How many 7-digit numbers are there with exactly one 7?
+            \item How many 7-digit numbers read the same when you read themm forward or backward, i.e. are palindromic,
+                  e.g. 6548456 is one such integer.
+            \item How many 7-digit numbers are there that are divisible by 4?
+            \item How many times is the digit 7 written when listing the numbers between 1 and 1,000,000?
+        \end{enumerate}
+        \begin{solution}
+        \end{solution}
+
+        % Problem 2
+        \noindent\testbf{2.} How many 7-letter words can be constructed by using the 26 letters of the alphabet if
+        each word contains 3, or 4 vowels?
+        It is understood that there is no restriction on the numger of times a letter can be used in a word.
+        \begin{solution}
+        \end{solution}
+
+    \end{onehalfspace}
+\end{document}
