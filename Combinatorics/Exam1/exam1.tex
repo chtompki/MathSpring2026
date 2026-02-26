@@ -38,13 +38,61 @@
             \item How many times is the digit 7 written when listing the numbers between 1 and 1,000,000?
         \end{enumerate}
         \begin{solution}
+            (a) If we consider the number simply as a string of characters, and we allowed ``0'' at the beginning,
+            then we would have $10^7$ solutions, but for our leading digit we omit the availability of 0.
+            So our count becomes $9\times10^6$.
+
+            (b) To get the number of 7-digit even numbers with the same rules, we simply take the result from (a) and
+            divide by 2.
+            So we get our count to be $(9\times10^6)/2 = 4.5\times10^6$.
+
+            (c) Let's approach the problem in cases.
+            Case 1 (the 7 is the first digit): the other 6 digits are anything but 7 which is $9^6$ options.
+            Case 2 (the 7 is in one of the other 6 positions): we start with the first digit which is 8 choices,
+            because it can't be 0 or 7.
+            Next we fill the remaining 5 non-7 digits in $9^5$ ways.
+            Lastly, we have to choose which of the 6 digits is our 7, and there are 6 ways to do that.
+            So the count of 7 in one of the other 6 positions comes out as $8\cdot 9^5\cdot 6$.
+
+            (d) Considering the palindromes, we need only consider half the word because the other half mirrors it,
+            excepting the middle character.
+            Thus, our count for ways to have a palindrome becomes $9\times10^3$.
+
+            (e) At first glance I went about simply dividing (a) by $4$, but that over simplifies the task at hand and
+            omits some subtleties.
+            We begin by noticing that if a number is divisible by 4 then the last two digits form a number that is
+            divisible by 4.
+
+            So let's break the number down into $d_1 d_2 d_3 d_4 d_5 d_6 d_7$.
+            To build our number we chose the first digit $d_1$ between 1 and 9 to remain a 7-digit number.
+            The middle digits can be anything from 0 to 9 which gives us $10^4$ choices.
+            Lastly, the last two digits must be in the set $\{00,04,08,\ldots,96\}$ which has 25 elements.
+            So the number of choices we have to build our number is $9\cdot25\cdot10^4 = 2250000=2.25\times10^6$
+
+            (f) Notice that $1,000,000$ can not contain a $7$ so we only concern ourselves with numbers
+            of length 6.
+            In each of the 6 positions a 7 occurs in $10^5$ numbers, $6\times10^5$.
+            And, because 0 and $1,000,000$ don't contain the digit 7 we're good with our count being $6\times10^5$.
         \end{solution}
 
         % Problem 2
         \noindent\textbf{2.} How many 7-letter words can be constructed by using the 26 letters of the alphabet if
         each word contains 3, or 4 vowels?
-        It is understood that there is no restriction on the numger of times a letter can be used in a word.
+        It is understood that there is no restriction on the number of times a letter can be used in a word.
         \begin{solution}
+            Let $\{a,e,i,o,u,y\}$ be our set of vowels.
+            The number of 7-letter words with 3 vowels is
+            \begin{displaymath}
+                \binom{7}{3}\cdot 6^3 \cdot20^4.
+            \end{displaymath}
+            The number of 7-letter words with 4 vowels is
+            \begin{displaymath}
+                \binom{7}{4}\cdot 6^4 \cdot20^3.
+            \end{displaymath}
+            So our count follows as:
+            \begin{displaymath}
+                \#=\binom{7}{3}\cdot6^3\cdot 20^4 + \binom{7}{4}\cdot 6^4\cdot 20^3 = 1572480000
+            \end{displaymath}
         \end{solution}
 
         % Problem 3
