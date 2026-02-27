@@ -33,7 +33,7 @@
     \date{\today}
     \begin{onehalfspace}
 
-        \section{Modeling of cardiopulmonary dynamics}
+        \section{Cardiorespiratory compartmental model}
         The utilization of a mathematical model in regard to modeling the dynamics of blood-flow through the body
         is informative and understood to be fairly predictive of the actual dynamics of the physiological system
         at hand.
@@ -51,7 +51,52 @@
         We were given two projects that were being actively worked on: prediction of dynamic cerebrovascular resistance and
         patient-specific modeling of respiratory mechanics in preterm infants (which seems to have new material to work on).
 
+        We then briefly went over the mechanics of orthostatics and how sudden shifts in body position accommodate for
+        blood quickly moving throughout the system with reference to gravity such that cranial blood pressure can drop
+        below functional levels.
+        We then delved into the general physiology of the circulatory system as well as the autonomic nervous system,
+        with the sympathetic and parasympathetic controls that it offers.
 
+        The model was set up as eight distinct compartments over the arterial and veinous vascular systems,
+        each of which had four complementary compartments: the head, the heart, the thorax, and systemic tissue (the
+        remainder catchall). In a rough sketch the model was given as
+        \begin{displaymath}
+                \frac{dV}{dt} = q_{in} - q_{out},\quad\text{where}\quad q = \frac{p_{in} - p_{out}}{R}
+        \end{displaymath}
+        and
+        \begin{displaymath}
+            V - V_{unstr} = Cp\quad \Rightarrow\quad \frac{dp}{dt} = \frac{1}{C}\left(q_{in}-q_{out}-p\frac{dC}{dt}\right)
+        \end{displaymath}
+
+        The model was then run against normal respiration followed the administration of a breathing mask
+        giving 5\% $CO_2$, and plots were shown.
+        It was shown that cranial resistence hops up after re-breathing the 5\% $CO_2$ for some time.
+        There seem to be future research opportunities here regarding applying the model to populations with
+        compromised cerebrovascular reactivity.
+        Another thought was to potentially include modern sensitivity analysis and parameter identifiability
+        techniques.
+
+        \section{Patient-specific modeling of respiratory mechanics in the preterm infant}
+        When considering the 1st-percentile in infant birth weight we are faced with a mortality rate
+        of 60\%.
+        The issue seems to stem from high chest wall compliance due to an undermineralized rib cage, and cascades
+        of comorbidities can quickly arise necessitating ventilation.
+
+        Now a paper by Abbasi and Bhutani (1990) was presented giving data with clinical pressures, flows, and volumes.
+        We compared their data with neurally adjusted ventilatory assist data and they aligned well.
+        (\emph{Note.} neurally adjusted ventilatory assist is a mechanism for ventilation that relies upon a sensor catheter
+        placed in the esophagus of the patient to get electrical conductivity from the autonomic nervous system).
+
+        Similarly to before we fall back on an electromagnetic fluid dynamics analogue for modeling the alveoli of the
+        neonate needing care, however this time the mechanics of the fluid are complex enough to yield a dynamical system
+        as opposed to a solvable set of ODEs.
+
+        Using Matlab for modeling the system the plots shown indicated that the model did indeed align with dynamical system
+        we created.
+        Then a fairly wide array of simulated experiments were run through the model like the patient on a CPAP machine,
+        what happens with an injured lung, and what happens under anesthesia.
+
+        We went over a little more about sensitivity analysis, but then we wrapped things up.
 
 
     \end{onehalfspace}
