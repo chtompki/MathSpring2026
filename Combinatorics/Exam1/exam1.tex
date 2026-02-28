@@ -111,13 +111,23 @@
             All we are left to do is select woman who is supposed to chair the committee, and there are
             $n$ ways to accomplish this task.
             And thus we clearly have that:
-            \
+            \begin{displaymath}
+                \sum_{k=1}^n k\binom{n}{k}^2 = n\binom{2n-1}{n-1}
+            \end{displaymath}
         \end{proof}
 
         % Problem 4
         \noindent\textbf{4.} In how many ways can we select a set of $m$ marbles from a collection of $2m$ marbles,
         where $m$ of them are identical and the remaining $m$ are all distinct?
         \begin{solution}
+            Let the collection of marbles look like $\{\underbrace{l,l,\ldots,l}_{m-\text{terms}},m_1,m_2,\ldots,m_m\}$.
+            Choose $r$ distinct marbles where $0\le r\le$ in $\binom{m}{r}$ ways.
+            Then we must choose the identical marbles in $m-r$ ways, for which there is only 1 way to
+            do this since they are all identical.
+            Thus, the number of ways to do our selection generally is:
+            \begin{displaymath}
+                \sum_{r=0}^m\binom{m}{r} = 2^m.
+            \end{displaymath}
         \end{solution}
 
         % Problem 5
