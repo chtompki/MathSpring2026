@@ -102,6 +102,16 @@
             \sum_{k=1}^n k\binom{n}{k}^2 = n\binom{2n-1}{n-1}
         \end{displaymath}
         \begin{proof}
+            We can reduce this problem to a question about a committee with men and women.
+            And we want to choose $n$ committee members from a pool of $n$ men and $n$ women, and we want
+            a woman chairperson.
+            The right hand side is clearly a count of just this.
+            For the left hand side consider a committee we choose $k$ women from $n$ choices, $\binom{n}{k}$.
+            Then, we count the $n-k$ men we chose from the $n$ men $\binom{n}{n-k} = \binom{n}{k}$.
+            All we are left to do is select woman who is supposed to chair the committee, and there are
+            $n$ ways to accomplish this task.
+            And thus we clearly have that:
+            \
         \end{proof}
 
         % Problem 4
