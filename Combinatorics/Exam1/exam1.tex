@@ -134,6 +134,12 @@
         \noindent\textbf{5.} Show that if $n+1$ distinct integers are chosen from the set $\{1,2,\ldots,3n\}$, then
         there are always two which differ by at most 2.
         \begin{proof}
+            For the sake of curiosity, let's look at the partition of our set in $n$ distinct blocks of
+            three consecutive integers.
+            From these blocks we choose $n+1$ integers, so by the pigeonhole principle one of the blocks must contain
+            two elements.
+            But, any block that contains two elements contains two numbers that differ by no more than two,
+            and we are done.
         \end{proof}
 
         % Problem 6
@@ -145,6 +151,42 @@
                   strangers.
         \end{enumerate}
         \begin{solution}
+            (a) We begin by using the mechanics of the integers modulo 10 to sketch out
+            the pigeonholes that we are working with.
+            We begin by noticing that we end up with 10 ``residues'' of the integers
+            modulo 10.
+            In other words, any integer can be written as
+            \begin{displaymath}
+                n\equiv r \mod{10},\quad\text{with}\quad r\in\{0,1,2,3,4,5,6,7,8,9\}.
+            \end{displaymath}
+            Futhermore we are in one of two situations if
+            \begin{displaymath}
+                a \equiv b \mod{10} \Rightarrow a-b\equiv 0 \mod{10}.
+            \end{displaymath}
+            or where
+            \begin{displaymath}
+                a+b\equiv 10 \equiv 0 \mod{10}.
+            \end{displaymath}
+
+            We then see that we have 6 possible different sets of integers into which our pick of
+            seven, from the problem statement, must land:
+            \begin{enumerate}[label=\arabic*.]
+                \item $S_0 = \{0\}$, if two numbers have remainder 0, their difference is a multiple of 10
+                \item $S_1 = \{1, 9\}$, sum is 10, or difference is 0, similarly
+                \item $S_2 = \{2,8\}$, where the sum is 10, or difference is 0,
+                \item $S_3 = \{3,7\}$, sum is 10, or difference 0,
+                \item $S_4 = \{4,6\}$, sum is 10, or difference is 0, and
+                \item $S_5 = \{5\}$, which if two numbers have remainder 5, their sum 5+5 = 10 or their difference
+                      $5 - 5 = 0$.
+            \end{enumerate}
+
+            So now we are choosing seven distinct integers that must land in our six distinct sets.
+            Let these two integers be $a$ and $b$.
+            If $a$ and $b$ share the same remainder when they land in our set $S_i$, we have
+            $a-b\equiv 0 \mod{10}$.
+            On the other had if they don't share the same remainder when they land in our set then
+            $a+b\equiv 10 \mod{10}$.
+            So by definition of the integers modulo $10$ we have that either $10|(a-b)$ or $10|(a+b)$.
         \end{solution}
 
         % Problem 7
@@ -152,8 +194,20 @@
         \begin{displaymath}
             x_1 + x_2 + x_3 + x_4 = 30,
         \end{displaymath}
-        such that $x_1 \le 1$, $x_2 \le 2$, $x_3 \le 3$, and $x_4 \le 4$?
+        such that $x_1 \ge 1$, $x_2 \ge 2$, $x_3 \ge 3$, and $x_4 \ge 4$?
         \begin{solution}
+            We begin by shifting to 0 by setting $y_1 \ge x_1 - 1$, $y_2 \ge x_2 - 2$,
+            $y_3 \ge x_3 - 3$, and $y_4 \ge x_4 - 4$, with $y_1\ge 0$, $y_2\ge 0$, $y_3\ge 0$, and $y_4\ge 0$.
+            thus our equation becomes
+            \begin{eqnarray*}
+                (y_1+1) + (y_2+2) + (y_3+3) + (y_4+4) & = & 30\\
+                y_1 + y_2 + y_3 + y_4 + 10 & = & 30\\
+                y_1 + y_2 + y_3 + y_4 & = & 20.
+            \end{eqnarray*}
+            So the number of possible solutions follows as
+            \begin{displaymath}
+                \binom{20 + 4 - 1}{4 - 1} = \binom{23}{3} = 1771
+            \end{displaymath}
         \end{solution}
 
         % Problem 8
@@ -163,6 +217,55 @@
         \end{displaymath}
         for which $1\le x_1 \le 6$, $0 \le x_2 \le 7$, $4\le x_3 \le 8$, and $2 \le x_4 \le 6$?
         \begin{solution}
+            For this problem we approach it much the same as the last problem regarding the
+            lower bounds which we shift to zero with the relations: $0\le y_1\le 5$, $0\le y_2\le 7$,
+            $0\le y_3\le 4$, and $0\le y_4\le 4$.
+            And the function becomes:
+            \begin{eqnarray*}
+                (y_1 + 1) + y_2 + (y_3 + 4)  + (y_4 + 2) & = & 20\\
+                y_1 + y_2 + y_3 + y_4 + 7 & = & 20\\
+                y_1 + y_2 + y_3 + y_4 & = & 13\\
+            \end{eqnarray*}
+            So our initial count begins as:
+            \begin{displaymath}
+                \binom{13 + 4 - 1}{4 - 1} = \binom{16}{3} = 560.
+            \end{displaymath}
+            But we have potentially double counted, triple counted, and quadruply counted solutions
+            that lie outside our bounds.
+
+            So, remembering that we have $0\le y_1\le 5$, $0\le y_2\le 7$,
+            $0\le y_3\le 4$, and $0\le y_4\le 4$ we consider the exclusion sets
+            \begin{displaymath}
+                A_1= \{y_1\ge 6\},\quad A_2=\{y_2\ge 8\},\quad A_3\{y_3\ge 5\},\quad\text{and}\quad A_4=\{y_4 \ge 5\}.
+            \end{displaymath}
+            To remove our double countings, we count our excluson sets from above
+            \begin{itemize}
+                \item[-] $A_1$: $(y_1 + 6) + y_2 + y_3 + y_4 = 13 \Rightarrow \binom{7+4-1}{4-1} = \binom{10}{3} = 120$,
+                \item[-] $A_2$: $y_1 + (y_2 + 8) + y_3 + y_4 = 13 \Rightarrow \binom{5+4-1}{4-1} = \binom{8}{3} = 56$,
+                \item[-] $A_3$: $y_1 + y_2 + (y_3+5) + y_4 = 13 \Rightarrow \binom{8+4-1}{4-1} = \binom{11}{3} = 165$, and
+                \item[-] $A_4$: same as $A_3$, $\binom{11}{3} = 165$.
+            \end{itemize}
+            So we will need to subtract $120 + 56 + 165 + 165 = 506$ from our original answer.
+
+            We will then need to re-add our triple countings in to our main count.
+            So again we resort to cases:
+            \begin{itemize}
+                \item[-] $A_1\cap A_2$: $(y_1 + 6) + (y_2 + 8) + y_3 + y_4 = 13 \Rightarrow \binom{-1+4-1}{4-1} = \binom{2}{3} = 0$,
+                \item[-] $A_1\cap A_3$: $(y_1 + 6) + y_2 + (y_3 + 5) + y_4 = 13 \Rightarrow \binom{2+4-1}{4-1} = \binom{5}{3} = 10$,
+                \item[-] $A_1\cap A_4$: $(y_1 + 6) + y_2 + y_3 + (y_4 + 5) = 13 \Rightarrow \binom{2+4-1}{4-1} = \binom{5}{3} = 10$,
+                \item[-] $A_2\cap A_3$: $y_1 + (y_2 + 8) + (y_3 + 5) + y_4 = 13 \Rightarrow \binom{0+4-1}{4-1} = \binom{3}{3} = 1$,
+                \item[-] $A_2\cap A_4$: $y_1 + (y_2 + 8) + y_3 + (y_4 + 5) = 13 \Rightarrow \binom{0+4-1}{4-1} = \binom{3}{3} = 1$, and
+                \item[-] $A_3\cap A_4$: $y_1 + y_2 + (y_3 + 5) + (y_4 + 5) = 13 \Rightarrow \binom{3+4-1}{4-1} = \binom{6}{3} = 20$.
+            \end{itemize}
+            And, we notice for any quadruple countings or quintuple countings of the solutions of the original equation
+            we would have an equation where the right hand side would look like $13 - (6+5+5) = -3$, $13 - (8+5+5) = -5$,
+            $13 - (8+6+5) = -6$, or $13 - (6+8+5+5)=-11$, none of which could happen.
+
+            Thus, our final count is
+            \begin{displaymath}
+                560 - 506 + (10 + 10 + 1+ 1+ 20) = 96.
+            \end{displaymath}
+
         \end{solution}
 
         % Problem 9
