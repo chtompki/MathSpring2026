@@ -367,6 +367,24 @@
         % Problem 10
         \noindent\textbf{10.} Solve the recurrence relation $a_k = a_{k-1} + k + 6$, with $k \ge 1$ given that $a_0=5$.
         \begin{solution}
+            We begin by noticing that
+            \begin{eqnarray*}
+                a_1 & = & a_0 + 1 + 6 \\
+                a_2 & = & a_1 + 2 + 6 \\
+                a_3 & = & a_2 + 3 + 6 \\
+                & \vdots &\\
+                a_k & = & a_{k-1} + \sum_{k=1}^k ( j+ 6).
+            \end{eqnarray*}
+            If we split the sum apart we see that
+            \begin{eqnarray*}
+                \sum_{k=1}^k ( j+ 6) & = & \sum_{k=1}^k j + \sum_{k=1}^k 6\\
+                & = & \frac{k(k+1)}{2} + 6k.
+            \end{eqnarray*}
+            So we further see that:
+            \begin{eqnarray*}
+                a_k & = & a_{k-1} + \frac{k(k-1)}{2} + 6k\\
+                & = & \frac{k^2 + 13k + 10}{2}
+            \end{eqnarray*}
         \end{solution}
 
         % Problem 11
@@ -374,6 +392,37 @@
         students, if each of the first 19 students can give either \$1 or nothing, and the twentieth student can give
         nothing, \$1, or \$5.
         \begin{solution}
+            We begin byu building our solution using ordinary generating functions.
+            Each of the first 19 students contribute either 0 or 1 dollars, so we need: $(1+x)^{19}$.
+            Secondly the $20^{th}$ student can give 0, 1, or 5 dollars, so we need: $1+x+x^5$.
+            Thus, when we multiply the parts together we get our generating function
+            \begin{eqnarray*}
+                g(x) & = & (1+x)^{19}(1+x+x^5)\\
+                & = & (1+x)^{19} + x(1+x)^{19} + x^5(1+x)^{19}.
+            \end{eqnarray*}
+
+            So we are going to use a new notation here. Let $[x^n]p(x)$ be the coefficient for $x^n$ in the
+            polynomial $p(x)$.
+            So for example $[x^2](1 + 10x - 3x^2 + 12x^3 + 17x^4) = -3$.
+
+            We are primarily concerned with $[x^15]g(x)$, as that is what corresponds to the number of ways to collect \$15.
+            So we look at
+            \begin{displaymath}
+                [x^15]g(x) = [x^15](1+x)^{19} + [x^15]x(1+x)^{19} + [x^15]x^5(1+x)^{19}
+            \end{displaymath}
+            But, notice $[x^15]x(1+x)^{19}=[x^14](1+x)^{19}$ and $[x^15]x^5(1+x)^{19}=[x^10](1+x)^{19}$.
+            So then we're faced with
+            \begin{displaymath}
+                [x^15]g(x) = [x^15](1+x)^{19} + [x^14](1+x)^{19} + [x^10](1+x)^{19}.
+            \end{displaymath}
+            And by the binomial expansion we have that
+            \begin{displaymath}
+                (1+x)^{19} = \sum_{k=0}^{19}\binom{19}{k}x^k
+            \end{displaymath}
+            So we have that,
+            \begin{displaymath}
+                [x^15]g(x) = \binom{19}{15} + \binom{19}{14} + \binom{19}{10} = 107,882.
+            \end{displaymath}
         \end{solution}
 
         % Problem 12
