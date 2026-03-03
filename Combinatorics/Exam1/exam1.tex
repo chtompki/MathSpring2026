@@ -483,6 +483,34 @@
             \binom{n}{r-1} = \sum_{i=0}^k (-1)^i\binom{k}{i}\binom{n + k - i}{r + k - i}
         \end{displaymath}
         \begin{proof}
+            We go about this by using the principle of inclusion-exclusion.
+            Consider a set $A$ containing $n+k$ elements, where $k$ elements are labled $x_1,x_2,\ldots,x_k$,
+            and remaining $n$ elements are labled $y_1,y_2,\ldots,y_n$.
+            We want to choose a subset of size $r+k$ from $S$ such that all $k$ elements $\{x_1,\ldots,x_k\}$
+            are included.
+            Selecting $k$ specific elements leaves us to choose $(r+k)-k=r$ elements from the remaining $n$.
+            However, to count all the elements we need to consider the complement and counting subsets of
+            size $r+k$ that contain at least one specific subset of ``forbidden'' elements.
+
+            Next we apply inclusion-exclusion.
+            Let $B$ bet the collection of elements of all subsets of $A$ with size $r+k$.
+            The total number of subsets is $\binom{n+k}{r+k}$.
+            For a fixed set of $i$ excluded elements we must consider $r+k$ elements from the remaining
+            $(r+k)-i$ elements, and the number of ways to do this is $\binom{n+k-i}{r+k-i}$, and there
+            are $\binom{k}{i}$ ways to choose $i$ elements to exclude.
+            So the sum becomes
+            \begin{displaymath}
+                \sum_{i=0}^k (-1)^i\binom{k}{i}\binom{n+k-i}{r+k-i}.
+            \end{displaymath}
+
+            So how do we get the left hand side of the equation?
+            If we must include all $k$ elements $\{x_1,\ldots,x_k\}$ in our subset of size $r+k$,
+            we are actively choosing $r$ elements from the remaining $n$ elements $\binom{n}{r}$.
+            By the symmetry of Pascal's identity, the alternating sum of binomial coefficients
+            of this form collapses.
+            Specifically using the identity we see that $\binom{n}{r} = \binom{n-1}{r} + \binom{n-1}{r-1}$,
+            repeatedly $k$ times which equates to $\binom{n}{r-k+k-1}=\binom{n}{r-1}$, the left hand side,
+            and we are done.
         \end{proof}
 
         % Problem 15
