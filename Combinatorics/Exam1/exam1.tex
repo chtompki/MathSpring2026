@@ -453,12 +453,34 @@
         \end{displaymath}
         is a multiple of 10.
         \begin{proof}
+            First factor $F(x,y)$ as
+            \begin{displaymath}
+                F(x,y) = x^3y-xy^3 = xy(x^2-y^2) = xy(x+y)(x-y)
+            \end{displaymath}
+            $F(x,y)$ must always be even because if $x,y$ are both even then both of the terms are even.
+            If $x,y$ are even and odd then $xy$ is even so $F(x,y)$ is even.
+            If both $x,y$ are odd, then $x^2$ is odd and $y^2$ is odd, but then $(x^2-y^2)$ is even.
+            So for every pair $2|F(x,y)$.
+            Thus, to get a multiple of 10, it only remains to show that $5|F(x,y)$.
+            Let's work with the integers modulo 5, and consider the residues $\mod{5}$ grouped by $\pm$ as
+            \begin{displaymath}
+                \{0\},\quad\{1,4\},\quad\{2,3\}.
+            \end{displaymath}
+            When you take an arbitrary three integers $a,b,c$ $(\mod{5})$, you get that two of the integers, call
+            them $x$ and $y$ end up such that either
+            \begin{itemize}
+                \item[-] both reduce to $0(\mod{5})$, and then $5|x$
+                \item[-] they are both in $\{1,4\}$ or both in $\{2,3\}$ which means that $x\equiv y(\mod{5})$
+                         $x\equiv -y(\mod{5})$. In either case $x-y\equiv 0 (\mod{5})$ or $x+y\equiv 0 (\mod{5})$, and
+                         hence $5|F(x,y)$.
+            \end{itemize}
+            So we have shown that $5|F(x,y)$, and we are done.
         \end{proof}
 
         % Problem 14
         \noindent\textbf{14.}Use combinatorial reasoning to show that:
         \begin{displaymath}
-            \binom{n}{r-1} = \sum_{i=0}^k (-1)^i\binom{k}{i}\binom{n + k + 1}{r + k + 1}
+            \binom{n}{r-1} = \sum_{i=0}^k (-1)^i\binom{k}{i}\binom{n + k - i}{r + k - i}
         \end{displaymath}
         \begin{proof}
         \end{proof}
