@@ -441,6 +441,8 @@
                   formed by the diagonals of the $n$-sided polygon.
         \end{enumerate}
         \begin{solution}
+            (a) The total number of intersection points is $\binom{n}{4}$.
+            (b) The number of line segments is
         \end{solution}
 
         % Problem 13
@@ -454,7 +456,7 @@
         \end{proof}
 
         % Problem 14
-        \noindent\textbf{14.} Use combinatorial reasoning to show that:
+        \noindent\textbf{14.}Use combinatorial reasoning to show that:
         \begin{displaymath}
             \binom{n}{r-1} = \sum_{i=0}^k (-1)^i\binom{k}{i}\binom{n + k + 1}{r + k + 1}
         \end{displaymath}
@@ -465,6 +467,31 @@
         \noindent\textbf{15.} Find and verify a general formula, involving the Sterling Numbers of the second kind,
         for $1^n + 2^n + 3^n + cdots + m^n$.
         \begin{solution}
+            Let $U$ be the set of all partitions of $[p]$ into $k$ distiguishable boxes $B_1,\ldots,B_{k}$.
+            We define all $k$ properties $P_1,\ldots,P_k$ where $P_i$ is the property that the $i^{th}$ box $B_i$ is
+            empty.
+            Let $A_i$ denote the subset of $U$ consisting of all of those partitions for which $B_i$ is empty
+            then
+            \begin{displaymath}
+                S(p,k) = |\bar{A_1}\cap\bar{A_2}\cap\cdots\cap\bar{A_k}|,\quad\text{and}\quad |U|=k^p,
+            \end{displaymath}
+            since each of the $p$ elements can be put into any one of the $k$ distinguishable boxes.
+            Let $t$ be an integer such that $1\le t\le k$.
+            How many partitions of $U$ belong to the intersection $A_1\cap A_2\cap\cdots\cap A_t$?
+            For these partitions the boxes $B_1,\ldots,B_t$ are empty and the remaining boxes
+            $B_{t+1},\ldots,B_k$ may or may not be empty.
+            Thus, $|A_1\cap A_2\cap\cdots\cap A_t|$ counts the number of partitions of $[p]$ into $k-t$
+            distinguishable boxes and hence equals $(k-t)^p$.
+            The same conclustion holds no matter which $t$ boxes are assumed empty; that is
+            \begin{displaymath}
+                |A_{i_1}\cap A_{i_2}\cap\cdots\cap A_{i_t}| = (k-t)^p
+            \end{displaymath}
+            for each $t$-subset $\{i_1,i_2,\ldots,i_t\}$ of $\{1, 2, lodots, k\}$.
+            By the inclusion-exclusion principle, we have
+            \begin{displaymath}
+                S(p,k) = \sum_{t=0}^k(-1)^t\binom{k}{t}(k-t)^p,
+            \end{displaymath}
+            and we are done.
         \end{solution}
 
     \end{onehalfspace}
