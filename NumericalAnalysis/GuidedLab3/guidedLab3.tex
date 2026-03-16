@@ -27,57 +27,154 @@
     \date{\today}
     \begin{onehalfspace}
         Note, all the files associated with Guided Lab 3 are checked into the : \\
-        \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab3}
-
+        \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab3}\\
+\quad\\
         Problems 1, 2, and 3, were predominantly only writing code. The code can be found at:
         \underline{\href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab3/naturalCubicSplines.m}{naturalCubicSplines.m}}.
         Though, the code for these three problems also follows as
         \begin{tiny}
         \begin{verbatim}
 function [A,rvec,c,a,b,d] = naturalCubicSplines(x,y)
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Natural cubic spline interpolator
+    %
+    % Inputs:
+    %   x     - vector of x data points
+    %   y     - vector of y data points
+    %   xstar - point(s) where spline is to be evaluated
+    %
+    % Output:
+    %   ystar - spline value(s) at xstar
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if length(x) < 2 | length(y) < 2
         error('Input vectors are not long enough, please make them of length two or more and be of the same size')
     end
     if length(x) ~= length(y)
         error('Input vectors are not the same length')
     end
-    A=zeros(length(x));
-    rvec=zeros(length(x),1);
-    h=zeros(1,length(x));
 
-    % Begin Problem 1
+    % Make sure x and y are column vectors
+    x = x(:);
+    y = y(:);
+
+    % n = number of subintervals
+    n = length(x) - 1;
+
+    % Initialize A and rvec
+    A = zeros(n+1,n+1);
+    rvec = zeros(n+1,1);
+
+    % Calculate vector of h values
+    h = diff(x);
+
+    % Natural spline boundary conditions
     A(1,1) = 1;
-    A(length(x),length(x)) = 1;
+    A(n+1,n+1) = 1;
 
-    h(1) = x(2) - x(1);
-
-    for i = 2:length(x)-1
-        h(i) = x(i+1) - x(i);
+    % Populate rest of matrix A and RHS vector
+    for i = 2:n
         A(i,i-1) = h(i-1);
-        A(i,i) = 2*(h(i-1)+h(i));
+        A(i,i)   = 2*(h(i-1) + h(i));
         A(i,i+1) = h(i);
-        rvec(i) = 3*((y(i+1)-y(i))/h(i) - (y(i)-y(i-1))/h(i-1));
+        rvec(i)  = 3*((y(i+1)-y(i))/h(i) - (y(i)-y(i-1))/h(i-1));
     end
-    % End Problem 1
 
-    % Problem 2 - Solve the system of equations
+    % Solve for c coefficients
     c = A \ rvec;
 
-    % Problem 3 - Calculate the coefficients a, b, and d
-    a = zeros(length(x),1);
-    for i=1:length(x)
-        a(i) = y(i);
+    % Compute a coefficients
+    a = zeros(n+1,1);
+    for j = 1:n+1
+        a(j) = y(j);
     end
 
-    b = zeros(length(x)-1, 1);
-    d = zeros(length(x)-1, 1);
+    % Compute b and d coefficients
+    b = zeros(n,1);
+    d = zeros(n,1);
 
-    for i = 1:length(x)-1
-        b(i) = (c(i+1) - c(i))/(3*h(i));
-        d(i) = (a(i+1) - a(i))/h(i) - (h(i)*(2*c(i) + c(i+1)))/3;
+    for j = 1:n
+        d(j) = (c(j+1) - c(j)) / (3*h(j));
+        b(j) = (a(j+1) - a(j))/h(j) - (h(j)/3)*(2*c(j) + c(j+1));
     end
 end
         \end{verbatim}
         \end{tiny}
+
+        Problem 4 works with the following code:
+
+        \begin{tiny}
+        \begin{verbatim}
+coeffs=zeros(length(x)-1, 4);
+for k=1:length(x)-1
+    coeffs(k,:)=[d(k) c(k) b(k) a(k)];
+end
+
+breaks=[x];
+pp=mkpp(breaks,coeffs);
+ystar=ppval(pp,xstar);
+        \end{verbatim}
+        \end{tiny}
+
+        At first, we're running \texttt{pp=mkpp(breaks,coeffs)} which takes the intervals over the $x$ vector, and the
+        coefficients, and builds cubic polynomials using the values $d_i$, $c_i$, $b_i$, and $a_i$ for the interval between
+        $x_i$ and $x_{i+1}$.
+        Running \texttt{mkpp} results in the output \texttt{pp} is a matlab struct with the following fields:
+        \texttt{form}, \texttt{breaks}, \texttt{coefs}, \texttt{pieces}, \texttt{order}, and \texttt{dim}.
+        \texttt{form} seems to be a constant string term with the value $pp$ for piecewise polynomial.
+        \texttt{breaks} represents the increasing list of $x$ values of our points.
+        \texttt{coefs} is a matrix of coefficients set up for the equation
+        \begin{displaymath}
+            f(x) = a(x-x_i)^3 + b(x-x_i)^2 + c(x-x_i) + d
+        \end{displaymath}
+        based on the $i^{th}$ interval.
+        \texttt{pieces} is the number of elements in the partition; \texttt{order} is the order of the polynomials; and
+        \texttt{dim} is the dimensionality of the target.
+        All of this then in turn gets sent to the function \texttt{ppeval(pp,xstar)}, which is a canned matlab function
+        specifically for taking this data structure $pp$ and generating $y$ values given an arbitrary collection of $x$
+        values.
+        We were told to not edit this code, but curiously \texttt{xstar} is not defined, so we must in some fashion by
+        defining it.
+        It seems the best thing to do here is to take the minimum and maximum values from $x$ and evenly subdivide the
+        system for evaluation and to get a plot.
+
+        Problem 4 above adapted the original code from above such that the signature of the \texttt{naturalCubicSplines}
+        function follows as \texttt{ystar=naturalCubicSplines(x,y,xstar)}. This is quite important for Problem 5 because
+        we run the data in Table \ref{silverNitrate} through the method.
+        \begin{table}
+        \begin{tabular}{|c|ccccccccc|}
+            \hline
+            Molality & 0.005 & 0.010 & 0.020 & 0.050 & 0.100 & 0.200 & 0.500 & 1.000 & 2.000\\
+            \hline
+            Coefficient & 0.924 & 0.896 & 0.859 & 0.794 & 0.732 & 0.656 & 0.536 & 0.430 & 0.316\\
+            \hline
+        \end{tabular}
+        \caption{The Molality Given the Meah Activity Coefficients of Silver Nitrate}
+        \label{silverNitrate}
+        \end{table}
+        We then set $x$ to be Molality, and $y$ to be Coefficient and $xstar=0.032$ to see what our method outputs.
+        We get $ystar=0.8283$.
+        The following code:
+        \begin{tiny}
+        \begin{verbatim}
+x = [0.005 0.010 0.020 0.050 0.100 0.200 0.500 1.000 2.000];
+y = [0.924 0.896 0.859 0.794 0.732 0.656 0.536 0.430 0.316];
+
+ystar = naturalCubicSpline1(x,y,0.032)
+        \end{verbatim}
+        \end{tiny}
+        yields the following output:
+
+        \begin{tiny}
+        \begin{verbatim}
+>> gl3prob5
+
+ystar =
+
+    0.8283
+        \end{verbatim}
+        \end{tiny}
+        Lastly note we have all this in thge file
+        \underline{\href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab3/gl3prob5.m}{gl3prob5.m}}.
+
     \end{onehalfspace}
 \end{document}
