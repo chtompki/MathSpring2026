@@ -177,4 +177,46 @@ ystar =
         \underline{\href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab3/gl3prob5.m}{gl3prob5.m}}.
 
     \end{onehalfspace}
+
+    For problem 6 we consider Table \ref{larvaeWeight} over which we will compute cubic spline interpolants.
+    \begin{table}
+    \begin{tabular}{r|ccccccc}
+        \hline
+        Days After Birth & 0 & 6 & 10 & 13 & 17 & 20 & 28 \\
+        \hline
+        avg. weight, \emph{mg} (from young leaves) & 7 & 18 & 45 & 40 & 32 & 30 & 30.5\\
+        avg. weight, \emph{mg} (from mature leaves) & 7 & 16 & 19 & 15 & 12 & 10.5 & 10\\
+        \hline
+    \end{tabular}
+    \caption{Average weights of larvae from Feeny, P. (1970) \emph{Ecology}, \textbf{51} (4), 565-581.}
+    \end{table}
+    For portion (a) of Problem 6, we have the following code and output
+    \begin{tiny}
+    \begin{verbatim}
+daysAfterBirth  = [0 6 10 13 17 20 28];
+weightYoungLeaves = [7 18 45 40 32 30.5 30];
+weightMatureLeaves = [7 16 19 15 12 10.5 10];
+
+youngWeight = naturalCubicSpline1(daysAfterBirth,weightYoungLeaves,3)
+matureWeight = naturalCubicSpline1(daysAfterBirth,weightMatureLeaves,3)
+meanWeight = (youngWeight + matureWeight)/2
+
+% >> gl3prob6
+%
+% youngWeight =
+%
+%     7.1888
+%
+%
+% matureWeight =
+%
+%    11.5619
+%
+%
+% meanWeight =
+%
+%     9.3754
+    \end{verbatim}
+        So our mean weight works out to be 9.3754\emph{mg}.
+    \end{tiny}
 \end{document}
