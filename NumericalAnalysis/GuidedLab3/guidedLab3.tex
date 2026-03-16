@@ -302,6 +302,46 @@ hold off;
             \label{gl3prob7fig1}.
         \end{figure}
 
+        Regarding problem 8, we have gone through and removed the points as requested. The code follows as:
+        \begin{tiny}
+            \begin{verbatim}
+time=[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24];
+temp=[58 58 58 58 57 57 57 58 60 64 67 68 66 66 65 64 63 63 62 61 60 60 59 58];
+time2=[ 2 4 6 8 10 12 14 16 18 20 22 24];
+temp2=[58 58 57 58 64 68 66 64 63 61 60 58];
+
+xstar = zeros(100);
+for i = 1:100
+    xstar(i) = i*0.24;
+end
+
+ystar = naturalCubicSplines(time,temp,xstar);
+ystar2 = naturalCubicSplines(time2,temp2,xstar);
+
+figure;
+hold on;
+plot(xstar,ystar, 'k-');
+plot(xstar,ystar2, 'k.');
+plot(time,temp, 'ko');
+xlabel('Time (hours)');
+ylabel('Temperature (°F)');
+hold off;
+            \end{verbatim}
+        \end{tiny}
+        Our plot is given in Figure \ref{gl3prob8fig1}.
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.5]{gl3prob8fig1.png}
+            \caption{Temperature in Fahrenheit for a given day in a random location interpolated on the hour and the even hour.}
+            \label{gl3prob8fig1}.
+        \end{figure}
+
+        What can be determined by the dropping of points regarding interpolation?
+        Well certainly we get different plots, the functions diverge as there is more room
+        for wiggle with the spline on fewer points.
+        The graphs are both continuous, but clearly the more points in our data set the closer our curve is going
+        to be to the actual temperature of the day, and that is a limit process.
 
     \end{onehalfspace}
 
