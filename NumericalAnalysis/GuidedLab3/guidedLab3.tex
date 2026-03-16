@@ -235,7 +235,7 @@ meanWeightMatlab = (youngWeightMatlab + matureWeightMatlab)/2
         temperature to try to create a function that will give us temperature at any given time (approximately).
         The data isn't particularly interesting other than it is a continuous function in real life, so our cubic spline
         will probably be a good representation of where the temperature is during the day generally.
-        The data set is given in Table \ref{temperatureTable}
+        The data set is given in Table \ref{temperatureTable}.
 
         \begin{table}
         \begin{tabular}{c|c||c|c}
@@ -256,6 +256,8 @@ meanWeightMatlab = (youngWeightMatlab + matureWeightMatlab)/2
             Midnight & 58 & Noon & 68\\
             \hline
         \end{tabular}
+        \caption{Temperature in Farenheit over a day}
+        \label{temperatureTable}
         \end{table}
 
         The problem calls for a for loop to appropriately generate our \texttt{xstar} vector to be passed into the function
