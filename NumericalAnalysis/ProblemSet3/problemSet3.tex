@@ -99,5 +99,74 @@
         \section{Problem 2}
         Our goal here is to approximate $\ln(2)$ with piecewise polynomials.
 
+        %2.a
+        \subsection{}
+        Since each piece has 3 coefficients and there are $n+1$ points there are $n$ pieces to the polynomial.
+        So we have $3n$ coefficients to account for.
+        We will refer to our interpolation function at $s(x)$, with the piceces being $s_i(x)$.
+
+        We begin by interpolating the endpoints of the segments giving us $s_i(x_i)=y_i$ and $s_i(x_{i+1}) = y_{i+1}$.
+        This gives us our first $2n$ constraints.
+
+        Next we approach the first derivatives of the pieces for which we need equality for continuity on the
+        inner $n-1$ points or knots.
+        So we must have that
+        \[
+            s_i'(x_{i+1}) = s_{i+1}(x_{i+1}),
+        \]
+        which gives us another $n-1$ conditions.
+        So we are missing 1 condition to reach our $3n$ requisite conditions to be able to solve for
+
+        The piece that we are missing is one of the boundary conditions. For example we could use
+        $s_0(x_0)$ and fix that or use $s_{n-1}(x_n)$.
+        Regardless we need this one more condition to get all of our constants.
+
+        %2.b
+        \subsection{}
+        We were instructed to use the dataset from problem 1, $\{(-1,1/2), (0,1), (1,2)\}$ to solve this problem.
+        This yields the intervals $I_0=[-1,0]$ and $I_1=[0,1]$.
+        The interpolating polynomials that we are looking to find the coefficients for follow
+        \begin{gather*}
+            s_0(x) = a_0 + b_0(x+1)+c_0(x+1)^2\\
+            s_1(x) = a_1 + b_1 x + c_1 x^2.
+        \end{gather*}
+        We begin by using the interpolation conditions such that $s_0(-1) = 1/2 \Rightarrow a_0=1/2$,
+        $s_0(0) = 1 = 1/2 + b_0 + c_0$ and $s_0'(-1) = b_0 + 2c_0(-1+1) = 0$ we have that $b_0 = 0$.
+        Thus $c_0 = 1/2$, which gives us
+        \[
+            s_0(x) = \frac{1}{2} + \frac{1}{2}(x+1)^2
+        \]
+        Notice that $s_1(0) = 1 \Rightarrow a_1 = 1$.
+        Next we use derivative continuity at $x=0$ to find the other coefficients.
+        We have that $s_1'(x) = b_1 + 2c_1 x$, so $s_0'(0) = s_1'(0) = b_1 = 1$.
+        Lastly, we use our boundary condition $s_1(1) = 2 = 1 + 1 + c_1(1) = 2$ to get $c_1 = 0$.
+        And we have
+        \[
+            s_1(x) = 1 + x.
+        \]
+        So
+        \[
+            s(x) =
+            \begin{cases}
+                \frac{1}{2} + \frac{1}{2}(x+1)^2 & -1\le x < 0\\
+                1+x & 0\le x \le 1
+            \end{cases}
+        \]
+
+        %2.c
+        \subsection{}
+        We begin by noticing that $s_0'(0) = 1$ and $s_1'(0) = 1$ by the continuity of $s'(x)$.
+        Now again we are using the function $f(x)=2^x$ such that $f'(x) = \ln(2) 2^x$ and $f'(0) = \ln(2)$, so
+        we use $s'(0) = 1 \approx \ln(2)$.
+        We did a calculation on a computer just to test the error here and we got $\ln(2)=0.69315$, so we
+        are quite off
+
+        %2.d
+        \subsection{}
+        Skip
+
+        \section{Problem 3}
+
+
     \end{onehalfspace}
 \end{document}
