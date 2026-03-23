@@ -308,5 +308,41 @@ ybarNewton = newtonDividedDiff(x, y, xbar)
         \end{tiny}
         which again yields $\texttt{xbar} = -0.3400$.
 
+        \section{Problem 4}
+        We are given the function $f(x) = xe^{-x}$ over the interval $[-1,3]$.
+        For this problem we will rely upon computational mechanisms available
+        to us for our approach as opposed to working things out by hand.
+
+        Note for Chebyshev points we have to re-map the domain because the Chebyshev
+        points are generally defined on the interval $[-1,1]$, and we need to operate over
+        $[-1,3]$ so our Chebyshev points become
+        \begin{gather*}
+            x_0 = 1 + 2\cos\frac{\pi}{10},\qquad x_1 = 1 + 2\cos\frac{3\pi}{10},\qquad x_2 = 1 + 2\cos\frac{5\pi}{10}\\
+            x_3 = 1 + 2\cos\frac{7\pi}{10},\qquad x_4 = 1 + 2\cos\frac{9\pi}{10}.
+        \end{gather*}
+        The Chebyshev answer can be found in our book on pgs 380-381, though we use the code
+        from class to plot the interpolations given in Figure \ref{ps3prob4interpolant} and
+        \ref{ps3prob4error}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.5]{ps3prob4interpolant.png}
+            \caption{The polynomial interpolants.}
+            \label{ps3prob4interpolant}.
+        \end{figure}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.5]{ps3prob4error.png}
+            \caption{The interpolation errors.}
+            \label{ps3prob4error}.
+        \end{figure}
+
+
+
+
+
+
+
     \end{onehalfspace}
 \end{document}
