@@ -1,0 +1,42 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\NewDocumentCommand{\vitem}{v}{%
+    \item[\texttt{#1}]%
+}
+
+\title{Numerical Analysis\\Problem Set 3}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        We begin by noting that all of the files referenced in this document are available at: \\
+        \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet3}
+
+        \section{Problem 1}
+        We'll be approximating $\sqrt{2}$ though this problem
+        \subsection{1.a.}
+        Our goal is to find a polynomial interpolant $p(x)$ using the Lagrange form given that we have
+        three points in the form $x,f(x)$ as $\{(-1,1/2), (0,1), (1,2)\}$.
+    \end{onehalfspace}
+\end{document}
