@@ -14,6 +14,8 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
 \newenvironment{solution}
 {\begin{proof}[Solution]}
 {\end{proof}}
@@ -35,8 +37,67 @@
 
         \section{Problem 1}
         We'll be approximating $\sqrt{2}$ though this problem
-        \subsection{1.a.}
+
+        %1.a
+        \subsection{}
         Our goal is to find a polynomial interpolant $p(x)$ using the Lagrange form given that we have
-        three points in the form $x,f(x)$ as $\{(-1,1/2), (0,1), (1,2)\}$.
+        three points in the form $x,f(x)$ as $\{(-1,1/2), (0,1), (1,2)\}$. So we let $f(x) = 2^x$ such that
+        $f(1/2) = \sqrt{2}$. So our polynomial begins as
+        \[
+            p(x) = y_0 L_0(x) + y_1 L_1(x) + y_2 L_2(x),
+        \]
+        with $y_i = f(x_i)$ and $L_i(x)$ being the $i^{th}$ Lagrange polynomial.
+        Computing the polynomials follows as
+        \begin{gather*}
+            L_{2,0}(x) = \frac{(x-x_1)(x-x_2)}{(x_0-x_1)(x_0-x_2)} = \frac{(x-0)(x-1)}{(-1-0)(-1-1)} = \frac{x(x-1)}{2}\\
+            L_{2,1}(x) = \frac{(x-x_0)(x-x_2)}{(x_1-x_0)(x_1-x_2)} = \frac{(x+1)(x-1)}{(0+1)(0-1)} = 1-x^2\\
+            L_{2,2}(x) = \frac{(x-x_0)(x-x_1)}{(x_2-x_0)(x_2-x_1)} = \frac{(x+1)(x-0)}{(1+1)(1-0)} = \frac{x(x+1)}{2}
+        \end{gather*}
+
+        %1.b
+        \subsection{}
+        Putting these together we have the following polynomial:
+        \begin{eqnarray*}
+            p(x) & = &  \frac{1}{2}\cdot\frac{x(x-1)}{2} + 1\cdot(1-x^2) + 2\cdot\frac{x(x+1)}{2} \\
+             & = & \frac{x^2}{4} - \frac{x}{4} + 1 -x^2 + x^2 + x\\
+            & = & \frac{x^2}{4} + \frac{3x}{4} + 1
+        \end{eqnarray*}
+        Pluggin in $x=1/2$ we get the following
+        \begin{eqnarray*}
+            p\left(\frac{1}{2}\right) & = & \frac{1}{4}\cdot\frac{1}{4} + \frac{3}{4}\cdot\frac{1}{2} + 1\\
+            & = & \frac{1}{16} + \frac{3}{8} + 1\\
+            & = & \frac{1}{16} + \frac{6}{16} + \frac{16}{16}\\
+            & = & \frac{23}{16} \approx \sqrt{2}.
+        \end{eqnarray*}
+
+        %1.c
+        \subsection{}
+        For the error bound we want to compute the following
+        \begin{displaymath}
+            |f(x) - p(x)| = \frac{f'''(\xi)}{3!} (x - x_0)(x - x_1)(x - x_2),
+        \end{displaymath}
+        where $\xi\in[-1,1]$.
+        We compute the third derivative of $f(x)$ by setting $f(x) = \ln(x) = e^{x\ln(2)}$.
+        Clearly then we have
+        \begin{displaymath}
+            f'''(x) = (\ln(2))^3 e^{x\ln(2)} = (\ln(2))^3 2^x.
+        \end{displaymath}
+        We want to have $\xi$ such that $|f'''(\xi)|$ is largest so that everything else is beneath that
+        as our upper bound.
+        Because $f(x) = 2^x$ is an increasing exponential, the maximum of the third derivative will necessarily
+        be the right hand end point. So we set $\xi=1$ giving us $f'''(\xi) = 2(\ln(2))^3.$ So
+        \begin{displaymath}
+            |f(x) - p(x)| = \frac{f'''(\xi)}{3!} (x - x_0)(x - x_1)(x - x_2) = \frac{2(\ln(2))^3}{6}(x+1)(x)(x-1)
+        \end{displaymath}
+        And we want to know the error at $x=1/2$ which comes out at
+        \begin{eqnarray*}
+            \left|f\left(\frac{1}{2}\right) - p\left(\frac{1}{2}\right)\right| & = & \frac{2(\ln(2))^3}{6}\left(\frac{1}{2}+1\right)\cdot\frac{1}{2}\cdot\left(\frac{1}{2}-1\right)\\
+            & = & \frac{3\ln(2)^3}{24} \\
+            & = & \frac{\ln(2)^3}{8} = 0.0416
+        \end{eqnarray*}
+
+        \section{Problem 2}
+        Our goal here is to approximate $\ln(2)$ with piecewise polynomials.
+
     \end{onehalfspace}
 \end{document}
