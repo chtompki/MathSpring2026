@@ -231,6 +231,82 @@ ybar = nevilleInterpolation(x,y,xbar)
 
         %3.b
         \subsection{}
+        We want to compute the same as above except use Newton's method using divided differences.
+        So we need to find the polynomial:
+        \[
+            P_2(x) = f[x_0] + f[x_0,x_1](x-x_0) + f[x_0,x_1,x_2](x-x_0)(x-x_1),
+        \]
+        where $f[x_i]$ is the divided difference with respect to $x_i$, and
+        \[
+            f[x_i,x_{i+1},\ldots,x_{i+k-1},x_{i+k}] = \frac{f[x_{i+1},\ldots,x_{i+k-1},x_{i+k}] - f[x_i,x_{i+1},\ldots,x_{i+k-1}]}{x_{i+k} - x_i}.
+        \]
+        We begin by noticing that $f[x_i] = f(x_i)$ is given by our points: $x_0=0$, $x_1=1$, and $x_2=2$, so
+        \[
+            f[x_0] = 2,\qquad f[x_1] = -1,\qquad f[x_2] = 4.
+        \]
+        Now we compute $f[x_0,x_1]$ and $f[x_1,x_2]$ as
+        \[
+            f[x_0,x_1] = \frac{f[x_1] - f[x_0]}{x_1 - x_0} = \frac{-1 -2}{1} = -3
+        \]
+        and
+        \[
+            f[x_1,x_2] = \frac{f[x_2] - f[x_1]}{x_2 - x_1} = \frac{4+1}{2-1} = 5.
+        \]
+        Lastly $f[x_0,x_1,x_2]$ follows as:
+        \[
+            f[x_0,x_1,x_2] = \frac{f[x_1,x_2] - f[x_0,x_1]}{x_2 - x_0} = \frac{5 + 3}{2} = 4
+        \]
+        So our polynomial follows as:
+        \begin{eqnarray*}
+            P_2(x) & = & 2 - 3(x - 0) + 4(x - 0)(x - 1)\\
+             & = & 4x^2-7x+2
+        \end{eqnarray*}
+        So when we compute $P_2(1.3)$ we get the following
+        \begin{eqnarray*}
+            P_2(1.3) & = & 4(1.69) -7 (1.3) + 2 \\
+            & = & 6.76 - 9.1 + 2 \\
+            & = & -0.34
+        \end{eqnarray*}
+        which is what we got in 3.a using Neville's method.
+        Similar to the previous problem we code Newton's method as:
+        \begin{tiny}
+        \begin{verbatim}
+function p = newtonDividedDiff(x, y, xbar)
+    n = length(x);
+    DD = zeros(n, n);
+
+    % First column: function values
+    DD(:,1) = y(:);
+
+    % Build divided difference table
+    for j = 2:n
+        for i = 1:n-j+1
+            DD(i,j) = (DD(i+1,j-1) - DD(i,j-1)) / (x(i+j-1) - x(i));
+        end
+    end
+
+    % Evaluate Newton polynomial at xbar
+    p = DD(1,1);
+    prodterm = 1;
+
+    for j = 2:n
+        prodterm = prodterm * (xbar - x(j-1));
+        p = p + DD(1,j) * prodterm;
+    end
+
+    % Display divided difference table if desired
+    disp('Divided difference table:')
+    disp(DD)
+end
+
+x = [0 1 2];
+y = [2 -1 4];
+xbar=1.3;
+
+ybarNewton = newtonDividedDiff(x, y, xbar)
+        \end{verbatim}
+        \end{tiny}
+        which again yields $\texttt{xbar} = -0.3400$.
 
     \end{onehalfspace}
 \end{document}
