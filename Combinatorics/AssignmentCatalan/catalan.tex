@@ -47,9 +47,28 @@
             of smaller trees.
             So counting binary trees in this fashion is a split of counting two independent sub-Catalan objects.
 
-            Supose $\Phi$ defines a map from binary trees to balanced parentheses strings.
+            Suppose, $\Phi$ defines a map from binary trees to balanced parentheses strings.
             We do the following iteratively: (a) the empty tree maps to the empty string, and (b) if a tree has a root,
             a left subtree $L$, and a right subtree $R$, then we write $\Phi(T) = (\Phi(L))\Phi(R)$.
+            So each vertex contributes one pair of matched parentheses with the left subtree written inside the pair
+            and the right subtree afterward.
+
+            \noindent\emph{Why is this a bijection?}\\
+
+            Every binary tree has a decomposition into: (a) a root, (b) a left subtree, and (c) a right subtree.
+            Every non-empty balanced parentheses string has a unique decomposition of the form
+            \[
+                (w_0)w_1,
+            \]
+            where $w_0$ and $w_1$ are balanced parentheses strings.
+
+            So, from a balanced string $w$ we recover a tree by using the following steps: (a) making a root, (b) taking
+            the substring inside the first matching pair as the left subtree, and (c) taking the remaining suffix
+            substring as the right subtree.
+            Thus, we see that $\Phi$ is one-to-one and onto, a bijection.
+
+            Since the balanced parentheses strings with $n$-pairs are counted by the Catalan numbers $C_n$, then it
+            naturally follows that the binary trees on $n$-vertices are counted by $C_n$.
         \end{proof}
     \end{onehalfspace}
 \end{document}
