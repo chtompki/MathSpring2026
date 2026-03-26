@@ -17,7 +17,9 @@
 {\begin{proof}[Solution]}
 {\end{proof}}
 
-\title{Combinatorics\\Catalan}
+\newtheorem{theorem}{Theorem}
+
+\title{Combinatorics\\Catalan Numbers Homework}
 \author{Rob Tompkins}
 \date{\today}
 
@@ -25,6 +27,29 @@
     \maketitle
     \date{\today}
     \begin{onehalfspace}
+        \begin{theorem}
+            Let $C_n$ represent the Catalan numbers, with
+            \[
+                C_n = \frac{1}{n+1}\binom{2n}{n}.
+            \].
+            We define the Catalan numbers as the number of valid ways to arrange $n$-pairs of left-right
+            parentheses where every opening bracket has a subsequent closing bracket, and they are nested correctly.
+            We want to show that $C_n$ as defined above, also represents the number of binary trees with $n$ vertices.
+        \end{theorem}
 
+        \begin{proof}
+            Our proof technique is the mechanics of reduction.
+            We reduce one problem to another based on definition.
+            Our goal will be to show that there is a bijective correspondence between the two definitions and
+            their outcomes.
+
+            The fundamental idea behind the proof will be that every binary tree is determined by a root and a pair
+            of smaller trees.
+            So counting binary trees in this fashion is a split of counting two independent sub-Catalan objects.
+
+            Supose $\Phi$ defines a map from binary trees to balanced parentheses strings.
+            We do the following iteratively: (a) the empty tree maps to the empty string, and (b) if a tree has a root,
+            a left subtree $L$, and a right subtree $R$, then we write $\Phi(T) = (\Phi(L))\Phi(R)$.
+        \end{proof}
     \end{onehalfspace}
 \end{document}
