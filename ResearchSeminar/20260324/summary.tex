@@ -1,0 +1,49 @@
+%! Author = chtompki
+%! Date = 1/14/26
+% Example LaTeX document for GP111 - note % sign indicates a comment
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{shadows,arrows,arrows.meta,shapes,positioning,calc}% Required for the Circle and Triangle arrow tips
+\usepackage{setspace}
+\usepackage{siunitx}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{question}
+\newtheorem{question}{Question}
+
+\title{Seminar Summary:\\March 24, 2026 - Reed Ogrosky\\Some mathematical modeling projects\\ using differential equations\\ in fluid dynamics}
+\author{Rob Tompkins}
+\date{\today}
+
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        \section{Mathematical modeling of gas---liquid transport in human airways/lungs}
+        The lecture began with a presentation of a model of the fluid mechanics of the movement of mucus around the lungs,
+        which is a curious problem because there is quite a large free surface of liquid in the lungs due to the branches
+        as well as the fluid itself being non-newtonian (having viscoelastic properties) in nature.
+        We began by discussing the mechanics of the cilia that line the lungs and how they beat in rhythmic fashions
+        to move the mucus up and out of the lungs generally.
+        We were then posed with a quote:
+        \begin{quote}
+            ``It is awkward that in 2022 a comprehensive description of the organization and topography of mucus
+            transport macroscopically under basal or stressed conditions is not available.'' --- Hill et al. (2022)
+        \end{quote}
+
+
+    \end{onehalfspace}
+\end{document}
