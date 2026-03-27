@@ -34,8 +34,8 @@
     \begin{onehalfspace}
         \section{Mathematical modeling of gas---liquid transport in human airways/lungs}
         The lecture began with a presentation of a model of the fluid mechanics of the movement of mucus around the lungs,
-        which is a curious problem because there is quite a large free surface of liquid in the lungs due to the branches
-        as well as the fluid itself being non-newtonian (having viscoelastic properties) in nature.
+        which is a curious problem because there is quite a large free surface of liquid in the lungs due to the number of branches.
+        Furthermore, the fluid itself being non-newtonian (having viscoelastic properties) in nature makes for a more difficult problem.
         We began by discussing the mechanics of the cilia that line the lungs and how they beat in rhythmic fashions
         to move the mucus up and out of the lungs generally.
         We were then posed with a quote:
@@ -43,6 +43,57 @@
             ``It is awkward that in 2022 a comprehensive description of the organization and topography of mucus
             transport macroscopically under basal or stressed conditions is not available.'' --- Hill et al. (2022)
         \end{quote}
+        Personally, to me, this implies that the mechanics of the problem are in the space of difficulty similar to that
+        of the standard dynamical system governed by the Navier-Stokes that are difficult to solve (e.g. weather prediction).
+
+        So the question that we are concerned with is: how effective is flow of gas from breathing in moderating the mucus?
+        Can the breathing clear the mucus on its own?
+        Now, for the purpose of exploring the problem, we are only concerned with the lung tissue being smooth and how
+        the mechanics of the movement of air effects whether the fluids coating the edges of the bronchioles converts into
+        plugs of fluid occluding the entire space.
+        Now this is particularly difficult because the walls of the bronchioles are continuously moving as well.
+        Furthermore, the mucus sits on a secondary layer of fluid periciliary layer which again complicates the matter.
+
+        So can we simply throw computation at the problem and pray that it's going to work?
+        No, the complexity of the problem simply outstrips our abilities to solve because of: the movement of the free
+        surface, the huge variability in the viscosity of the mucus ($10^5$), the change in velocities of both the
+        bronchi/bronchioles and the air movement, mucus plugs regularly forming in the airways change the topology of the
+        free surface for modeling.
+
+        What do we do?
+        Reduced order modeling, get out of the PDE world into the ODE world, which we base on PDE studies in structured
+        environments.
+        By structured environments, we were given a simplified experiment where the walls of a tube were lined with an
+        oil analogue to our mucus in terms of viscosity and such.
+        We notice that as we increase the volume of the fluid in the tube eventually it goes from being laminar flow
+        along the edges to being individual droplets obscuring the whole tube.
+        The system has a inflection point where things seem to go from being continuous laminar flow  along the walls to discrete beads
+        of fluid moving through the tube.
+
+        We concluded with there being much to do in this space.
+
+        \section{Weather forecasting: the role of balanced and unbalanced moisture}
+        We switched to exploring the mechanics of weather modeling.
+        This too is an extraordinarily complex problem as precipitation is influenced by many factors many of which
+        we don't have real time information for.
+        For example, we don't always know where it's raining even based on satellite imagery.
+
+        What goes into weather forecasting?
+        We start with Newton's equations of motion $F=ma$, but extend that to looking at temperature, pressure, moisture
+        content, as well as wind speed and direction.
+        Then, we have our initial conditions to deal with which we take from historical data, other weather forecasts,
+        and such.
+        Though, dealing with all of this un uniform data is tricky which pushes data assimilation strategies upon us.
+
+        Next, we look at the shear numbers of variables that need modeling to effectively maintain a proper model
+        of atmospheric conditions.
+        The example suggested geospatial grid given was a 16km grid with 137 vertical points and five variables at each
+        point in the atmosphere.
+        Such a model requires over a billion datapoints to mode and a covariance matrix with $10^{18}$ values, a difficulty.
+
+        We then looked at some plots of the ingested data to see the model.
+
+
 
 
     \end{onehalfspace}
