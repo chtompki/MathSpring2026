@@ -1,0 +1,154 @@
+%! Author = chtompki
+%! Date = 1/14/26
+% Example LaTeX document for GP111 - note % sign indicates a comment
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{shadows,arrows,arrows.meta,shapes,positioning,calc}% Required for the Circle and Triangle arrow tips
+\usepackage{setspace}
+\usepackage{siunitx}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{question}
+\newtheorem{question}{Question}
+
+\title{Seminar Summary:\\March 31, 2026 - Neal Bushaw\\Bootstrap percolation on grids.}
+\author{Rob Tompkins}
+\date{\today}
+
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        Percolation theory is a branch of mathematics rooted in time based graphical
+        shading changes related to a set of rules and an initial condition.
+        We were presented with an $n\times m$ square tiling of the plane.
+        Our initial condition was a collection of shaded blocks, take Figure \ref{m_n_grid_5filled}
+        for example.
+        The percolating mechanic was then set to being that if a square has $k$ shaded (or infected)
+        neighbors then in the next time step, it will become shaded, and time steps in definite intervals.
+        For example, if $k=1$, the behaviour is as if each square becomes a ``source'' in the sense of water
+        or sand, and over time the entire board is filled so long as there is a single shaded block
+        at our initial condition.
+
+        \begin{figure}
+            \begin{tikzpicture}[scale=1]
+
+                % Dimensions
+                \def\rows{4}
+                \def\cols{5}
+
+                % Draw all cells explicitly (ensures borders everywhere)
+                \foreach \i in {0,...,4} {
+                    \foreach \j in {0,...,3} {
+                        \draw (\i,\j) rectangle (\i+1,\j+1);
+                    }
+                }
+
+                % Shade selected cells
+                \fill[black!25] (0,3) rectangle (1,4); % (1,1)
+                \fill[black!25] (2,3) rectangle (3,4); % (1,3)
+                \fill[black!25] (0,2) rectangle (1,3); % (2,1)
+                \fill[black!25] (3,2) rectangle (4,3); % (2,4)
+                \fill[black!25] (3,0) rectangle (4,1); % (m,4)
+
+                % Redraw borders on top of shading (important!)
+                \foreach \i in {0,...,4} {
+                    \foreach \j in {0,...,3} {
+                        \draw (\i,\j) rectangle (\i+1,\j+1);
+                    }
+                }
+
+                % Column labels
+                \node at (0.5,4.3) {$1$};
+                \node at (1.5,4.3) {$2$};
+                \node at (2.5,4.3) {$3$};
+                \node at (3.5,4.3) {$\cdots$};
+                \node at (4.5,4.3) {$n$};
+
+                % Row labels
+                \node[left] at (-0.2,3.5) {$1$};
+                \node[left] at (-0.2,2.5) {$2$};
+                \node[left] at (-0.2,1.5) {$\vdots$};
+                \node[left] at (-0.2,0.5) {$m$};
+
+                % Label underneath
+                \node at (2.5,-0.6) {$G_{4,5}$};
+            \end{tikzpicture}
+            \caption{A rectangular $G_{4,5}$ tiled with squares, five shaded as bootstrap for percolation.}
+            \label{m_n_grid_5filled}
+        \end{figure}
+
+        We then began looking at the scenario for $k=2$ (i.e. two neighbors, as edge neighbors, not corner neighbors).
+        If we were to take Figure \ref{m_n_grid_5filled}, and step it once in time, then we would get Figure
+
+        \begin{figure}
+            \begin{tikzpicture}[scale=1]
+
+                % Dimensions
+                \def\rows{4}
+                \def\cols{5}
+
+                % Draw all cells explicitly (ensures borders everywhere)
+                \foreach \i in {0,...,4} {
+                    \foreach \j in {0,...,3} {
+                        \draw (\i,\j) rectangle (\i+1,\j+1);
+                    }
+                }
+
+                % Original shaded cells
+                \fill[black!25] (0,3) rectangle (1,4); % (1,1)
+                \fill[black!25] (2,3) rectangle (3,4); % (1,3)
+                \fill[black!25] (0,2) rectangle (1,3); % (2,1)
+                \fill[black!25] (3,2) rectangle (4,3); % (2,4)
+                \fill[black!25] (3,0) rectangle (4,1); % (m,4)
+
+                % NEW shaded cells
+                \fill[black!25] (1,3) rectangle (2,4); % (1,2)
+                \fill[black!25] (2,2) rectangle (3,3); % (2,3)
+                \fill[black!25] (3,1) rectangle (4,2); % (3,4)
+
+
+                % Redraw borders on top of shading (important!)
+                \foreach \i in {0,...,4} {
+                    \foreach \j in {0,...,3} {
+                        \draw (\i,\j) rectangle (\i+1,\j+1);
+                    }
+                }
+
+                % Column labels
+                \node at (0.5,4.3) {$1$};
+                \node at (1.5,4.3) {$2$};
+                \node at (2.5,4.3) {$3$};
+                \node at (3.5,4.3) {$\cdots$};
+                \node at (4.5,4.3) {$n$};
+
+                % Row labels
+                \node[left] at (-0.2,3.5) {$1$};
+                \node[left] at (-0.2,2.5) {$2$};
+                \node[left] at (-0.2,1.5) {$\vdots$};
+                \node[left] at (-0.2,0.5) {$m$};
+
+                % Label underneath
+                \node at (2.5,-0.6) {$G_{4,5}$};
+            \end{tikzpicture}
+            \caption{A rectangular $G_{4,5}$ tiled with squares, eight shaded after time step 1 with $k=2$.}
+            \label{m_n_grid_7filled}
+        \end{figure}
+
+
+
+    \end{onehalfspace}
+\end{document}
