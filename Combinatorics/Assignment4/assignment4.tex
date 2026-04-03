@@ -64,7 +64,62 @@
             \begin{displaymath}
                 \# = \frac{(2n)!}{2^n(n)!}.
             \end{displaymath}
-
         \end{solution}
+
+        3. How many 1-factors are there in the complete bipartide graph on $n$-vertices, $K_{n,n}$?
+        Next show that it is $D_n$, the number of derrangements.
+
+        \begin{solution}
+            We begin by setting $\{x_1,\ldots,x_n\}$ and $\{y_1,\ldots, y_n\}$ to be the two distinct parts
+            of $K_{n,n}$.
+            A 1-factor is analogous to a perfect matching between $x_i$ and $y_i$ for all $i$ noting that we can only
+            pair a vertex once.
+            For our count, we must remove a 1-factor.
+            Because, we arbitrarily selected everything we can simply remove the 1-factor
+            \[
+                M_0=\{x_1 y_1,\ldots, x_n y_n\}.
+            \]
+            So we are concerned with the graph $G = S_{n,n}\setminus M_0$, and we want to count
+            the 1-factors of $G$.
+            Furthermore, notice that every perfect matching $x_i$ to $y_i$ corresponds to a permutation in $S_n$
+            let that be $\sigma$, except with the edge $x_i$-$y_i$ removed, giving us $\sigma(i) = i$.
+
+            We now count by inclusion/exclusion.
+            There are $n!$ permutations of $[n]$.
+            For each $i\in[n]$, let $A_i$ be the set of permutations with $\sigma(i)=i$.
+            Then consider $S\setminus (A_1\cup\cdots\cup A_n)$ via inclusion/exclusion
+            \[
+                |S\setminus (A_1\cup\cdots\cup A_n)| = n! - \binom{n}{1}(n-1)! + \binom{n}{2}(n-2)! + \cdots + (-1)^n\binom{n}{n}(n-n)!
+            \]
+            Notice that $\binom{n}{k}(n-k)! = \frac{n!}{k!}$.
+            So we have that
+            \[
+                |S\setminus (A_1\cup\cdots\cup A_n)| = n! -\frac{n!}{1!} + \frac{n!}{2!} + \cdots + (-1)^n\binom{n!}{n!}.
+            \]
+            So we have that
+            \[
+                \#\text{ of }K_{n,n}\setminus M_0 = \sum_{k=0}^n(-1)^k\frac{n}{k}(n-k)! = n!\sum_{k=0}^n \frac{(-1)^{k}}{k!}.
+            \]
+
+            \emph{Proof that $D_n$ is the same count.} We go back to our previous setup with $\{x_1,\ldots,x_n\}$ and $\{y_1,\ldots, y_n\}$
+            being our bipartition, and $M_0 = \{x_1 y_1,\ldots,x_n y_n\}$ being our removed 1-factor.
+            Also notice that a 1-factor over $K_{n,n}\setminus M_0$ is equivalent to a permutation $\sigma$
+            on $[n]$ with $\sigma(i)\neq i$ for any $i\in[n]$.
+            Thus, $\sigma$ is a derrangement.
+            Conversely, if $\sigma$ is a derrangement, then the set of edges $F_\sigma = \{x_iy_{\sigma(i):1\le i\le n}\}$
+            is a 1-factor of $S_{n,n}\setminus M_0$ because $\sigma(i)\neq i$ we know that none of the edges is the edge $x_i-y_i$.
+            So we have a bijection
+            \[
+                D_n \leftrightarrow \{F_{n,n}\setminus M_0\text{ 1-factors}\}.
+            \]
+            So, from our last problem
+            \[
+                |D_n| = |\{ f_{n,n} \setminus M_0\text{ 1-factors}\}| = \sum_{k=0}^n(-1)^k\frac{n}{k}(n-k)! = n!\sum_{k=0}^n \frac{(-1)^{k}}{k!}
+            \]
+        \end{solution}
+        and we are done.
+
+
     \end{onehalfspace}
 \end{document}
+/
