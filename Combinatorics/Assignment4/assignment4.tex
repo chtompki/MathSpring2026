@@ -25,6 +25,46 @@
     \maketitle
     \date{\today}
     \begin{onehalfspace}
+        1. How many paths of length $k$, $P_k$, are there in the complete graph on $n$
+        edges, $K_n$?
 
+        \begin{solution}
+            Let $V=\{v_0,\ldots,v_{n-1}\}$ to bet the vertices of a graph.
+            Any ordered $k$-tuple chosen from $V$, like $(\underbrace{v_0,\ldots,v_8,\ldots,v_k, \ldots, v_n}_{k\text{-tuples}})$ represents
+            a path.
+            For a specific set of indices $i_0,\ldots,i_{k-1}$ we can represent an arbitrary path of length $k$ as
+            $(v_{i_0},v_{i_1},\ldots,v_{i_{k-1}})$. Now consider the path $(v_{i_{k-1}}, \ldots, v_{i_1}, v_{i_0})$
+            which is the same path as before but from the other direction.
+            Thus, we see that we list every path twice when trying to count, once forwards and once backwards.
+
+            So we begin by choosing $k$ vertices from our original $n$ vertices in $\binom{n}{k}$ ways.
+            Then, we choose our vertex ordering, which is a permutation in our index set, chosen in $k!$ ways,
+            but like we said before we'll be double counting, so it turns out that we need $\frac{k!}{2}$.
+            Thus, the total count follows as
+            \begin{displaymath}
+                \# = \binom{n}{k}\frac{k!}{2} = \frac{n!}{2(n-k)!}
+            \end{displaymath}
+        \end{solution}
+
+        2. How many 1-factors are there in $K_{2n}?$
+
+        \begin{solution}
+            There are $(2n)!$ ways to arrange our $2n$ vertices.
+            Let $V=\{v_1,\ldots , v_{2n}\}$ be our vertex set, and let
+            the indices $i_1,\ldots, i_{2n}$ represent an arrangement
+            $(v_{i_1},v_{i_2}, \ldots,v_{i_{2n}})$.
+
+            Now let's pair off the vertices in our arrangement in the following fashion
+            $((v_{i_1},v_{i_2}),(v_{i_3},v_{i_4}),\ldots,(v_{2n-1},v_{2n}))$.
+            Now we count this construction. There are $(2n)!$ ways to choose the indices on
+            our vertices, but in our pairing as we've listed, the order of the $n$-pairs does not matter
+            in the slightest so we will need to divide by $n!$ in the end.
+            The ordering of the pair of vertices does not matter which happens in $2^n$ ways. Thus
+            our count comes out as
+            \begin{displaymath}
+                \# = \frac{(2n)!}{2^n(n)!}.
+            \end{displaymath}
+
+        \end{solution}
     \end{onehalfspace}
 \end{document}
