@@ -17,11 +17,17 @@
 \usepackage{setspace}
 \usepackage{siunitx}
 
+\theoremstyle{conjecture}
+\newtheorem{conjecture}{Conjecture}
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
 \theoremstyle{question}
 \newtheorem{question}{Question}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
 
 \title{Seminar Summary:\\April 7, 2026 - Richard Hammack\\Graphs, Products, and Folding.}
 \author{Rob Tompkins}
@@ -37,5 +43,155 @@
         Let $i,j,n\in\mathbb{Z}^+$, generally a \emph{graph}, $G$, is a set of \emph{vertices},
         $V(G) = \{x_1, \ldots,x_n\}$, and a set of \emph{edges}, $E(G) = \{(x_i,x_j):
         \text{ where } x_i,x_j\in V(G) \text{ and } i,j \le n\}$.
+        A \emph{bipartite graph} is a graph $G$ with two distinct vertex sets $B$ and $W$ such that no
+        edge joins two vertices of $B$ or two vertices of $W$, or that edges only traverse from $B$ to $W$.
+        And, a \emph{direct product of graphs}, $G$ and $H$ is given by
+        \begin{gather*}
+            V(G\times H) = V(G) \times V(H), \text{ and}\\
+            E(G\times H) = \{(x,u)(y,v): xy\in E(G), uv\in E(H)\}.
+        \end{gather*}
+        An example of a direct product of a graph is drawn in Figure \ref{g_cross_h}.
+        Note this concept of a direct product of a graph was entirely new to me, and was
+        quite facinating.
+        \begin{figure}
+            \begin{tikzpicture}[
+                scale=1.2,
+                every node/.style={circle,draw,fill=white,inner sep=0pt,minimum size=7pt},
+                lab/.style={draw=none,fill=none,font=\large\itshape},
+                edge/.style={line width=0.9pt},
+                rededge/.style={line width=0.9pt,draw=red!60!black}
+            ]
+
+                %--------------------------------
+                % H on the left
+                %--------------------------------
+                \node (h1) at (0,3) {};
+                \node (h2) at (0,1.7) {};
+                \node (h3) at (0,0.4) {};
+
+                \draw[edge]    (h1)--(h2);
+                \draw[edge] (h2)--(h3);
+
+                \node[lab] at (0,3.55) {$H$};
+
+                %--------------------------------
+                % G \times H in the middle
+                %--------------------------------
+                % left column
+                \node (a1) at (2.1,3.0) {};
+                \node (a2) at (2.1,1.7) {};
+                \node (a3) at (2.1,0.4) {};
+
+                % middle column
+                \node (b1) at (4.0,3.0) {};
+                \node (b2) at (4.0,1.7) {};
+                \node (b3) at (4.0,0.4) {};
+
+                % right column
+                \node (c1) at (5.9,3.0) {};
+                \node (c2) at (5.9,1.7) {};
+                \node (c3) at (5.9,0.4) {};
+
+                % horizontal copies of the red/black edges of H
+                \draw[edge] (a1)--(b1);
+                \draw[edge]    (b1)--(c1);
+
+                \draw[edge]    (a2)--(b2);
+                \draw[edge]    (b2)--(c2);
+
+                \draw[edge]    (a3)--(b3);
+                \draw[edge]    (b3)--(c3);
+
+                % diagonal connections between consecutive H-levels
+                \draw[edge] (a2)--(b1);
+                \draw[edge] (a3)--(b2);
+                \draw[edge] (a1)--(b2);
+                \draw[edge] (a2)--(b3);
+
+                \draw[edge] (b2)--(c1);
+                \draw[edge] (b3)--(c2);
+                \draw[edge] (b1)--(c2);
+                \draw[edge] (b2)--(c3);
+
+                % extra long diagonals visible in the figure
+                \draw[edge] (a2)--(c1);
+                \draw[edge] (a1)--(c2);
+                \draw[edge] (a3)--(c2);
+                \draw[edge] (a2)--(c3);
+
+                % right-hand curved edges
+                \draw[edge]    (c1) to[out=-20,in=20,looseness=1.5] (c2);
+                \draw[edge] (c2) to[out=-20,in=20,looseness=1.5] (c3);
+
+                \node[lab] at (6.15,3.55) {$G\times H$};
+
+                %--------------------------------
+                % G on the bottom
+                %--------------------------------
+                \node (g1) at (2.1,-1.0) {};
+                \node (g2) at (4.0,-1.0) {};
+                \node (g3) at (5.9,-1.0) {};
+
+                \draw[edge] (g1)--(g2);
+                \draw[edge]    (g2)--(g3);
+                \draw[edge]    (g1) to[out=-30,in=-150,looseness=1.0] (g3);
+                \draw[edge]    (g3) to[out=60,in=-60,looseness=8] (g3);
+
+                \node[lab] at (7.1,-1.0) {$G$};
+
+            \end{tikzpicture}
+            \caption{A direct product of a path with a cycle $G$ and a path $H$}
+            \label{g_cross_h}
+        \end{figure}
+
+        We then went about exploring \emph{Weichsel's Theorem} which was given as:
+        \begin{theorem}
+            Suppose that $G$ and $H$ are connected graphs.
+            If both are bipartite, then $G\times H$ has two components.
+            If one has an odd cycles, then $G\times H$ is connected.
+        \end{theorem}
+        Then we were presented with an interesting conjecture about graph products.
+        \begin{conjecture}
+            Suppose that $G$ and $H$ are bipartite graphs.
+            Then, $G\times H$ has isomorphic components if and only if $G$ or $H$ has symmetry that reverses
+            its bipartite sets.
+        \end{conjecture}
+        This conjecture was outstanding for quite some time before Hammack was able to make progress and
+        eventually conclude the problem in the affirmative.
+        We were then introduced to a theorem of Ralph McKenzie and Imrich.
+        \begin{theorem}
+            If $G$ is connected and non-bipartite, then there exists a prime factorization of it, unique up to the
+            order of the factors.
+        \end{theorem}
+        We subsequently went over how prime factorization of a bipartite graph is not unique, but that there seems to
+        always be a bipartite factor by Weichsel's theorem, however it is unknown as to the uniqueness of that factor.
+        And that is where we left the graph theory to head towards visualizations.
+
+        \section{Pop-ups and Multidimensional Visualization}
+        After going over the graph direct products, we ventured into the territory of pop-up books and multidimensional
+        visualization.
+        We were shown a series of pop-up books that resented various geometrical figures from a compressed folding.
+        The subtlety here was impressive as we went from a cube to a dodecahedron.
+        When asked, Professor Hammack said that he did the constructions by using tikz and printing a reference graph on
+        card stock and using scissors or a scalpel cut them out then gluing them to the books.
+        All the work had apparently been direct from mind to tikz.
+        We then went in to different visualizations of the four-dimensional cube, the tesseract, some of which I had
+        never though of before.
+
+        I was familiar with the perspective projection of the tesseract, as that is how I personally visualize
+        in four-dimensions.
+        For example think of a cube whose inner colors vary at different cubic depths.
+        Say take the 1m cube, we would color the outside red, and the interior cube  with sides of 0.5m if removed
+        would be colored gray.
+        We continue this grading all the way down to the cube of side length $\epsilon$m being black for an arbitrarily
+        small $\epsilon > 0$.
+
+        This is similar to how one might think of the 4 dimensional sphere as a sphere with a point source of cold in
+        the middle and an exterior that is hot, and the color grading representing temperature along the interior of
+        the sphere.
+        The projections of the tesseract that I found most interesting were the linear projection and the orthogonal
+        projection through opposite edges.
+        We finished the talk with a pop-up representation of the 5 dimensional cube as a linear projection into
+        3-space.
     \end{onehalfspace}
 \end{document}
