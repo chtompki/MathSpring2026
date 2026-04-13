@@ -8,6 +8,7 @@
 \setlength{\textheight}{9.0in}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{cancel}
 \usepackage{amsthm}
 \usepackage{enumitem}
 \usepackage{setspace}
@@ -84,7 +85,56 @@
         \begin{gather*}
             \int_0^4 1 dt = 4 \stackrel{?}{=} \frac{4}{3}(2 - 1 + 2) = 4 \quad\checkmark\\
             \int_0^4 t dt = \frac{t^2}{2}\bigg|_0^4 = 8 \stackrel{?}{=} \frac{4}{3}(2\cdot 1 - 2 + 2\cdot 3) = 8 \quad\checkmark\\
-            \int_0^4 t^2 dt = \frac{t^3}{3}\bigg|_0^4 = \frac{64}{3} \stackrel{?}{=} \frac{4}{3}(2\cdot 1 - 4 + 2 \cdot 9) = \frac{4\cdot 16}{3} = \frac{64}{3}\quad\checkmark
+            \int_0^4 t^2 dt = \frac{t^3}{3}\bigg|_0^4 = \frac{64}{3} \stackrel{?}{=} \frac{4}{3}(2\cdot 1 - 4 + 2 \cdot 9) = \frac{4\cdot 16}{3} = \frac{64}{3}\quad\checkmark\\
+            \int_0^4 t^3 dt = \frac{t^4}{4}\bigg|_0^4 = 64 \stackrel{?}{=} \frac{4}{3}(2\cdot 1 - 8 + 2\cdot 27) = \frac{4\cdot 48}{3} = \frac{192}{3} = 64\quad\checkmark\\
+            \int_0^4 t^4 dt = \frac{t^5}{5}\bigg|_0^4 = \frac{1024}{5} = 204.8 \stackrel{?}{=} \frac{4}{3}(2-32+2\cdot 243)= \frac{1824}{3} = 608 \quad\times
         \end{gather*}
+        So we are done.
+
+        \section{Problem 2}
+        Let
+        \[
+            I(f) = \int_a^b f(x)dx
+        \]
+        and let $[a,b]$ be divided into subintervals in the following fashion
+        \[
+            \big\{[a,x_1+h],[x_2-h,x_2+h],\ldots,[x_n-h,b]\big\},
+        \]
+        with $x_1,\ldots,x_n$ being the midpoints of the subintervals.
+        We thusly see that $h=\frac{b-a}{2n}$, that $x_j=a + (2j-1)h$, and that each of our subintervals has
+        width $2h$.
+        Now consider the $j^{th}$ subinterval $[x_j-h,x_j+h]$.
+        We can write $f(x)$ over the interval using Taylor's theorem as
+        \[
+            f(x) = f(x_j) + f'(x_j)(x-x_j) + \frac{f''(\eta_x)}{2}(x-x_j)^2,
+        \]
+        for some $\eta_x$ between $x$ and $x_j$.
+        So we integrate
+        \begin{eqnarray*}
+            \int_{x_j-h}^{x_j+h} f(x)dx & = & \int_{x_j-h}^{x_j+h}\left(f(x_j) + f'(x_j)(x-x_j) + \frac{f''(\eta_x)}{2}(x-x_j)^2 \right)dx\\
+             & = & \int_{x_j-h}^{x_j+h}f(x_j)dx  + \int_{x_j-h}^{x_j+h}f'(x_j)(x-x_j)dx + \int_{x_j-h}^{x_j+h}\frac{f''(\eta_x)}{2}(x-x_j)^2 dx\\
+             & = & 2hf(x_j) + 0 + \frac{f''(\xi_j)}{2}\int_{x_j-h}^{x_j+h} (x-x_j)^2 dx,
+        \end{eqnarray*}
+        for some $\xi_j$ clearly dependent upon our choice of $\eta_x$.
+        But notice that our last integral can be manipulated by a transformation of variables in the following
+        fashion
+        \[
+            \int_{x_j-h}^{x_j+h}(x-x_j)^2 dx = \int_{-h}^h t^2 dt = \frac{2h^3}{3}.
+        \]
+        Substituting that back in to the over all equation we see that
+        \[
+            \int_{x_j-h}^{x_j+h} f(x)dx + \frac{f''(\xi_j)}{\cancel{2}}\frac{\cancel{2}h^3}{3}.
+        \]
+        So we take this result and sum across all the subintervals to get that
+        \[
+            \int_b^a f(x)dx = \sum_{j=1}^n\int_{x_j-h}^{x_j+h}f(x)dx = 2h\sum_{j=1}^n f(x_j) + \frac{h^3}{3}\sum_{j=1}^n f''(\xi_j).
+        \]
+        But we notice that $\sum_{j=1}^n f''(\xi_j) = nf''(\xi)$ with $f''(\xi)$ representing the average of all $f''(\xi_j)$.
+        And with some careful substitution, along with noticing that $n=\frac{b-a}{2h}$ by manipulating our definition of $h$,
+        we see that
+        \[
+            \int_a^b f(x)dx = 2h\sum_{j=1}^n f(x_j) + \frac{(b-a)h^2}{6}f''(\xi),
+        \]
+        and we are done.
     \end{onehalfspace}
 \end{document}
