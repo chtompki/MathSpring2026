@@ -40,9 +40,10 @@
         \]
         for evenly spaced points with $h = \frac{b-a}{n+2}$.
         Now we set $n = 2$ so that $h=\frac{b-a}{4}$, and we need to sort out
-        \[
+        \begin{equation}
             I_{2,\text{open}}(f) = \int_a^b\sum_{i=0}^2 L_{2,i}(x)f(x_i) dx.
-        \]
+            \label{nc-equation}
+        \end{equation}
         But we need to shift to an easier or simpler variable to work with.
         So we set $x=a+t\cdot h$, with $dx=h\cdot dt$.
         Now as $x$ moves from $a$ to $b$ we see that ($b=a+4h$), $t$ moves from $0$ to $4$, and we have
@@ -56,6 +57,34 @@
             L_{2,0}(x) = \frac{(t-2)(t-3)}{(1-2)(1-3)} = \frac{(t-2)(t-3)}{2} = \frac{1}{2}(t^2 -5t + 6)\\
             L_{2,1}(x) = \frac{(t-1)(t-3)}{(2-1)(2-3)} = -(t-1)(t-3) = -t^2+ 4t - 3\\
             L_{2,2}(x) = \frac{(t-1)(t-2)}{(3-1)(3-2)} = \frac{(t-1)(t-2)}{2} = \frac{1}{2}(t^2 - 3t + 2).
+        \end{gather*}
+        And we then need to integrate these Lagrange interpolants, which we do as
+        \begin{gather*}
+            \int_0^4 \frac{1}{2}(t^2-5t+6)dt = \frac{t^3}{6} - \frac{5t^2}{4} + 3t \bigg|_0^4 = \frac{8}{3}\\
+            \int_0^4 -t^2 + 4t - 3dt = -\frac{t^3}{3} + 2t^2 - 3t \bigg|_0^4 = -\frac{4}{3}\\
+            \int_0^4 \frac{1}{2}(t^2 - 3t + 2)dt = \frac{t^3}{6} - \frac{3t^2}{2} + 2t \bigg|_0^4 = \frac{8}{3}
+        \end{gather*}
+        Thus, when we plug this into equation (\ref{nc-equation}), we get the following
+        \begin{eqnarray*}
+            \int_a^b f(x)dx & \approx & h\bigg(\frac{8}{3}f(a+h) - \frac{4}{3}f(a+2h) + \frac{8}{3}f(a+3h)\bigg)\\
+             & \approx & \frac{4h}{3}\bigg(2f(a+h) - f(a+2h) + 2f(a+3h)\bigg)\\
+             & \approx & \frac{b-a}{3}\bigg(2f(a+h) - f(a+2h) + 2f(a+3h)\bigg).
+        \end{eqnarray*}
+        which solves our problem
+
+        \subsection{}
+        We must show that our quadrature is exact for $1,x,x^2,x^3$ but not for $x^4$.
+        Again we rescale the interval in teh fashion
+        \[
+            x=a+ht,\qquad h=\frac{b-a}{4}, x\in[a,b]\rightarrow t\in[0,4]
+        \]
+        So $Q(g) = \frac{4}{3}\bigg(2g(1) - g(2) - 2g(3)\bigg)$.
+        But, we need to check if $I(g)=Q(g)$ for $g(t)\in\{1,x,x^2,x^3,x^4\}$.
+        So we write
+        \begin{gather*}
+            \int_0^4 1 dt = 4 \stackrel{?}{=} \frac{4}{3}(2 - 1 + 2) = 4 \quad\checkmark\\
+            \int_0^4 t dt = \frac{t^2}{2}\bigg|_0^4 = 8 \stackrel{?}{=} \frac{4}{3}(2\cdot 1 - 2 + 2\cdot 3) = 8 \quad\checkmark\\
+            \int_0^4 t^2 dt = \frac{t^3}{3}\bigg|_0^4 = \frac{64}{3} \stackrel{?}{=} \frac{4}{3}(2\cdot 1 - 4 + 2 \cdot 9) = \frac{4\cdot 16}{3} = \frac{64}{3}\quad\checkmark
         \end{gather*}
     \end{onehalfspace}
 \end{document}
