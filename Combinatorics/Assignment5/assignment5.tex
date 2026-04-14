@@ -31,6 +31,40 @@
         What if we have $q$ gemstones?
 
         \begin{solution}
+            Our goal is an application of Burnside's Lemma here.
+            Now, for Burnside's Lemma, we need to start
+            with a finite group $G$ and a set $X$ and $G$ acting on $X$.
+            For each $g\in G$, set $X^g$ to be the elements of $X$ that are fixed by $g$'s action on $X$.
+            That is to say we set $X^g = \{x\in X: g\cdot x = x\}$.
+            Burnside's Lemma then asserts that the number of $G$ orbits of $X$, denoted $|G\\X|$ is given by
+            \[
+                |G\\X| = \frac{1}{|G|}\sum_{g\in G} |X^g|.
+            \]
+
+            We start by noticing that in our problem, we are dealing with the group of rotations and reflections
+            on the 7-cycle, which is commonly referred to as the dihedral group on 7 elements, $D_7$.
+            Notice that the size of $|D_7|=14$.
+
+            Assume we have $q$ gemstones for the sake of generality.
+            Now, we must account for all of the elements of $D_7$ in order to account for the summation in Burnside's
+            Lemma.
+
+            So we begin with the identity rotation which fixes our 7 places with $q$ colorings counting $q^7$ occurrences.
+            We then proceed to counting the non-trivial rotations of which there are 6, so we get another $6q$ coloring
+            occurrences there.
+            Lastly, we consider the reflections, for which there are 7 axis of symmetry each bead on the axis can be
+            any of $q$ colors and the remaining 6 beads are set up in 3 pairs where each of the 3 pairs must match in color.
+            Thus, we count this number of colorings as $7\cdot q\cdot q^3=7q^4$.
+
+            So when we put all this together we see that
+            \[
+                |D_7\\[q]| = \frac{1}{14}(q^7 + 6q + 7q^4).
+            \]
+            So for 5 colors we have]
+            \[
+                |D_7\\[5]| = \frac{1}{14}(5^7 + 6\cdot 5 + 7\cdot 5^4) = 5895
+            \]
+
 
         \end{solution}
 
