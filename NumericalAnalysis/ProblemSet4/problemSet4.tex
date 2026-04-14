@@ -369,9 +369,76 @@
         \]
         We not want to find $y(1)$, which follows as:
         \[
-            y(1)
+            y(1) = -\frac{1}{2}\sin(1) - \frac{1}{2}\cos(1) \approx -0.1908866453\ldots
         \]
 
+        \subsection{}
+        For the next portion of this problem we ran the following code
+        \begin{tiny}
+        \begin{verbatim}
+% Forward Euler for y' = sin(t) + y, y(0) = 0 on [0,1]
+clear; clc;
+f = @(t,y) sin(t) + y;
+yexact = @(t) 0.5*(exp(t) - sin(t) - cos(t));
+
+a = 0;
+b = 1;
+Nh = 2;
+h = (b-a)/Nh;
+
+t = zeros(Nh+1,1);
+y = zeros(Nh+1,1);
+
+% initial condition
+t(1) = 0;
+y(1) = 0;
+
+% Forward Euler method
+for n = 1:Nh
+    t(n+1) = t(n) + h;
+    y(n+1) = y(n) + h*f(t(n),y(n));
+end
+
+% exact value and error at t=1
+y_exact_at_1 = yexact(1);
+error_at_1 = abs(y(end) - y_exact_at_1);
+
+fprintf('Forward Euler approximation at t=1: %.10f\n', y(end));
+fprintf('Exact value at t=1: %.10f\n', y_exact_at_1);
+fprintf('Absolute error at t=1: %.10f\n', error_at_1);
+        \end{verbatim}
+        \end{tiny}
+
+        And we achieved the following output:
+
+        \begin{tiny}
+            \begin{verbatim}
+Forward Euler approximation at t=1: 0.2397127693
+Exact value at t=1: 0.6682542689
+Absolute error at t=1: 0.4285414996
+            \end{verbatim}
+        \end{tiny}
+
+        \subsection{}
+        We then went about doing forwards and backwards Euler's method on the problem to see how it did, and we achieved
+        the following graphs.
+        For forward Euler's method we have Figure \ref{ps4prob5fig1} which has a constant slope to it
+        so we would expect linear convergence.
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.5]{ps4prob5fig1.png}
+            \caption{For $y'=\sin(t) + y$, a log-log plot of the Forward Euler's method approach based on step size.}
+            \label{ps4prob5fig1}.
+        \end{figure}
+
+        \subsection{}
+        For 5.d. we do (b) and (c) again, but this time for the backwards Euler's method. The code follows below as
+        \begin{tiny}
+        \begin{verbatim}
+
+        \end{verbatim}
+        \end{tiny}
 
     \end{onehalfspace}
 \end{document}
