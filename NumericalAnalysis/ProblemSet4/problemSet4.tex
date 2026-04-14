@@ -494,7 +494,13 @@ Absolute error at t=1: 0.1343570192
         only requires calculation.
         Again the main trade-off is the stability of the solution.
 
-Both forward Euler and backward Euler are first-order methods, so their errors decrease proportionally to h. On a log-log plot, this appears as an approximately straight line of slope 1. Forward Euler is simpler and faster since it is explicit and does not require solving an equation at each step. Backward Euler is implicit and therefore usually more expensive computationally, but it has better stability properties. For this problem, backward Euler can be solved algebraically at each step, so the extra cost is small, though still somewhat greater than forward Euler. In general, forward Euler is advantageous for simple nonstiff problems, while backward Euler is preferred when stability is more important, especially for stiff equations.
+        Both forward Euler and backward Euler are first-order methods, so their errors decrease proportionally to h. On a
+        log-log plot, this appears as an approximately straight line of slope 1. Forward Euler is simpler and faster
+        since it is explicit and does not require solving an equation at each step. Backward Euler is implicit and
+        therefore usually more expensive computationally, but it has better stability properties. For this problem,
+        backward Euler can be solved algebraically at each step, so the extra cost is small, though still somewhat
+        greater than forward Euler. In general, forward Euler is advantageous for simple nonstiff problems, while
+        backward Euler is preferred when stability is more important, especially for stiff equations.
 
 
 
