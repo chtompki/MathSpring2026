@@ -227,5 +227,151 @@
         and we are done.
 
         \section{Problem 4}
+        Consider the initial value problem given as
+        \[
+            y' = y\cos(t),\qquad y(0)=1,\qquad t\in[0,2\pi].
+        \]
+        \subsection{}
+        We need to show existence and uniqueness of the solution of some subinterval $I\subseteq[0,2\pi]$ containing
+        $t=0$.
+        To do this we show the Lipschitz condition $|f(t,y_1) - f(t,y_2)|\le L |y_1 - y_2|$.
+        First we know that $f(x,y)$ must be continuous in our domain because it is the product of two continuous functions.
+        Next we notice that
+        \[
+            |f(t,y_1) - f(t,y_2)| = |y_1\cos(t) - y_2\cos(t)| = |\cos(t)||y_1-y_2|\le 1\cdot |y_1 - y_2|,
+        \]
+        because $|\cos(t)|\le 1$ for all $t\in\mathbb{R}$.
+        So our function is Lipschitz with $L=1$.
+        Furthermore, we have a theorem that states that if we are Lipschitz on our domain then for an initial value problem
+        of our form, then we are guaranteed existence and uniqueness of the solution over our interval.
+
+        \subsection{}
+        We now compute the Forward Euler Method for solving the problem.
+        Specifically, we need to work out the stepwise solution for $y_{n+1}=y_n + hf(t,y_n)$.
+        Set $h=\pi/4$ with $t_0=0$, $y_0=1$, $t_1=\pi/4$, and $t_2=\pi/2$.
+
+        \emph{Step 1.}
+        With $t_0=0$, $t_1=\pi/4$, and $f(t_0,y_0) = 1\cdot\cos(0) = 1$, we see that
+        \[
+            y_1 = y_0 + h f(t_0,y_0) = 1 + \frac{\pi}{4}(1) = 1 + \frac{\pi}{4}
+        \]
+
+        \emph{Step 2.}
+        Now that we have $y_1$ above, we use $t_1=\pi/4$ and $t_2=\pi/2$.
+        We then notice that
+        \[
+            f(t_1,y_1) = \left(1 + \frac{\pi}{4}\right)\cos\left(\frac{\pi}{4}\right) = \left(1 + \frac{\pi}{4}\right)\frac{\sqrt{2}}{2}.
+        \]
+        Then we compute $y_2$ in the following manner
+        \[
+            y_2 = y_1 + hf(t_1,y_1) = \left(1+\frac{\pi}{4}\right) + \left(1 + \frac{\pi}{4}\right)\frac{\sqrt{2}}{2}\cdot\frac{\pi}{4}
+            = \left(1 + \frac{\pi}{4}\right)\left(1 + \frac{\pi\sqrt{2}}{8}\right)\approx 2.7554.
+        \]
+
+        \subsection{}
+        Directly solving the initial value problem for $y'=y\cos(t)$ follows as
+        \begin{eqnarray*}
+            \frac{dy}{y} & = & \cos(t)\\
+            \int \frac{dy}{y} & = & \int \cos(t) dt\\
+            \ln(y) & = & \sin(t) + c\\
+            y & = & e^{\sin(t) + c} = ce^{\sin(t)}.
+        \end{eqnarray*}
+        Then we substitute in $y(0)=1$ as
+        \[
+            y(0) = ce^{\sin(0)} = 1 \Leftrightarrow c = 1.
+        \]
+        Thus, we have that
+        \[
+            y(t) = e^{\sin(t)}.
+        \]
+        We were asked to show that $y(t)$ is bounded in the fashion $e^{-\pi}\le y \le e^\pi$, but $-1\le \sin(t)\le 1$
+        so naturally $e^{-\pi}\le e^{-1}\le y(t) \le e^1\le e^\pi$.
+        The rest of (c) we omit for the sake of expedience.
+
+        \subsection{}
+        The backwards Euler formula follows as $y_{n+1} = y_n + hf(t_{n+1}, y_{n+1})$.
+        So we write and solve for $y_{n+1}$.
+        \begin{gather*}
+            y_{n+1} = y_n + h y_{n+1}\cos(t_{n+1})\\
+            y_{n+1} (1-h\cos(t_{n+1})) = y_n\\
+            y_{n+1} = \frac{y_n}{1-h\cos(t_{n+1})}
+        \end{gather*}
+        Furthermore, we are given $h=\pi/4$ with $t_0=0$, $y_0=1$, $t_1=\pi/4$, and $t_2=\pi/2$.
+        So we do our two steps.
+
+        \emph{Step 1.}
+        \[
+            y_1 = \frac{y_0}{1 - h\cos(t_1)} = \frac{1}{1-\frac{\pi}{4}\cos\left(\frac{\pi}{4}\right)}
+             = \frac{1}{1-\frac{\pi\sqrt{2}}{8}}.
+        \]
+
+        \emph{Step 2.}
+        \[
+            y_2 = \frac{y_1}{1-h\cos(t_2)} = \frac{\left(\frac{1}{1-\frac{\pi\sqrt{2}}{8}}\right)}{1-\frac{\pi}{4}\cos\left(\frac{\pi}{2}\right)} = y_1.
+        \]
+        So
+        \[
+            y\left(\frac{\pi}{2}\right) \approx \frac{1}{1-\frac{\pi\sqrt{2}}{8}}
+        \]
+
+        \subsection{}
+        We ran plots of the Euler's methods and such. The code can be found in:\\
+        \href{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet4}{\underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/ProblemSet4}}
+
+        The exact solution for the problem can be found back in part (c) of the problem.
+        That said, we have generated a plot of the forward and backwards Euler's method
+        given in Figure \ref{ps4prob4fig1}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.5]{ps4prob4fig1.png}
+            \caption{For $y'=y\cos(t)$, a plot of the exact solution along with Euler's backwards and forwards methods.}
+            \label{ps4prob4fig1}.
+        \end{figure}
+
+        We've omitted talking about the Global Error Theorem for Euler's method out of the need for expedience.
+
+        \section{Problem 5}
+        Consider the initial value problem given as
+        \[
+            y' = \sin(t) + y,\qquad y(0)=0,\qquad t\in[0,1].
+        \]
+
+        \subsection{}
+        We go about finding the exact solution of the initial value problem as
+        \begin{gather*}
+            dy = \sin(t)dt + y\\
+            dy - y = \sin(t)dt
+        \end{gather*}
+        Now we are going to use an integrating factor $\mu(t) = e^{-t}$ so we multiply both sides by $\mu(t)$ which
+        becomes
+        \[
+            e^{-t}dy - ye^{-t} = e^{-t}\sin(t)dt.
+        \]
+        Notice that the left hand side is the result of a product rule differentiation.
+        Now we also know that,
+        \[
+            \frac{d}{dt}\left[e^{-t}y\right] = e^{-t}dy - ye^{-t}.
+        \]
+        Which allows us to do the following
+        \begin{eqnarray*}
+            e^{-t}y & = & \int e^{-t}\sin(t) dt\\
+            e^{-t}y & = & -\frac{1}{2} e^{-t}\bigg(\sin(t) + \cos(t)\bigg) + C\\
+            y(t) & = & -\frac{1}{2}(\sin(t)+\cos(t)) + C.
+        \end{eqnarray*}
+        Now we solve for $C$ by using our initial condition $y(0)=0$ as:
+        \[
+            y(0) = -\frac{1}{2}(\sin(0) + \cos(0)) + C = 0 \qquad\Longleftrightarrow\qquad C=\frac{1}{2}
+        \]
+        So we have that
+        \[
+            y(t) = -\frac{1}{2}(\sin(t)+\cos(t)) + \frac{1}{2}.
+        \]
+        We not want to find $y(1)$, which follows as:
+        \[
+            y(1)
+        \]
+
+
     \end{onehalfspace}
 \end{document}
