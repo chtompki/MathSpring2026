@@ -136,5 +136,96 @@
             \int_a^b f(x)dx = 2h\sum_{j=1}^n f(x_j) + \frac{(b-a)h^2}{6}f''(\xi),
         \]
         where $\xi\in[a,b]$, and we are done.
+
+        \section{Problem 3}
+        We will determine the weights $w_i$ and the quadriture points $x_i$ in the three point Guass-Legendre
+        quadrature formula
+        \[
+            \int_{-1}^1 f(x) dx \approx w_1 f(x_1) + w_2 f(x_2) + w_3 f(x_3).
+        \]
+        Now by definition the degree of precision of this formula just falls out by us having to generate $2n-1$
+        equations, so that we can use the method of undetermined coefficients for finding the weights.
+        This yields a $2(3) - 1 = 5$ degree of precision.
+        So we go through the process of generating the equations over which we'll solve for the weights by using the integrals
+        of $1,x,x^2,x^3,x^4,x^5$, as
+        \begin{gather*}
+            f(x) = 1:\quad w_1 + w_2 + w_3 = \int_{-1}^1 1\cdot dx = 2, \\
+            f(x) = x:\quad w_1 x + w_2 x + w_3 x = \int_{-1}^1 x dx = \frac{x^2}{2}\bigg|_{-1}^1 = 0,\\
+            f(x) = x^2:\quad w_1 x^2 + w_2 x^2 + w_3 x^2 = \int_{-1}^1 x^2 dx = \frac{x^3}{3}\bigg|_{-1}^1 = \frac{2}{3},\\
+            f(x) = x^3:\quad w_1 x^3 + w_2 x^3 + w_3 x^3 = \int_{-1}^1 x^3 dx = \frac{x^4}{4}\bigg|_{-1}^2 = 0,\\
+            f(x) = x^4:\quad w_1 x^4 + w_2 x^4+ w_3 x^4 = \int_{-1}^1 x^4 dx = \frac{x^5}{5}\bigg|_{-1}^1 = \frac{2}{5}\\
+            f(x) = x^5:\quad w_1 x^5 + w_2 x^5+ w_3 x^5 = \int_{-1}^1 x^5 dx = \frac{x^6}{6}\bigg|_{-1}^1 = 0.\\
+        \end{gather*}
+        Our goal now is to define a polynomial, call it $p(x)$, that vanishes at the quadriture points $x_1, x_2, x_3$.
+        So we have
+        \begin{eqnarray*}
+            p(x) & = & (x - x_1)(x - x_2)(x - x_3)\\
+            & = & x^3 - x_1 x^2 - x_2 x^2 - x_3 x^2 + x_1 x_2 x + x_1 x_3 x + x_2 x_3 x - x_1 x_2 x_3\\
+            & = & x^3 s_1 x^2 + s_2 x + s_3,
+        \end{eqnarray*}
+        where $s_1 = -(x_1 + x_2 + x_3)$, $s_2 = x_1 x_2 + x_1 x_3 + x_2 x_3$, and $s_3 = - x_1 x_2 x_3$.
+
+        Now to find our weights we set $p(x)=0$, then $xp(x)=0$, and finally $x^2 p(x) = 0$.
+        So let us begin with
+        \begin{eqnarray*}
+            p(x_i) = 0 & = & x_i^3 + s_1 x_i^2 + s2 x_i + s_3  = 0\\
+            & = & \sum w_i x_i^3 + s_1 \sum w_i x_i^2 + s_2 \sum w_i x _i + s3 \sum w_i = 0\\
+            & = & 0 + s_1\frac{2}{3} + 0 + s_3 \cdot (-2)\\
+        \end{eqnarray*}
+        So we have that
+        \[
+            s_1 = -3s_3.
+        \]
+
+        Now set $xp(x) = 0$, and let us see what we can find:
+        \begin{eqnarray*}
+            xp(x) & = & x^4 + s_1 x^3 + s_2 x^2 + s_3 x = 0 \\
+            & = & \sum w_i x_i^4 + s_1 \sum w_i x_i^3 + s_2 \sum w_i x_i^2 + s_3 \sum w_i x_i = 0\\
+            & = & \frac{2}{5} + s_1\cdot 0 + s_2 \frac{2}{3} + s_3\cdot 0 = 0\\
+            & = & \frac{2}{5} + s_2\frac{2}{3} = 0 \quad\Rightarrow\quad s_2 = -\frac{3}{5}.
+        \end{eqnarray*}
+
+        Next we set $x^2 p(x) = 0$ to again have another equation over which we can solve for $s_1, s_2, s_3$, which
+        follows as
+        \begin{eqnarray*}
+            x^2 p(x) & = & x^5 + s_1 x^4 + s_2 x^3 + s_3 x^2 = 0 \\
+            & = & \sum w_i x_i^5 + s_1 \sum w_i x_i^4 + s_2 \sum w_i x_i^3 + s_3 \sum w_i x_i^2 = 0\\
+            & = & 0 + s_1\frac{2}{5} + s_2\cdot 0 + s_3\frac{2}{3} = 0\\
+            & = & s_1\frac{2}{5} + s_3\frac{2}{3}.
+        \end{eqnarray*}
+        Because we have $s1=-3s_3$ we see that $-6s_3/5 + 2s_3/3 = s_3(2/3-6/5)=0$.
+        So, $s_3=0$ and thus $s_1=0$, which setting $p(x)=0$ yields
+        \[
+            p(x) = x^3 - \frac{3}{5}x = x\left(x^2-\frac{3}{5}\right) = 0.
+        \]
+        So we see that
+        \[
+            x_1 = -\sqrt{\frac{3}{5}},\qquad x_2 = 0,\qquad x_3=\sqrt{\frac{3}{5}}.
+        \]
+        So now we solve for the weights using our first three $f(x)$ equations from the beginning.
+        We begin with,
+        \begin{equation}
+            \sum w_i = w_1 + w_2 + w_3 = 2.
+            \label{wsum}
+        \end{equation}
+        Next, we see that
+        \[
+            \sum w_i x_i = -w_1\sqrt{\frac{3}{5}} + w_2\cdot 0 + w_3 \sqrt{\frac{3}{5}} = 0 \qquad\Longleftrightarrow\qquad w_1 = w_3.
+        \]
+        Lastly we compute,
+        \[
+            \sum w_i x_i^2 = w_1 \frac{3}{5} + w_3\frac{3}{5} = \frac{6 w_1}{5} = \frac{2}{3} \qquad\Longleftrightarrow\qquad w_1=w_3=\frac{5}{9}
+        \]
+        Which plugging back into equation (\ref{wsum}) yields
+        \[
+            \frac{5}{9} + w_2 + \frac{5}{9} = 2 \qquad\Longleftrightarrow\qquad w_2 = \frac{8}{9}.
+        \]
+        So we see that
+        \[
+            \int_{-1}^1 f(x)dx \approx \frac{5}{9}f\left(-\sqrt{\frac{3}{5}}\right) + \frac{8}{9} f(0) + \frac{5}{9}f\left(\sqrt{\frac{3}{5}}\right),
+        \]
+        and we are done.
+
+        \section{Problem 4}
     \end{onehalfspace}
 \end{document}
