@@ -36,9 +36,9 @@
             with a finite group $G$ and a set $X$ and $G$ acting on $X$.
             For each $g\in G$, set $X^g$ to be the elements of $X$ that are fixed by $g$'s action on $X$.
             That is to say we set $X^g = \{x\in X: g\cdot x = x\}$.
-            Burnside's Lemma then asserts that the number of $G$ orbits of $X$, denoted $|G\\X|$ is given by
+            Burnside's Lemma then asserts that the number of $G$ orbits of $X$, denoted $|G/X|$ is given by
             \[
-                |G\\X| = \frac{1}{|G|}\sum_{g\in G} |X^g|.
+                |G/ X| = \frac{1}{|G|}\sum_{g\in G} |X^g|.
             \]
 
             We start by noticing that in our problem, we are dealing with the group of rotations and reflections
@@ -58,14 +58,12 @@
 
             So when we put all this together we see that
             \[
-                |D_7\\[q]| = \frac{1}{14}(q^7 + 6q + 7q^4).
+                |D_7/[q]| = \frac{1}{14}(q^7 + 6q + 7q^4).
             \]
-            So for 5 colors we have]
+            So for 5 colors we have
             \[
-                |D_7\\[5]| = \frac{1}{14}(5^7 + 6\cdot 5 + 7\cdot 5^4) = 5895
+                |D_7/[5]| = \frac{1}{14}(5^7 + 6\cdot 5 + 7\cdot 5^4) = 5895
             \]
-
-
         \end{solution}
 
         \section{Problem 2}
@@ -73,7 +71,31 @@
         In how many ways can we color if the faces can be colored using any one of the 5 colors.
 
         \begin{solution}
+            We again appeal to Burnside's Lemma.
+            We begin by determining the rotational symmetry group of the prism, which
+            is the identity element, a rotation about the axis through the triangular faces of which there are 3 $120^\circ$, and
+            a rotation about an axis taken through one of the rectangular faces, a $180^\circ$ rotation which makes the group of
+            rotations of size 6.
 
+            Now to the summation portion of Burnside's Lemma.
+            For the identity element coloring the faces with 5 colors, because there are 5 faces, we have $5^5$
+            possibilities.
+
+            For the rotations about the axis through the triangular faces, for this to remain the same after a rotation
+            we must have any of the 5 colors on either end of the prism in the triangular face.
+            But, for the rectangular faces, those must all be the same color.
+            So we have $5^3$ possibilities here of which there are $3$ rotations.
+
+            Now what if we put the axis of rotation through a rectangular face?
+            For the prism to remain unchanged through the rotation the face can be chosen to be any of our 5 colors,
+            the other two rectangles must be the same color, and as well the triangles must maintain the same color.
+            So that is 3 regions with 5 colors to choose from which yields $5^3$ possibilities of which there are $2$
+            rotations.
+
+            To add everything up we see that
+            \[
+                #=\frac{1}{6}(5^5 + 3(5^3) + 2(5^3)) = 625.
+            \]
         \end{solution}
 
         \section{Problem 3}
