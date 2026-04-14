@@ -436,9 +436,67 @@ Absolute error at t=1: 0.4285414996
         For 5.d. we do (b) and (c) again, but this time for the backwards Euler's method. The code follows below as
         \begin{tiny}
         \begin{verbatim}
+clear; clc;
 
+yexact = @(t) 0.5*(exp(t) - sin(t) - cos(t));
+
+a = 0;
+b = 1;
+Nh = 10;
+h = (b-a)/Nh;
+
+t = zeros(Nh+1,1);
+y = zeros(Nh+1,1);
+
+% initial condition
+t(1) = 0;
+y(1) = 0;
+
+% Backward Euler method
+for n = 1:Nh
+    t(n+1) = t(n) + h;
+    y(n+1) = ( y(n) + h*sin(t(n+1)) ) / (1-h);
+end
+
+y_exact_at_1 = yexact(1);
+error_at_1 = abs(y(end) - y_exact_at_1);
+
+fprintf('Backward Euler approximation at t=1: %.10f\n', y(end));
+fprintf('Exact value at t=1: %.10f\n', y_exact_at_1);
+fprintf('Absolute error at t=1: %.10f\n', error_at_1);
         \end{verbatim}
         \end{tiny}
+
+        which yields the following output
+        \begin{tiny}
+        \begin{verbatim}
+Backward Euler approximation at t=1: 0.8026112881
+Exact value at t=1: 0.6682542689
+Absolute error at t=1: 0.1343570192
+        \end{verbatim}
+        \end{tiny}
+
+        And our figure for the convergence of the backwards Euler's method follows as Figure \ref{ps4prob5fig2}
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[scale=0.5]{ps4prob5fig2.png}
+            \caption{For $y'=\sin(t) + y$, a log-log plot of the Backwards Euler's method approach based on step size.}
+            \label{ps4prob5fig2}.
+        \end{figure}
+
+        \subsection{}
+        When considering which to use, backwards or forwards Euler methods we have to think about the problem we are faced
+        with.
+        Generally, the forward Euler's method requires less effort as we get $y$ values directly as a product of doing the
+        iteration, but that trades off for stability of the solution.
+        The backwards Euler's method requires algebraic manipulation from step to step, whereas the forwards Euler's method
+        only requires calculation.
+        Again the main trade-off is the stability of the solution.
+
+Both forward Euler and backward Euler are first-order methods, so their errors decrease proportionally to h. On a log-log plot, this appears as an approximately straight line of slope 1. Forward Euler is simpler and faster since it is explicit and does not require solving an equation at each step. Backward Euler is implicit and therefore usually more expensive computationally, but it has better stability properties. For this problem, backward Euler can be solved algebraically at each step, so the extra cost is small, though still somewhat greater than forward Euler. In general, forward Euler is advantageous for simple nonstiff problems, while backward Euler is preferred when stability is more important, especially for stiff equations.
+
+
 
     \end{onehalfspace}
 \end{document}
