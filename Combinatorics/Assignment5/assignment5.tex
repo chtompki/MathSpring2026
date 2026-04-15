@@ -12,6 +12,8 @@
 \usepackage{amsthm}
 \usepackage{enumitem}
 \usepackage{setspace}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
 
 \newenvironment{solution}
 {\begin{proof}[Solution]}
@@ -22,6 +24,86 @@
 \date{\today}
 
 \begin{document}
+    % ---------- tetrahedron macros ----------
+    % vertices:
+    %   T = top
+    %   L = left
+    %   R = right
+    %   B = bottom
+    %
+    % edges:
+    %   TL, TR, TB, LR, LB, RB
+    %
+    % filled vertices = black, unfilled vertices = white
+    % solid edges = black, dashed edges = gray dashed
+
+    \newcommand{\tetraVertices}[4]{%
+      % #1,#2,#3,#4 are 0 or 1 for T,L,R,B filled?
+      \begin{scope}
+        \ifnum#1=1
+          \fill (T) circle (2.2pt);
+        \else
+          \fill[white] (T) circle (2.2pt);
+          \draw (T) circle (2.2pt);
+        \fi
+        \ifnum#2=1
+          \fill (L) circle (2.2pt);
+        \else
+          \fill[white] (L) circle (2.2pt);
+          \draw (L) circle (2.2pt);
+        \fi
+        \ifnum#3=1
+          \fill (R) circle (2.2pt);
+        \else
+          \fill[white] (R) circle (2.2pt);
+          \draw (R) circle (2.2pt);
+        \fi
+        \ifnum#4=1
+          \fill (B) circle (2.2pt);
+        \else
+          \fill[white] (B) circle (2.2pt);
+          \draw (B) circle (2.2pt);
+        \fi
+      \end{scope}
+    }
+
+    \newcommand{\tetraEdges}[6]{%
+      % #1..#6 are 0 or 1 for TL,TR,TB,LR,LB,RB solid?
+      \ifnum#1=1 \draw[thick] (T)--(L); \else \draw[dashed,gray] (T)--(L); \fi
+      \ifnum#2=1 \draw[thick] (T)--(R); \else \draw[dashed,gray] (T)--(R); \fi
+      \ifnum#3=1 \draw[thick] (T)--(B); \else \draw[dashed,gray] (T)--(B); \fi
+      \ifnum#4=1 \draw[thick] (L)--(R); \else \draw[dashed,gray] (L)--(R); \fi
+      \ifnum#5=1 \draw[thick] (L)--(B); \else \draw[dashed,gray] (L)--(B); \fi
+      \ifnum#6=1 \draw[thick] (R)--(B); \else \draw[dashed,gray] (R)--(B); \fi
+    }
+
+    \newcommand{\drawtetraV}[5]{%
+    % #1 xshift, #2 T, #3 L, #4 R, #5 B
+    \begin{scope}[xshift=#1]
+      \coordinate (T) at (0,1.3);
+      \coordinate (L) at (-1.0,0);
+      \coordinate (R) at (1.0,0);
+      \coordinate (B) at (0,-0.55);
+      \draw[thick] (T)--(L)--(B)--(R)--cycle;
+      \draw[thick] (T)--(B);
+      \tetraVertices{#2}{#3}{#4}{#5}
+    \end{scope}
+    }
+
+    \newcommand{\drawtetraE}[7]{%
+    % #1 xshift, then TL,TR,TB,LR,LB,RB
+    \begin{scope}[xshift=#1]
+      \coordinate (T) at (0,1.3);
+      \coordinate (L) at (-1.0,0);
+      \coordinate (R) at (1.0,0);
+      \coordinate (B) at (0,-0.55);
+      \tetraEdges{#2}{#3}{#4}{#5}{#6}{#7}
+      \fill (T) circle (1.7pt);
+      \fill (L) circle (1.7pt);
+      \fill (R) circle (1.7pt);
+      \fill (B) circle (1.7pt);
+    \end{scope}
+    }
     \maketitle
     \date{\today}
     \begin{onehalfspace}
@@ -103,6 +185,73 @@
         Repeat the problem with red-blue edge colorings.
 
         \begin{solution}
+        Figure \ref{tetrahedra} shows the pattern inventory of the red-blue vertex and edge colorings of a tetrahedron.
+        The first row shows the vertex colorings using black and white to represent red and blue, respectively.
+        The second, third, and forth rows show the edge colorings using solid and dashed lines to represent red and blue, respectively.
+        The second row and fourth row show monochromatic colorings, a single differentiated edge, and two differentiated
+        edges.
+        The two differentiated edges accommodate for two different colorings because the two edges can be adjacent or non-adjacent.
+        As for the third row, the four differentiated edges accommodate for the four different colorings because the four edges can be arranged in a few different ways.
+        \begin{figure}
+            \begin{tikzpicture}[scale=1.2]
+
+                % ---------- row 1: vertex colorings ----------
+                \drawtetraV{0cm}{0}{0}{0}{0}
+                \drawtetraV{3cm}{1}{0}{0}{0}
+                \drawtetraV{6cm}{0}{1}{0}{1}
+                \drawtetraV{9cm}{0}{1}{1}{1}
+                \drawtetraV{12cm}{1}{1}{1}{1}
+
+                \node at (15.1,0.55) {\Large $5$};
+                \node at (16.2,0.70) {\Large R/B};
+                \node at (16.2,0.15) {\Large vertices};
+
+                % ---------- row 2 ----------
+                \begin{scope}[yshift=-4cm]
+                    \drawtetraE{0cm}{1}{1}{1}{1}{1}{1}
+                    \node at (0,-1.6) {$0$};
+
+                    \drawtetraE{3cm}{1}{1}{1}{1}{0}{1}
+                    \node at (3,-1.6) {$1$};
+
+                    \drawtetraE{6cm}{1}{0}{1}{1}{0}{1}
+                    \drawtetraE{9cm}{0}{1}{1}{1}{0}{1}
+                    \draw[decorate,decoration={brace,mirror,amplitude=5pt},thick]
+                    (5.1,-1.95) -- (9.9,-1.95)
+                    node[midway,below=6pt] {$2$};
+                \end{scope}
+
+                % ---------- row 3 ----------
+                \begin{scope}[yshift=-8cm]
+                    \drawtetraE{0cm}{0}{0}{1}{1}{0}{1}
+                    \drawtetraE{3cm}{0}{1}{1}{0}{0}{1}
+                    \drawtetraE{6cm}{1}{1}{1}{0}{0}{0}
+                    \drawtetraE{9cm}{0}{0}{1}{1}{1}{0}
+
+                    \draw[decorate,decoration={brace,mirror,amplitude=5pt},thick]
+                    (-0.9,-1.95) -- (9.9,-1.95)
+                    node[midway,below=6pt] {$4$};
+                \end{scope}
+
+                % ---------- row 4 ----------
+                \begin{scope}[yshift=-12cm]
+                    \drawtetraE{0cm}{0}{0}{1}{1}{0}{0}
+                    \drawtetraE{3cm}{1}{0}{0}{0}{1}{0}
+                    \draw[decorate,decoration={brace,mirror,amplitude=5pt},thick]
+                    (-0.3,-1.95) -- (3.3,-1.95)
+                    node[midway,below=6pt] {$2$};
+
+                    \drawtetraE{6cm}{0}{0}{0}{0}{0}{1}
+                    \node at (6,-1.6) {$1$};
+
+                    \drawtetraE{9cm}{0}{0}{0}{0}{0}{0}
+                    \node at (9,-1.6) {$0$};
+                \end{scope}
+
+            \end{tikzpicture}
+            \caption{The pattern inventory of the red-blue vertex and edge colorings of a tetrahedron.}
+            \label{tetrahedra}
+        \end{figure}
 
         \end{solution}
 
@@ -110,7 +259,18 @@
         How many 10 red, 12 blue, 3 green squares are there in the coloring of a $5\times 5$ chessboard?
 
         \begin{solution}
-
+            Regarding the coloring of the $5\times 5$ chessboard with 3 diffenrent colors, we simply chose the color to
+            work with first, fill those squares and then move on to the next color.
+            So we start with the red squares, of which there are 10, and we have 25 total squares to choose from,
+            so we have $\binom{25}{10}$ ways to color the red squares.
+            Next, we have 15 remaining squares to choose from for the blue squares, of which there are 12,
+            so we have $\binom{15}{12}$ ways to color the blue squares.
+            Finally, we have 3 remaining squares to choose from for the green squares, of which there are 3, so we
+            have $\binom{3}{3}$ ways to color the green squares.
+            Thus, the number of possibilities for coloring the $5\times 5$ grid with 10 red, 12 blue, and 3 green squares is given by
+            \[
+                \# = \binom{25}{10}\binom{15}{12}\binom{3}{3} = 1,487,285,800.
+            \]
         \end{solution}
 
         \section{Problem 5}
