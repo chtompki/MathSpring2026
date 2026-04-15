@@ -278,7 +278,60 @@
         in space).
 
         \begin{solution}
+            We consider colorings of the $8$ vertices of a cube using two colors (red and blue), where two colorings
+            are considered equivalent if one can be obtained from the other by a rotation of the cube. Thus, we apply
+            P\'olya's Enumeration Theorem using the rotation group of the cube, which has order $24$.
 
+            The rotations of the cube induce permutations of the $8$ vertices with the following cycle structures:
+            \begin{itemize}
+                \item[-] Identity ($1$ element): cycle type $1^8$
+                \item[-] Rotations about face centers:
+                \begin{itemize}
+                    \item[-] $90^\circ$ and $270^\circ$ ($6$ elements): cycle type $4^2$
+                    \item[-] $180^\circ$ ($3$ elements): cycle type $2^4$
+                \end{itemize}
+                \item[-] Rotations about opposite vertices ($8$ elements): cycle type $1^2 3^2$
+                \item[-] Rotations about midpoints of opposite edges ($6$ elements): cycle type $2^4$
+            \end{itemize}
+
+            Thus, the cycle index polynomial is
+            \[
+                Z_G(a_1,a_2,a_3,a_4)
+                =
+                \frac{1}{24}
+                \left(
+                a_1^8
+                + 9a_2^4
+                + 8a_1^2 a_3^2
+                + 6a_4^2
+                \right).
+            \]
+
+            To compute the pattern inventory for red-blue colorings, we substitute $a_k \mapsto r^k + b^k$:
+            \[
+                P(r,b)
+                =
+                \frac{1}{24}\left[
+                    (r+b)^8
+                    + 9(r^2+b^2)^4
+                    + 8(r+b)^2 (r^3+b^3)^2
+                    + 6(r^4+b^4)^2
+                    \right].
+            \]
+
+            Expanding, we obtain
+            \[
+                P(r,b)
+                =
+                r^8 + r^7 b + 3r^6 b^2 + 3r^5 b^3 + 7r^4 b^4
+                + 3r^3 b^5 + 3r^2 b^6 + r b^7 + b^8.
+            \]
+
+            The coefficient of $r^k b^{8-k}$ gives the number of inequivalent colorings with $k$ red vertices.
+            In particular, the total number of distinct colorings is
+            \[
+                P(1,1) = 23.
+            \]
         \end{solution}
     \end{onehalfspace}
 \end{document}
