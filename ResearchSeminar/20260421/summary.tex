@@ -1,0 +1,62 @@
+%! Author = chtompki
+%! Date = 1/14/26
+% Example LaTeX document for GP111 - note % sign indicates a comment
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{shadows,arrows,arrows.meta,shapes,positioning,calc}% Required for the Circle and Triangle arrow tips
+\usepackage{setspace}
+\usepackage{siunitx}
+
+\theoremstyle{conjecture}
+\newtheorem{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{question}
+\newtheorem{question}{Question}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+
+\title{Seminar Summary:\\April 21, 2026 - Brent Cody\\Connections Between Graph Theory and Music}
+\author{Rob Tompkins}
+\date{\today}
+
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        We start with an introduction to modular synthesizers.
+        But we are quickly confronted with a problem about maximal evenness, presenting a 12-cycle $C_{12}$, we are
+        curious about the maximal placing of 5 onsets over the cycle of 12.
+        We try to space the onsets alternatively at first, and we get a section of three uncovered vertices in the cycle.
+        We do a little fiddling, and we end up with the repeating pattern of the black-keys on a piano over the white
+        keys on the piano.
+        The set $J_{12,5}^0 = \{0,2,4,7,9\}$ is the maximally even subset of $C_{12}$.
+
+        So naturally we ask, what does it mean to be maximally even?
+        We come up with the following definition
+        \begin{definition}
+            (Clough, Douthett, 1991) Let $d(u,v)$ represent the distance from vertex $u$ to vertex $v$ of shortest length where $u,v\in C_n$,
+            with $C_n$ being the cycle on $n$-vertices.
+            We call a set of vertices $\{a_0,a_1,\ldots, a_{m-1}\}\subseteq C_n$ \emph{maximally even} if whenever there is
+            $1\le k \le \lfloor m/2 \rfloor$, we have
+            \[
+                d(a_i, a_{i+k}) \in \left\{ \left\langle \frac{nk}{m} \right\rangle, \left\lceil \frac{nk}{m}\right\rceil \right\}
+            \]
+        \end{definition}
+
+    \end{onehalfspace}
+\end{document}
