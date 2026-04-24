@@ -57,6 +57,23 @@
                 d(a_i, a_{i+k}) \in \left\{ \left\lfloor \frac{nk}{m} \right\rfloor, \left\lceil \frac{nk}{m}\right\rceil \right\}
             \]
         \end{definition}
+        Now we notice something curious, namely that
+        \[
+            J_{12,5} = \left\{\left\lfloor\frac{12i}{5}\right\rfloor: 0\le i< 5\right\}.
+        \]
+        So this theorem arises:
+        \begin{theorem}
+            (Clough, Douthett, 1991) A set $A \subseteq C_n$ with $|A| = m$ is maximally even if and only if it is
+            of the form
+            \begin{displaymath}
+                A = J_{n,m}^r = \left\{ \left\lfloor\frac{ni+r}{m}\right\rfloor: 0 \le i < m\right\}.
+            \end{displaymath}
+        \end{theorem}
 
+        And it seems that quite naturally the complement of a maximally even set is also maximally even
+
+        \[
+            C_n \setminus J_{m,n}^r = J_{n,m-n}^{n-r-1}
+        \]
     \end{onehalfspace}
 \end{document}
