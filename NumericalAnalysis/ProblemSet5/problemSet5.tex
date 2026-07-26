@@ -1,0 +1,69 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\NewDocumentCommand{\vitem}{v}{%
+    \item[\texttt{#1}]%
+}
+
+\title{Numerical Analysis\\Problem Set 5}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+
+        % Problem 1
+        \section{Problem 1}
+        Derive the trapezoid integration scheme as an Adams-Moulton method with $m = 1$ step:
+        \[
+            \frac{w_{j+1}-w_j}{h} = \frac{1}{2}[f(t_{j+1},w_{j+1}) + f(t_j, w_j)]
+        \]
+        to approximate the initial value problem $y'=f(t,y)$ for $a\le t \le b$ with initial condition
+        $y(a)=\alpha$.
+        Also derive the associated error term.
+        Let $w_j \approx y_j := y(t_j)$.
+        \begin{itemize}
+            \item[(a)] Use the Lagrange form of the polynomial interpolant to write
+            \[
+                f(t, y(t)) = P_1(t) + R_1(t).
+            \]
+            Integrate $P_1(t) = L_{1,0}(t)f(t_{j+1}, y_{j+1}) + L_{1,1}(t)f(t_j,y_j)$ from $t = t_j$ to $t=t_j+1$.
+            \item[(b)] Set $w_{j+1} = w_j + \int_{t_j}^{t_{j+1}} f(t,y(t))dt$, approximating the 2nd term with
+            $\int_{t_j}^{t_{j+1}} P_1(t)dt$, and derive the method above.
+            \item[(c)] The error term $R_1(t) = \frac{f''(\xi,y(\xi))}{2}(t-t_{j+1})(t-t_j)$ for $f$ (some
+            $\xi\in(t_j,t_{j+1})$) can be integrated from $t=t_j$ to $t=t_{j+1}$ to get the error associated
+            with the Adams-Moulton scheme:
+            \[
+                \text{Error} = Mh^3 f''(\mu, y(\mu)).
+            \]
+            Do this integration to find value of $M$.
+            \item[(d)] What is the order of this one-step implicit method?
+        \end{itemize}
+
+        \begin{solution}
+        \end{solution}
+
+    \end{onehalfspace}
+\end{document}
