@@ -62,6 +62,31 @@
             \item[(d)] What is the order of this one-step implicit method?
         \end{itemize}
 
+        % Problem 2
+        \section{Problem 2}
+        Consider the initial value problem
+        \[
+            y' = \frac{4t\sqrt{1 + y^2}}{y}, y(0) = 1
+        \]
+        for $0\le t \le 5$.\\
+        \underline{Challenge.} Show that $y(t)  = \sqrt{\left(2t^2 + \sqrt{2}\right)^2 - 1}$ is a solution to the
+        initial value problem.
+        Is it unique?
+
+        Numerically implement the following methods below, and run with enough values of step-size $h$ to demonstrate
+        that each of has convergence of global discretization error with rate $\mathcal{O}(h^2)$.
+        \begin{itemize}
+            \item[(a)] Optimal RK2 method
+            \item[(b)] Two-step Adams-Bashforth
+            \item[(c)] One-step Adams-Moulton method
+            \item[(d)] Heun method (predictor-corrector)
+        \end{itemize}
+        Plot the error versus the step size on a log-log plot for all methods on the same axes to compare.
+        Comment on the advantages and disadvantages of each.
+
+        % Problem 3
+        \section{Problem 3}
+
         \begin{solution}
         \end{solution}
 
