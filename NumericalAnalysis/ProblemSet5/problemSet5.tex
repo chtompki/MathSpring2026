@@ -84,8 +84,52 @@
         Plot the error versus the step size on a log-log plot for all methods on the same axes to compare.
         Comment on the advantages and disadvantages of each.
 
+        \begin{solution}
+        \end{solution}
+
         % Problem 3
         \section{Problem 3}
+        Consider the linear multi-step method to approximate the initial value problem $y'=f(t,y)$ for $a\le t\le b$
+        with the initial condition $y(a)=\alpha$:
+        \[
+            w_{j+1} - \frac{18}{11}w_j + \frac{9}{11}w_{j-1} + \frac{2}{11}w_{j-2} = \frac{6}{11}h f(t_{j+1}, w_{j+1}).
+        \]
+        \begin{itemize}
+            \item[(a)] Is the method stable?
+            If so, is it strongly or weakly stable?
+            Show your work by considering the roots of the characteristic polynomial, noting that $\lambda=1$ is a root,
+            and you can even factor and write $P(\lambda) = (\lambda - 1)*(\ldots)$.
+            \item[(b)] Is the method convergent?
+            \item[(c)] Is the method consistent?
+        \end{itemize}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 4
+        \section{Problem 4}
+        Use a built-in ODE solver to numerically integrate the Lorenz equations
+        \begin{eqnarray*}
+            \dot{x} & = & \sigma(x - y)\\
+            \dot{y} & = & rx - y - xz \\
+            \dot{z} & = & xy - bz
+        \end{eqnarray*}
+        with the following values for coefficients $\sigma=10, r = 28, b = 8/3$.
+        \begin{itemize}
+            \item[(a)] Using the intial condition $(x_0, y_0, z_0) = (5, 5, 5)$, solve the system for
+            $0\le t\le 10$ with a time step $h=0.001$. Make a 2D plot of $x$ versus $z$ and a 3D plot
+            of $x$ versus $y$ versus $z$.
+            \item[(b)] Use a new initial condition $(\bar{x_0}, \bar{y_0}, \bar{z_0}) = (5,5,5) 10^{-5}$,
+            repeat the simulations in part (a) and the plots in part (b).
+            \item[(c)] Plot the $L_2$-norm pof the difference in the solutions obtained using the
+            different initial conditions in (a) and (b).
+            Comment on your results.
+            \item[(d)] Repeat parts (a) - (c) with different solvers and different step sizes.
+            Comment on your results.
+            You may see differences when using some solvers but not using others.
+            Given the differences observed when using different methods, how can you tell what to expect
+            for the exact solution?
+        \end{itemize}
 
         \begin{solution}
         \end{solution}
