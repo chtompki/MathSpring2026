@@ -62,6 +62,42 @@
             \item[(d)] What is the order of this one-step implicit method?
         \end{itemize}
 
+        \begin{solution}
+            For the sake of convenience, we're going to set $g(t) = f(y,y(t)) = y'(t)$, and furthermore, we
+            assume a uniform grid over which we will work.
+            So set
+            \[
+                t_j = a + jh,\qquad h\frac{b-a}{N}.
+            \]
+            So we have that
+            \[
+                y(t_{j+1} - y(t_j)) = \int_{t_j}^{t_{j+1}} g(t) dt.
+            \]
+
+            \emph{(a)} So if we are to interpolate the function $g(t) = f(t, y(t))$ at the nodes $t_{j+1}$ and
+            $t_j$, then the degree-one Lagrange interpolant follows as $P_1(t) = L_{1,0}(t)f(t_{j+1}, y_{j+1}) +
+            L_{1,1}(t)f(t_j, y_j)$, where
+            \[
+                L_{1,0}(t) = \frac{t-t_j}{t_{j+1} - t_j} = \frac{t - t_j}{h},
+            \]
+            and
+            \[
+                L_{1,1}(t) = \frac{t-t_{j+1}}{t_j - t_{j+1}} = \frac{t_{j+1} - t}{h}.
+            \]
+            Thus, we have that
+            \[
+                f(t,y(t)) = P_1(t) + R_1(t)
+            \]
+            in conjunction with
+            \[
+                P_1(t) = \frac{t-t_j}{h}f(t_{j+1}, y_{j+1}) + \frac{t_{j+1} - t}{h}f(t_j, y_j).
+            \]
+            Integrating over our interval $[t_j, t_{j+1}]$ yields
+            \[
+                \int_{t_j}^{t_{j+1}}P_1(t) dt = f(t_{j+1},y_{j+1})\int_{t_j}^{t_{j+1}} \frac{t-t_j}{h}dt + f(t_j, y_j)\int_{t_j}^{t_{j+1}}\frac{t_{j+1} - t}{h} dt.
+            \]
+        \end{solution}
+
         % Problem 2
         \section{Problem 2}
         Consider the initial value problem
