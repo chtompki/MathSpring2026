@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  7 AUG 2026 03:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  7 AUG 2026 04:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -903,11 +903,6 @@ LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 (Font)              scaled to size 10.5pt on input line 140.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 (Font)              scaled to size 7.9pt on input line 140.
-
-Overfull \hbox (90.65399pt too wide) in paragraph at lines 140--140
- [] 
- []
-
 LaTeX Font Info:    Font shape `OT1/ntxtlf/b/n' will be
 (Font)              scaled to size 12.0pt on input line 146.
 LaTeX Font Info:    Font shape `OT1/ntxtlf/m/it' will be
@@ -916,16 +911,17 @@ LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
 (Font)              scaled to size 17.28pt on input line 166.
 LaTeX Font Info:    Font shape `OT1/ntxtlf/b/n' will be
 (Font)              scaled to size 17.28pt on input line 166.
-LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
-(Font)              scaled to size 8.8pt on input line 174.
-LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
-(Font)              scaled to size 6.6pt on input line 174.
 
 
 [1
 
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
 al/texlive/2025/texmf-dist/fonts/enc/dvips/newtx/ntx-ot1-tlf.enc}]
+LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
+(Font)              scaled to size 8.8pt on input line 174.
+LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
+(Font)              scaled to size 6.6pt on input line 174.
+
 
 [2]
 <math1.jpeg, id=17, 1032.0156pt x 1376.0208pt>
@@ -988,7 +984,7 @@ r/local/texlive/2025/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/local
 /2025/texmf-dist/fonts/type1/public/newtx/ztmb.pfb></usr/local/texlive/2025/tex
 mf-dist/fonts/type1/public/newtx/ztmr.pfb></usr/local/texlive/2025/texmf-dist/f
 onts/type1/public/newtx/ztmri.pfb>
-Output written on sumfin.pdf (10 pages, 68617231 bytes).
+Output written on sumfin.pdf (10 pages, 68617217 bytes).
 PDF statistics:
  75 PDF objects out of 1000 (max. 8388607)
  46 compressed objects within 1 object stream
