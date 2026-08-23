@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  15 AUG 2026 14:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  15 AUG 2026 15:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -907,10 +907,6 @@ LaTeX Font Info:    Font shape `OT1/ntxtlf/b/n' will be
 (Font)              scaled to size 12.0pt on input line 141.
 LaTeX Font Info:    Font shape `OT1/ntxtlf/m/it' will be
 (Font)              scaled to size 12.0pt on input line 150.
-LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
-(Font)              scaled to size 17.28pt on input line 161.
-LaTeX Font Info:    Font shape `OT1/ntxtlf/b/n' will be
-(Font)              scaled to size 17.28pt on input line 161.
 
 
 [1
@@ -918,49 +914,51 @@ LaTeX Font Info:    Font shape `OT1/ntxtlf/b/n' will be
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
 al/texlive/2025/texmf-dist/fonts/enc/dvips/newtx/ntx-ot1-tlf.enc}]
 LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
-(Font)              scaled to size 8.8pt on input line 169.
+(Font)              scaled to size 17.28pt on input line 162.
+LaTeX Font Info:    Font shape `OT1/ntxtlf/b/n' will be
+(Font)              scaled to size 17.28pt on input line 162.
 LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
-(Font)              scaled to size 6.6pt on input line 169.
+(Font)              scaled to size 8.8pt on input line 171.
+LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
+(Font)              scaled to size 6.6pt on input line 171.
 
 
 [2]
-<math1_small.jpeg, id=17, 1032.0156pt x 1376.0208pt>
-File: math1_small.jpeg Graphic file (type jpg)
-<use math1_small.jpeg>
-Package pdftex.def Info: math1_small.jpeg  used on input line 391.
-(pdftex.def)             Requested size: 187.89912pt x 250.52856pt.
-<math2_small.jpeg, id=18, 1032.0156pt x 1376.0208pt>
-File: math2_small.jpeg Graphic file (type jpg)
-<use math2_small.jpeg>
-Package pdftex.def Info: math2_small.jpeg  used on input line 397.
-(pdftex.def)             Requested size: 187.89912pt x 250.52856pt.
-
 
 [3]
 
-[4 <./math1_small.jpeg>]
+[4]
 
-[5 <./math2_small.jpeg>]
+[5]
+<math1_small.jpeg, id=27, 1032.0156pt x 1376.0208pt>
+File: math1_small.jpeg Graphic file (type jpg)
+<use math1_small.jpeg>
+Package pdftex.def Info: math1_small.jpeg  used on input line 502.
+(pdftex.def)             Requested size: 187.89912pt x 250.52856pt.
+<math2_small.jpeg, id=28, 1032.0156pt x 1376.0208pt>
+File: math2_small.jpeg Graphic file (type jpg)
+<use math2_small.jpeg>
+Package pdftex.def Info: math2_small.jpeg  used on input line 508.
+(pdftex.def)             Requested size: 187.89912pt x 250.52856pt.
 <math3_small.jpeg, id=29, 1032.0156pt x 1376.0208pt>
 File: math3_small.jpeg Graphic file (type jpg)
 <use math3_small.jpeg>
-Package pdftex.def Info: math3_small.jpeg  used on input line 447.
+Package pdftex.def Info: math3_small.jpeg  used on input line 514.
 (pdftex.def)             Requested size: 187.89912pt x 250.52856pt.
-
-
-[6 <./math3_small.jpeg>]
-<math4_small.jpeg, id=33, 1032.0156pt x 1376.0208pt>
+<math4_small.jpeg, id=30, 1032.0156pt x 1376.0208pt>
 File: math4_small.jpeg Graphic file (type jpg)
 <use math4_small.jpeg>
-Package pdftex.def Info: math4_small.jpeg  used on input line 481.
+Package pdftex.def Info: math4_small.jpeg  used on input line 520.
 (pdftex.def)             Requested size: 187.89912pt x 250.52856pt.
 
 
-[7 <./math4_small.jpeg>]
+[6
 
-[8
+]
 
-] (./sumfin.aux)
+[7 <./math1_small.jpeg> <./math2_small.jpeg>]
+
+[8 <./math3_small.jpeg> <./math4_small.jpeg>] (./sumfin.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
@@ -969,7 +967,7 @@ L3 programming layer <2020/03/25>
 Here is how much of TeX's memory you used:
  18132 strings out of 473190
  345857 string characters out of 5715801
- 765535 words of memory out of 5000000
+ 765493 words of memory out of 5000000
  41051 multiletter control sequences out of 15000+600000
  597227 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -980,7 +978,7 @@ r/local/texlive/2025/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/local
 /2025/texmf-dist/fonts/type1/public/newtx/ztmb.pfb></usr/local/texlive/2025/tex
 mf-dist/fonts/type1/public/newtx/ztmr.pfb></usr/local/texlive/2025/texmf-dist/f
 onts/type1/public/newtx/ztmri.pfb>
-Output written on sumfin.pdf (8 pages, 9465035 bytes).
+Output written on sumfin.pdf (8 pages, 9464759 bytes).
 PDF statistics:
  69 PDF objects out of 1000 (max. 8388607)
  42 compressed objects within 1 object stream
