@@ -14,6 +14,7 @@
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{listings}
 
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 
@@ -97,6 +98,155 @@
                 \int_{t_j}^{t_{j+1}}P_1(t) dt = f(t_{j+1},y_{j+1})\int_{t_j}^{t_{j+1}} \frac{t-t_j}{h}dt + f(t_j, y_j)
                 \int_{t_j}^{t_{j+1}}\frac{t_{j+1} - t}{h} dt.
             \]
+
+            \item[(b)] Starting from the integral form of the differential equation,
+            \[
+                y_{j+1}
+                =
+                y_j
+                +
+                \int_{t_j}^{t_{j+1}} f(t,y(t))\,dt.
+            \]
+            Using the degree-one interpolating polynomial \(P_1(t)\) from part (a), we approximate
+            \[
+                \int_{t_j}^{t_{j+1}} f(t,y(t))\,dt
+                \approx
+                \int_{t_j}^{t_{j+1}} P_1(t)\,dt.
+            \]
+            From part (a),
+            \[
+                \int_{t_j}^{t_{j+1}} P_1(t)\,dt
+                =
+                \frac{h}{2}
+                \left[
+                    f(t_{j+1},y_{j+1})
+                +
+                f(t_j,y_j)
+                \right].
+            \]
+            Therefore,
+            \[
+                y_{j+1}
+                \approx
+                y_j
+                +
+                \frac{h}{2}
+                \left[
+                    f(t_{j+1},y_{j+1})
+                +
+                f(t_j,y_j)
+                \right].
+            \]
+            Replacing the exact values \(y_j\) and \(y_{j+1}\) by the numerical
+            approximations \(w_j\) and \(w_{j+1}\), we obtain
+            \[
+                w_{j+1}
+                =
+                w_j
+                +
+                \frac{h}{2}
+                \left[
+                    f(t_{j+1},w_{j+1})
+                +
+                f(t_j,w_j)
+                \right].
+            \]
+            Equivalently,
+            \[
+                \frac{w_{j+1}-w_j}{h}
+                =
+                \frac{1}{2}
+                \left[
+                    f(t_{j+1},w_{j+1})
+                +
+                f(t_j,w_j)
+                \right].
+            \]
+            This is the one-step Adams--Moulton method, also called the
+            trapezoidal method.
+
+            \item[(c)] The interpolation remainder is
+            \[
+                R_1(t)
+                =
+                \frac{f''(\xi,y(\xi))}{2}
+                (t-t_{j+1})(t-t_j),
+            \]
+            for some \(\xi \in (t_j,t_{j+1})\). Hence the error in the integral
+            approximation is
+            \[
+                E
+                =
+                \int_{t_j}^{t_{j+1}} R_1(t)\,dt.
+            \]
+            By the mean value theorem for integrals, for some
+            \(\mu \in (t_j,t_{j+1})\),
+            \[
+                E
+                =
+                \frac{f''(\mu,y(\mu))}{2}
+                \int_{t_j}^{t_{j+1}}
+                (t-t_{j+1})(t-t_j)\,dt.
+            \]
+            Let
+            \[
+                s=t-t_j.
+            \]
+            Since \(t_{j+1}=t_j+h\), we have
+            \[
+                t-t_j=s,
+                \qquad
+                t-t_{j+1}=s-h,
+            \]
+            and the limits become \(0\leq s\leq h\). Thus
+            \[
+                \begin{aligned}
+                    \int_{t_j}^{t_{j+1}}
+                    (t-t_{j+1})(t-t_j)\,dt
+                    &=
+                    \int_0^h (s-h)s\,ds \\
+                    &=
+                    \int_0^h (s^2-hs)\,ds \\
+                    &=
+                    \left[
+                        \frac{s^3}{3}
+                        -
+                        \frac{hs^2}{2}
+                    \right]_0^h \\
+                    &=
+                    \frac{h^3}{3}
+                    -
+                    \frac{h^3}{2} \\
+                    &=
+                    -\frac{h^3}{6}.
+                \end{aligned}
+            \]
+            Therefore,
+            \[
+                E
+                =
+                \frac{f''(\mu,y(\mu))}{2}
+                \left(-\frac{h^3}{6}\right)
+                =
+                -\frac{h^3}{12}f''(\mu,y(\mu)).
+            \]
+            Thus, in the form
+            \[
+                \text{Error}
+                =
+                Mh^3 f''(\mu,y(\mu)),
+            \]
+            we have
+            \[
+                M=-\frac{1}{12}.
+            \]
+
+            \item[(d)] The local truncation error is proportional to \(h^3\):
+            \[
+                E=O(h^3).
+            \]
+            Therefore, the accumulated global error is \(O(h^2)\). Hence the
+            one-step implicit trapezoidal Adams--Moulton method is a second-order method.
         \end{solution}
 
         % Problem 2
@@ -122,6 +272,238 @@
         Comment on the advantages and disadvantages of each.
 
         \begin{solution}
+            Define
+            \[
+                f(t,y)=\frac{4t\sqrt{1+y^2}}{y},
+                \qquad
+                y_{\mathrm{exact}}(t)
+                =\sqrt{\left(2t^2+\sqrt{2}\right)^2-1}.
+            \]
+            For a step size $h=5/N$, let $t_n=nh$ and let $w_n$
+            approximate $y(t_n)$. The global discretization error is
+            measured by
+            \[
+                E(h)=\max_{0\leq n\leq N}
+                \left|w_n-y_{\mathrm{exact}}(t_n)\right|.
+            \]
+            The step sizes used were
+            \[
+                h=0.2,\ 0.1,\ 0.05,\ 0.025,\ 0.0125,\ 0.00625.
+            \]
+
+            \medskip
+            \noindent
+            \emph{(a) Optimal RK2 method.}
+            We use Ralston's optimal two-stage RK2 method:
+            \[
+                \begin{aligned}
+                    k_1&=f(t_n,w_n),\\
+                    k_2&=f\left(t_n+\frac{2h}{3},
+                    w_n+\frac{2h}{3}k_1\right),\\
+                    w_{n+1}
+                    &=w_n+h\left(\frac14 k_1+\frac34 k_2\right).
+                \end{aligned}
+            \]
+            This is an explicit, self-starting, second-order method.
+
+            \medskip
+            \noindent
+            \emph{(b) Two-step Adams--Bashforth method.}
+            For $n\geq 1$, the method is
+            \[
+                w_{n+1}
+                =
+                w_n+\frac{h}{2}
+                \left(3f(t_n,w_n)-f(t_{n-1},w_{n-1})\right).
+            \]
+            Since this method requires two previous values, $w_1$ was
+            computed using one Ralston RK2 step. A second-order starting
+            method is necessary to preserve the second-order global
+            accuracy of Adams--Bashforth.
+
+            \medskip
+            \noindent
+            \emph{(c) One-step Adams--Moulton method.}
+            The one-step Adams--Moulton method is the implicit
+            trapezoidal rule
+            \[
+                w_{n+1}
+                =
+                w_n+\frac{h}{2}
+                \left[
+                    f(t_n,w_n)+f(t_{n+1},w_{n+1})
+                \right].
+            \]
+            At each step, $w_{n+1}$ was found by solving
+            \[
+                G(z)
+                =
+                z-w_n-\frac{h}{2}
+                \left[f(t_n,w_n)+f(t_{n+1},z)\right]
+                =0
+            \]
+            with Newton's method. The initial Newton iterate was the
+            forward-Euler prediction
+            \[
+                z^{(0)}=w_n+h f(t_n,w_n).
+            \]
+            Since
+            \[
+                f_y(t,y)
+                =
+                -\frac{4t}{y^2\sqrt{1+y^2}},
+            \]
+            the Newton iteration is
+            \[
+                z^{(j+1)}
+                =
+                z^{(j)}
+                -
+                \frac{G(z^{(j)})}
+                {1+\dfrac{2h(t_n+h)}
+                {(z^{(j)})^2\sqrt{1+(z^{(j)})^2}}}.
+            \]
+
+            \medskip
+            \noindent
+            \emph{(d) Heun predictor--corrector method.}
+            First, a forward-Euler predictor is computed:
+            \[
+                \widetilde w_{n+1}
+                =
+                w_n+h f(t_n,w_n).
+            \]
+            One trapezoidal correction then gives
+            \[
+                w_{n+1}
+                =
+                w_n+\frac{h}{2}
+                \left[
+                    f(t_n,w_n)
+                    +
+                    f(t_{n+1},\widetilde w_{n+1})
+                \right].
+            \]
+            This is an explicit method because the corrector evaluates
+            $f$ at the predicted value rather than at the unknown
+            corrected value.
+
+            \medskip
+            \noindent
+            The MATLAB implementation is contained in
+            \texttt{ps5prob2.m}. It may be included in the
+            document using
+            \[
+                \texttt{\string\lstinputlisting
+                    \{ps5prob2.m}\}.
+            \]
+            Equivalently, the following command can be placed outside
+            display mode:
+            \lstinputlisting[
+                language=Matlab,
+                basicstyle=\ttfamily\scriptsize,
+                breaklines=true,
+                frame=single,
+                caption={MATLAB implementation for Problem 2.}
+            ]{ps5prob2.m}
+
+            The observed maximum nodal errors were as follows:
+            \[
+                \begin{array}{c|cccc}
+                    h
+                    & \text{Ralston RK2}
+                    & \text{AB2}
+                    & \text{AM1}
+                    & \text{Heun}\\ \hline
+                    0.20000
+                    & 8.9244\times10^{-3}
+                    & 2.8853\times10^{-2}
+                    & 5.8754\times10^{-3}
+                    & 9.2048\times10^{-3}\\
+                    0.10000
+                    & 2.0879\times10^{-3}
+                    & 7.2217\times10^{-3}
+                    & 1.4466\times10^{-3}
+                    & 2.1074\times10^{-3}\\
+                    0.05000
+                    & 5.0966\times10^{-4}
+                    & 1.8036\times10^{-3}
+                    & 3.6033\times10^{-4}
+                    & 5.1112\times10^{-4}\\
+                    0.02500
+                    & 1.2617\times10^{-4}
+                    & 4.5047\times10^{-4}
+                    & 9.0000\times10^{-5}
+                    & 1.2624\times10^{-4}\\
+                    0.01250
+                    & 3.1403\times10^{-5}
+                    & 1.1255\times10^{-4}
+                    & 2.2495\times10^{-5}
+                    & 3.1390\times10^{-5}\\
+                    0.00625
+                    & 7.8343\times10^{-6}
+                    & 2.8128\times10^{-5}
+                    & 5.6238\times10^{-6}
+                    & 7.8279\times10^{-6}
+                \end{array}
+            \]
+
+            The experimental convergence rate is calculated from
+            \[
+                p(h)
+                =
+                \log_2\left(\frac{E(h)}{E(h/2)}\right).
+            \]
+            At the smallest step sizes, the observed rates were
+            \[
+                \begin{array}{c|c}
+                    \text{Method} & p(h)\\ \hline
+                    \text{Optimal RK2} & 2.0030\\
+                    \text{Two-step Adams--Bashforth} & 2.0005\\
+                    \text{One-step Adams--Moulton} & 2.0000\\
+                    \text{Heun predictor--corrector} & 2.0036
+                \end{array}
+            \]
+            Thus, halving $h$ decreases the global error by approximately
+            a factor of four for every method. This demonstrates
+            \[
+                \boxed{E(h)=\mathcal{O}(h^2)}
+            \]
+            for all four schemes.
+
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[width=\textwidth]{ps5prob2_1.png}
+                \caption{Maximum nodal error versus step size for the
+                optimal RK2, two-step Adams--Bashforth, one-step
+                Adams--Moulton, and Heun predictor--corrector methods.
+                The dashed curve is proportional to $h^2$.}
+                \label{fig:problem2-convergence}
+            \end{figure}
+
+            Figure~\ref{fig:problem2-convergence} compares the errors of
+            the four numerical methods with a reference curve
+            proportional to $h^2$. The computed rates approaching $2$
+            confirm second-order global convergence.
+
+            \medskip
+            \noindent
+            \emph{Advantages and disadvantages.}
+            Ralston's RK2 method is explicit and self-starting, but it
+            requires two function evaluations per step and has the
+            stability limitations of an explicit method. The two-step
+            Adams--Bashforth method requires only one new function
+            evaluation per step after startup, but it is not
+            self-starting, must store a previous value, and has the
+            largest error constant in this experiment.
+
+            The one-step Adams--Moulton method gives the smallest errors
+            and has better stability properties, but it requires a
+            nonlinear solve at every step. Heun's method is explicit,
+            self-starting, and easy to implement, but it requires two
+            function evaluations per step and generally has weaker
+            stability properties than the implicit Adams--Moulton
+            method.
         \end{solution}
 
         % Problem 3
