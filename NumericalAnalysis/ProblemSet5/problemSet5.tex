@@ -523,6 +523,186 @@
         \end{itemize}
 
         \begin{solution}
+            Consider the linear multistep method
+            \[
+                w_{j+1}
+                -\frac{18}{11}w_j
+                +\frac{9}{11}w_{j-1}
+                -\frac{2}{11}w_{j-2}
+                =
+                \frac{6}{11}h f(t_{j+1},w_{j+1}).
+            \]
+
+            \begin{itemize}
+
+                \item[(a)] To determine stability, we consider the characteristic
+                polynomial associated with the homogeneous difference equation:
+                \[
+                    P(\lambda)
+                    =
+                    \lambda^3
+                    -\frac{18}{11}\lambda^2
+                    +\frac{9}{11}\lambda
+                    -\frac{2}{11}.
+                \]
+                Multiplying by \(11\),
+                \[
+                    11P(\lambda)
+                    =
+                    11\lambda^3-18\lambda^2+9\lambda-2.
+                \]
+
+                Since \(\lambda=1\) is a root, we factor:
+                \[
+                    11\lambda^3-18\lambda^2+9\lambda-2
+                    =
+                    (\lambda-1)(11\lambda^2-7\lambda+2).
+                \]
+                Thus,
+                \[
+                    P(\lambda)
+                    =
+                    (\lambda-1)
+                    \left(
+                        \lambda^2-\frac{7}{11}\lambda+\frac{2}{11}
+                    \right).
+                \]
+
+                The remaining roots satisfy
+                \[
+                    11\lambda^2-7\lambda+2=0.
+                \]
+                Using the quadratic formula,
+                \[
+                    \lambda
+                    =
+                    \frac{7\pm\sqrt{49-88}}{22}
+                    =
+                    \frac{7\pm i\sqrt{39}}{22}.
+                \]
+
+                Their magnitudes are
+                \[
+                    |\lambda|
+                    =
+                    \sqrt{
+                        \left(\frac{7}{22}\right)^2
+                        +
+                        \left(\frac{\sqrt{39}}{22}\right)^2
+                    }
+                    =
+                    \frac{\sqrt{88}}{22}
+                    =
+                    \frac{\sqrt{22}}{11}
+                    <1.
+                \]
+
+                Therefore, the three roots are
+                \[
+                    \lambda_1=1,
+                    \qquad
+                    \lambda_{2,3}
+                    =
+                    \frac{7\pm i\sqrt{39}}{22}.
+                \]
+
+                All roots satisfy
+                \[
+                    |\lambda_k|\leq 1,
+                \]
+                and the only root on the unit circle is the simple root
+                \(\lambda=1\). Hence the root condition is satisfied, so the method
+                is stable.
+
+                Furthermore, since all roots other than the principal root
+                \(\lambda=1\) lie strictly inside the unit circle, the method is
+                \[
+                    \text{strongly stable}.
+                \]
+
+                \item[(b)] A linear multistep method is convergent if and only if it
+                is both consistent and stable (zero-stable).
+
+                From part (a), the method satisfies the root condition and is
+                therefore stable. We verify consistency in part (c). Since the
+                method is both stable and consistent, it follows that
+                \[
+                    \text{the method is convergent}.
+                \]
+
+                \item[(c)] For a linear multistep method, define
+                \[
+                    \rho(\lambda)
+                    =
+                    \lambda^3
+                    -\frac{18}{11}\lambda^2
+                    +\frac{9}{11}\lambda
+                    -\frac{2}{11},
+                \]
+                and
+                \[
+                    \sigma(\lambda)
+                    =
+                    \frac{6}{11}\lambda^3.
+                \]
+
+                A linear multistep method is consistent if
+                \[
+                    \rho(1)=0
+                \]
+                and
+                \[
+                    \rho'(1)=\sigma(1).
+                \]
+
+                First,
+                \[
+                    \rho(1)
+                    =
+                    1-\frac{18}{11}+\frac{9}{11}-\frac{2}{11}
+                    =
+                    \frac{11-18+9-2}{11}
+                    =
+                    0.
+                \]
+
+                Next,
+                \[
+                    \rho'(\lambda)
+                    =
+                    3\lambda^2
+                    -\frac{36}{11}\lambda
+                    +\frac{9}{11}.
+                \]
+                Therefore,
+                \[
+                    \rho'(1)
+                    =
+                    3-\frac{36}{11}+\frac{9}{11}
+                    =
+                    \frac{33-36+9}{11}
+                    =
+                    \frac{6}{11}.
+                \]
+
+                Also,
+                \[
+                    \sigma(1)
+                    =
+                    \frac{6}{11}.
+                \]
+
+                Hence,
+                \[
+                    \rho'(1)=\sigma(1).
+                \]
+
+                Both consistency conditions are satisfied, and therefore
+                \[
+                    \text{the method is consistent}.
+                \]
+
+            \end{itemize}
         \end{solution}
 
         % Problem 4
