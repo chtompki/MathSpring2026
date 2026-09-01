@@ -731,6 +731,421 @@
         \end{itemize}
 
         \begin{solution}
+
+            The standard Lorenz equations are
+            \begin{align}
+                \dot{x} &= \sigma(y-x), \\
+                \dot{y} &= rx-y-xz, \\
+                \dot{z} &= xy-bz,
+            \end{align}
+            where
+            \[
+                \sigma=10,\qquad r=28,\qquad b=\frac{8}{3}.
+            \]
+            Therefore, if
+            \[
+                \mathbf{u}(t)=
+                \begin{bmatrix}
+                    x(t)\\y(t)\\z(t)
+                \end{bmatrix},
+            \]
+            the system can be written as
+            \[
+                \dot{\mathbf{u}}=\mathbf{f}(t,\mathbf{u})
+                =
+                \begin{bmatrix}
+                    10(y-x)\\
+                    28x-y-xz\\
+                    xy-\dfrac{8}{3}z
+                \end{bmatrix}.
+            \]
+
+            The equation in the problem statement is written as
+            $\dot{x}=\sigma(x-y)$. In this solution, the standard Lorenz convention
+            $\dot{x}=\sigma(y-x)$ is used.
+
+            The notation for the second initial condition is interpreted as a small
+            perturbation of the first initial condition:
+            \[
+                \mathbf{u}_0=
+                \begin{bmatrix}
+                    5\\5\\5
+                \end{bmatrix},
+                \qquad
+                \bar{\mathbf{u}}_0
+                =
+                \mathbf{u}_0+
+                10^{-5}
+                \begin{bmatrix}
+                    1\\1\\1
+                \end{bmatrix}.
+            \]
+
+            \subsection*{(a) Solution using the initial condition $(5,5,5)$}
+
+            The system was first solved with MATLAB's built-in \texttt{ode45}
+            solver over
+            \[
+                0\leq t\leq 10.
+            \]
+            The requested output spacing and maximum internal step size were both set
+            to
+            \[
+                h=0.001.
+            \]
+
+            The MATLAB commands used for parts (a)--(c) are shown below.
+
+            \begin{lstlisting}
+clear;
+close all;
+clc;
+
+% Lorenz parameters
+sigma = 10;
+r = 28;
+b = 8/3;
+
+% Lorenz equations
+lorenz = @(t,u) [sigma*(u(2)-u(1));
+                 r*u(1)-u(2)-u(1)*u(3);
+                 u(1)*u(2)-b*u(3)];
+
+% Time interval and initial conditions
+h = 0.001;
+tspan = 0:h:10;
+
+u0 = [5; 5; 5];
+u0bar = u0 + 1e-5*[1; 1; 1];
+
+% Solver options
+options = odeset('RelTol',1e-9, ...
+                 'AbsTol',1e-12, ...
+                 'MaxStep',h);
+
+% Part (a)
+[t1,U1] = ode45(lorenz,tspan,u0,options);
+
+x1 = U1(:,1);
+y1 = U1(:,2);
+z1 = U1(:,3);
+
+figure;
+plot(x1,z1,'b','LineWidth',0.8);
+xlabel('x');
+ylabel('z');
+title('Lorenz system: x versus z');
+grid on;
+saveas(gcf,'lorenz_xz_a.png');
+
+figure;
+plot3(x1,y1,z1,'b','LineWidth',0.7);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+title('Lorenz trajectory for u_0=(5,5,5)');
+grid on;
+axis tight;
+view(3);
+saveas(gcf,'lorenz_3d_a.png');
+            \end{lstlisting}
+
+            The resulting $x$--$z$ phase plot and three-dimensional phase-space
+            trajectory are shown in Figures~\ref{fig:xza} and~\ref{fig:3da}.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.70\textwidth]{lorenz_xz_a.png}
+                \caption{The $x$--$z$ phase plot for
+                    $\mathbf{u}_0=(5,5,5)^T$.}
+                \label{fig:xza}
+            \end{figure}
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.75\textwidth]{lorenz_3d_a.png}
+                \caption{Three-dimensional Lorenz trajectory for
+                    $\mathbf{u}_0=(5,5,5)^T$.}
+                \label{fig:3da}
+            \end{figure}
+
+            The trajectory displays the characteristic two-lobed structure of the
+            Lorenz attractor. It spirals around one lobe for some time before
+            transitioning to the other lobe.
+
+            \subsection*{(b) Solution using the perturbed initial condition}
+
+            The simulation was repeated using
+            \[
+                \bar{\mathbf{u}}_0=
+                \begin{bmatrix}
+                    5+10^{-5}\\
+                    5+10^{-5}\\
+                    5+10^{-5}
+                \end{bmatrix}.
+            \]
+
+            The following MATLAB code produces the corresponding plots.
+
+            \begin{lstlisting}
+% Part (b)
+[t2,U2] = ode45(lorenz,tspan,u0bar,options);
+
+x2 = U2(:,1);
+y2 = U2(:,2);
+z2 = U2(:,3);
+
+figure;
+plot(x2,z2,'r','LineWidth',0.8);
+xlabel('x');
+ylabel('z');
+title('Perturbed Lorenz system: x versus z');
+grid on;
+saveas(gcf,'lorenz_xz_b.png');
+
+figure;
+plot3(x2,y2,z2,'r','LineWidth',0.7);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+title('Lorenz trajectory for perturbed initial condition');
+grid on;
+axis tight;
+view(3);
+saveas(gcf,'lorenz_3d_b.png');
+            \end{lstlisting}
+
+            The corresponding phase plots are shown in
+            Figures~\ref{fig:xzb} and~\ref{fig:3db}.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.70\textwidth]{lorenz_xz_b.png}
+                \caption{The $x$--$z$ phase plot for the perturbed initial
+                condition.}
+                \label{fig:xzb}
+            \end{figure}
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.75\textwidth]{lorenz_3d_b.png}
+                \caption{Three-dimensional Lorenz trajectory for the perturbed
+                initial condition.}
+                \label{fig:3db}
+            \end{figure}
+
+            At first, the trajectory from the perturbed initial condition appears
+            nearly identical to the trajectory from part (a). At later times,
+            however, the two trajectories follow different paths around the two
+            lobes of the attractor.
+
+            \subsection*{(c) Norm of the difference between the solutions}
+
+            Let
+            \[
+                \mathbf{u}(t)=
+                \begin{bmatrix}
+                    x(t)\\y(t)\\z(t)
+                \end{bmatrix}
+                \quad\text{and}\quad
+                \bar{\mathbf{u}}(t)=
+                \begin{bmatrix}
+                    \bar{x}(t)\\\bar{y}(t)\\\bar{z}(t)
+                \end{bmatrix}.
+            \]
+            The pointwise Euclidean norm of the difference is
+            \begin{align}
+                D(t)
+                &=\left\|\mathbf{u}(t)-\bar{\mathbf{u}}(t)\right\|_2 \\
+                &=\sqrt{
+                    \bigl(x(t)-\bar{x}(t)\bigr)^2+
+                    \bigl(y(t)-\bar{y}(t)\bigr)^2+
+                    \bigl(z(t)-\bar{z}(t)\bigr)^2
+                }.
+            \end{align}
+
+            The initial separation is
+            \[
+                D(0)
+                =
+                \left\|
+                    10^{-5}
+                    \begin{bmatrix}
+                        1\\1\\1
+                    \end{bmatrix}
+                \right\|_2
+                =
+                \sqrt{3}\times10^{-5}.
+            \]
+
+            The norm was calculated and plotted using the following MATLAB commands.
+
+            \begin{lstlisting}
+% Part (c)
+solutionDifference = U1-U2;
+L2difference = sqrt(sum(solutionDifference.^2,2));
+
+figure;
+semilogy(t1,L2difference,'k','LineWidth',1.2);
+xlabel('Time, t');
+ylabel('||u(t)-u-bar(t)||_2');
+title('Separation of nearby Lorenz trajectories');
+grid on;
+saveas(gcf,'lorenz_difference.png');
+
+fprintf('Initial separation = %.6e\n',L2difference(1));
+fprintf('Final separation   = %.6e\n',L2difference(end));
+fprintf('Maximum separation = %.6e\n',max(L2difference));
+            \end{lstlisting}
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.75\textwidth]{lorenz_difference.png}
+                \caption{The pointwise $L_2$ norm of the difference between the
+                two Lorenz solutions.}
+                \label{fig:difference}
+            \end{figure}
+
+            During an initial time interval, the difference grows approximately
+            exponentially:
+            \[
+                D(t)\approx D(0)e^{\lambda t},
+            \]
+            where $\lambda>0$ is related to the largest Lyapunov exponent of the
+            system. Consequently, an approximately straight increasing portion is
+            observed when $D(t)$ is plotted on a logarithmic vertical scale.
+
+            Eventually, the difference no longer follows a simple exponential
+            growth law. By this time, the trajectories are at unrelated locations
+            on the attractor, and their separation is comparable to the dimensions
+            of the attractor itself.
+
+            This behavior demonstrates sensitive dependence on initial conditions.
+            Although the initial conditions differ by only $10^{-5}$ in each
+            component, their trajectories eventually become substantially
+            different.
+
+            \subsection*{(d) Comparison of solvers and step sizes}
+
+            The calculations were repeated using the MATLAB solvers
+            \[
+                \texttt{ode23},\qquad
+                \texttt{ode45},\qquad
+                \texttt{ode113},\qquad
+                \texttt{ode15s},
+            \]
+            and the maximum step sizes
+            \[
+                h=0.01,\qquad h=0.005,\qquad h=0.001.
+            \]
+
+            The following code plots the separation of the nearby trajectories for
+            each solver and step size.
+
+            \begin{lstlisting}
+solverNames = {'ode23','ode45','ode113','ode15s'};
+solvers = {@ode23,@ode45,@ode113,@ode15s};
+stepSizes = [0.01,0.005,0.001];
+
+figure;
+plotNumber = 1;
+
+for i = 1:length(solvers)
+    for j = 1:length(stepSizes)
+        currentSolver = solvers{i};
+        currentH = stepSizes(j);
+        currentTspan = 0:currentH:10;
+
+        currentOptions = odeset( ...
+            'RelTol',1e-9, ...
+            'AbsTol',1e-12, ...
+            'MaxStep',currentH);
+
+        [tA,UA] = currentSolver( ...
+            lorenz,currentTspan,u0,currentOptions);
+
+        [tB,UB] = currentSolver( ...
+            lorenz,currentTspan,u0bar,currentOptions);
+
+        currentDifference = sqrt(sum((UA-UB).^2,2));
+
+        subplot(length(solvers),length(stepSizes),plotNumber);
+        semilogy(tA,currentDifference,'LineWidth',0.9);
+        grid on;
+
+        title(sprintf('%s, h_{max}=%.3g', ...
+              solverNames{i},currentH));
+
+        if i == length(solvers)
+            xlabel('t');
+        end
+
+        if j == 1
+            ylabel('||Delta u||_2');
+        end
+
+        plotNumber = plotNumber+1;
+    end
+end
+
+sgtitle('Effect of solver and maximum step size');
+saveas(gcf,'lorenz_solver_comparison.png');
+            \end{lstlisting}
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=\textwidth]{lorenz_solver_comparison.png}
+                \caption{Growth of the difference between nearby trajectories for
+                several MATLAB solvers and maximum step sizes.}
+                \label{fig:solvercomparison}
+            \end{figure}
+
+            The MATLAB solvers used here are adaptive. Thus, the vector
+            \[
+                \texttt{tspan = 0:0.001:10}
+            \]
+            specifies the times at which MATLAB returns the solution, but it does
+            not force the solver to use an internal step of exactly $0.001$. The
+            option
+            \[
+                \texttt{MaxStep}=0.001
+            \]
+            prevents the solver from taking an internal step larger than the
+            specified value.
+
+            The numerical experiments show that smaller maximum step sizes and
+            tighter tolerances generally cause the different numerical solutions
+            to agree for a longer time. Higher-order methods such as
+            \texttt{ode45} and \texttt{ode113} generally give better agreement than
+            lower-order methods for the same error tolerances.
+
+            Nevertheless, even very accurate numerical solutions eventually
+            separate. This does not necessarily indicate that a solver is
+            incorrect. The Lorenz system is chaotic, so truncation and roundoff
+            errors are amplified in the same way as a small perturbation of the
+            initial condition. Two accurate solvers can therefore produce
+            different pointwise trajectories at sufficiently large times while
+            still producing the same qualitative Lorenz attractor.
+
+            There is no simple closed-form exact solution available for comparison.
+            For a fixed finite time interval, confidence in the numerical solution
+            is obtained by a convergence study:
+
+            \begin{enumerate}
+                \item decrease the maximum step size;
+                \item tighten the relative and absolute error tolerances;
+                \item compare different high-order solvers; and
+                \item use higher-precision arithmetic if necessary.
+            \end{enumerate}
+
+            The portion of the trajectory that remains unchanged under these
+            refinements can be regarded as a reliable approximation to the exact
+            solution. Once the refined trajectories begin to separate, the exact
+            long-term pointwise trajectory cannot be predicted reliably using
+            ordinary floating-point computations. However, the geometry and
+            statistical properties of the Lorenz attractor can still be accurately
+            approximated.
+
         \end{solution}
 
     \end{onehalfspace}
