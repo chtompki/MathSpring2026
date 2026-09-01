@@ -1,0 +1,155 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[colorlinks=true, urlcolor=black, linkcolor=black]{hyperref}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+
+\title{Numerical Analysis\\Guided Lab 4}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        Note, all the files associated with Guided Lab 4 are checked into the : \\
+        \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab4}\\
+\quad\\
+
+        \noindent\textbf{1.} Given an intial value problem $y'=f(t,y)$ for $t\in[a,b]$ with initial condition $y(a)=\alpha$,
+        create a program that implements RK4 to approximate the solution $w_i\approx y(t_i)$ with
+        fixed step-size $h=(b-a)/N$:
+        \begin{align*}
+            k_1 &= h f(t_i,w_i)\\
+            k_2 &= h f\left(t_i+\frac h2,w_i+\frac{k_1}{2}\right)\\
+            k_3 &= h f\left(t_i+\frac h2,w_i+\frac{k_2}{2}\right)\\
+            k_4 &= h f(t_i+h,w_i+k_3)\\
+            w_{i+1} &= w_i+\frac16(k_1+2k_2+2k_3+k_4)
+        \end{align*}
+        \vspace{7pt}
+        Be sure to design your code to be able to handle systems of equations (e.g. $y\in\mathbb R^n$).
+        You may find the Matlab tutorial found at \href{https://ocw.mit.edu/courses/res-18-009-learn-differential-equations-up-close-with-gilbert-strang-and-cleve-moler-fall-2015/resources/classical-runge-kutta-ode4/}{this link} helpful.
+
+        \begin{solution}
+        \end{solution}
+
+        \noindent\textbf{2.} Consider the initial value problem
+        \begin{equation}
+            \frac{\dd y}{\dd t}=1-y+e^{2t}y^2\quad(0\le t\le0.9),\qquad y(0)=0
+        \end{equation}
+        \begin{enumerate}
+            \item Verify that the exact solution is $y(t)=e^{-t}\tan(e^t-1)$.
+            \item Use your RK4 code to approximate the solution to the given initial value problem,
+            using a stepsize of $h=0.1$. Store the approximate solution at each time step as
+            an element in a vector $w$. Also add a vector to your code which stores the errors,
+            $err=x-w$.
+
+            \newpage
+            \item Set up a script that solves the initial value problem for different step sizes $10^{-9}\le
+            h\le10^{-1}$ and stores the error at $t=0.9$. Run this script on VCU's Athena cluster
+            by submitting it as batch job (not interactively!). More information on how to do
+            this can be found \href{https://wiki-vcu.atlassian.net/wiki/spaces/unix/pages/45973545/Athena+cluster}{here}). If you are using Matlab, you can find an example script
+            for submitting your job \href{https://wiki-vcu.atlassian.net/wiki/spaces/unix/pages/45975823/Module+Matlab}{here}. Make a log-log plot of the error vs. the stepsize
+            and use this to verify the method converges with rate $O(h^4)$.
+
+            \vspace{2pt}
+            \underline{challenge:} Assuming your code stores the solution at every step, you will likely
+            become memory-limited if you try to test convergence using smaller step sizes.
+            Modify your code to only save the final value of the solution, and go down to step
+            sizes small enough to observe the effects of round-off error.
+        \end{enumerate}
+
+        \begin{solution}
+        \end{solution}
+
+        \noindent\textbf{3.} You will now use your RK4 code to reproduce figure 7.21 in your textbook. Consider
+        the model for cell production in a chemostat
+        \begin{align*}
+            \dot{s}&=1-s-\frac{msx}{a+s}\\
+            \dot{x}&=\frac{msx}{a+s}-x
+        \end{align*}
+        with $m=16$ and $a=0.25$.
+        \begin{enumerate}
+            \item Find the fixed points of the system and determine their stability.
+            \item Apply RK4 with step size $h=0.05$ to approximate the solution to the initial value
+            problem for $0\le t\le12$ with intial conditions $s(0)=0.5$ and $x(0)=0.02$. Plot
+            $s(t)$ and $x(t)$ and explain how your results are consistent to your linear stability
+            analysis.
+            \item Now repeat the previous part, this time using $h=0.06$ to approximate the
+            solution. Comment on the differences in your plots for $s(t)$ and $x(t)$.
+        \end{enumerate}
+
+        \begin{solution}
+        \end{solution}
+
+        \noindent\textbf{4.} In order to explore absolute stability of RK4, consider the test problem $y'=\lambda y$ with
+        $y(0)=1$ and $0\le t\le10$.
+        \begin{enumerate}
+            \item Analytically apply RK4 to the test problem to show that
+            \[
+                w_{i+1}=\left(1+h\lambda+\frac12(h\lambda)^2+\frac16(h\lambda)^3+\frac1{24}(h\lambda)^4\right)w_i.
+            \]
+            This allows us to define $Q(h\lambda)=1+h\lambda+\frac12(h\lambda)^2+\frac16(h\lambda)^3+\frac1{24}(h\lambda)^4$.
+            \item Now we will determine the stability region. Allow $h\lambda$ be a complex number
+            $h\lambda=x+iy$ where $i=\sqrt{-1}$. Create a contour plot that shows the $|Q|=1$ level
+            set over the complex plane. If you are using Matlab, you may find the command
+            \texttt{meshgrid} useful for creating a grid of points in the complex plane as follows:
+
+            \noindent\makebox[\textwidth]{MATH 515\hfill Numerical Analysis\hfill Spring 2026}\par
+            \vspace{2pt}\hrule height 0.8pt\vspace{17pt}
+            \begin{lstlisting}[basicstyle=\ttfamily\small,xleftmargin=2.6em]
+% Define the grid for the complex plane (z = h*lambda)
+x = linspace(-3, 3, 301);
+y = linspace(-3, 3, 301);
+[X, Y] = meshgrid(x, y);
+Z = X + 1i*Y;
+            \end{lstlisting}
+            \vspace{13pt}
+            The Matlab command \texttt{contour()} can then be used to create the requested plot.
+            Determine which region in the plot is the stability region.
+
+            \item With $\lambda=-55.31$ determine a bound on $h$ that guarantees $h\lambda$ will lie in the
+            stability region for this method. Numerically apply RK4 to the test problem for
+            $h$ values inside and outside of this stability region. How do the solution differ?
+            How do these results inform the differences you noticed in parts 3(b) and 3(c)?
+
+            \item We will see what happens to numerical solutions with $h\lambda$ combinations that lie in
+            both the region of stability and the right half of the complex plane, $\operatorname{Re}(\lambda h)>0$.
+            To explore this, set $\lambda=1+20i$ and $h=0.1$. The point $h\lambda$ should now lie in both
+            the right half of the plane and in the region of stability -- plot this point and the
+            region of stability on the same axes.
+
+            The solution with this $\lambda$ is
+            \[
+                e^{(1+20i)t}=e^t(\cos(20t)+i\sin(20t)).
+            \]
+            Should the solution converge to zero as $t\to\infty$? Apply the RK4 to the test
+            problem with these values of $\lambda$ and $h$. Does the numerical method converge to
+            zero? Should you use a $h\lambda$ that falls in or outside of the stability region for this
+            $\lambda$?
+        \end{enumerate}
+
+        \begin{solution}
+        \end{solution}
+
+
+    \end{onehalfspace}
+
+\end{document}
