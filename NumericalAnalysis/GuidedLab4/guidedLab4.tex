@@ -48,6 +48,181 @@
         You may find the Matlab tutorial found at \href{https://ocw.mit.edu/courses/res-18-009-learn-differential-equations-up-close-with-gilbert-strang-and-cleve-moler-fall-2015/resources/classical-runge-kutta-ode4/}{this link} helpful.
 
         \begin{solution}
+            The classical fourth-order Runge--Kutta method can be implemented directly
+            from the formulas above. To allow the same routine to handle both a scalar
+            differential equation and a system of differential equations, the numerical
+            solution is treated internally as a column vector. Thus, if
+            \[
+                y(t)=
+                \begin{bmatrix}
+                    y_1(t)\\
+                    \vdots\\
+                    y_n(t)
+                \end{bmatrix},
+            \]
+            then \(f(t,y)\) returns an \(n\times1\) column vector.
+
+            For a fixed number of steps \(N\), define
+            \[
+                h=\frac{b-a}{N}
+            \]
+            and
+            \[
+                t_i=a+ih,\qquad i=0,1,\ldots,N.
+            \]
+            Starting with
+            \[
+                w_0=\alpha,
+            \]
+            the RK4 approximation is computed for \(i=0,\ldots,N-1\) using
+            \begin{align*}
+                k_1 &= h f(t_i,w_i),\\
+                k_2 &= h f\left(t_i+\frac{h}{2},
+                w_i+\frac{k_1}{2}\right),\\
+                k_3 &= h f\left(t_i+\frac{h}{2},
+                w_i+\frac{k_2}{2}\right),\\
+                k_4 &= h f(t_i+h,w_i+k_3),
+            \end{align*}
+            followed by
+            \[
+                w_{i+1}
+                =
+                w_i+\frac{1}{6}\left(k_1+2k_2+2k_3+k_4\right).
+            \]
+
+            The following Matlab function implements this algorithm.
+
+            \begin{lstlisting}
+                function [t,w] = rk4(f,a,b,alpha,N)
+                %RK4 Classical fourth-order Runge-Kutta method.
+                %
+                % [t,w] = rk4(f,a,b,alpha,N)
+                %
+                % Approximates the solution of
+                %
+                %     y' = f(t,y),    a <= t <= b,
+                %     y(a) = alpha,
+                %
+                % using N equally spaced RK4 steps.
+
+                    h = (b-a)/N;
+
+                    % Convert the initial condition to a column vector.
+                    alpha = alpha(:);
+                    n = length(alpha);
+
+                    % Construct the time mesh.
+                    t = linspace(a,b,N+1).';
+
+                    % Preallocate storage for the numerical solution.
+                    % Each row contains one approximation.
+                    w = zeros(N+1,n);
+                    w(1,:) = alpha.';
+
+                    for i = 1:N
+
+                        % Current approximation as a column vector.
+                        wi = w(i,:).';
+
+                        k1 = h*f(t(i),wi);
+
+                        k2 = h*f(t(i) + h/2, ...
+                                 wi + k1/2);
+
+                        k3 = h*f(t(i) + h/2, ...
+                                 wi + k2/2);
+
+                        k4 = h*f(t(i) + h, ...
+                                 wi + k3);
+
+                        wi_next = wi + ...
+                            (k1 + 2*k2 + 2*k3 + k4)/6;
+
+                        w(i+1,:) = wi_next.';
+                    end
+                end
+            \end{lstlisting}
+
+            For example, for the scalar initial value problem
+            \[
+                y'=y-t^2+1,\qquad y(0)=0.5,
+            \]
+            on \(0\leq t\leq2\), the routine can be called using
+            \begin{lstlisting}
+                f = @(t,y) y - t.^2 + 1;
+
+                [t,w] = rk4(f,0,2,0.5,10);
+
+                disp([t,w])
+
+                %========Outputs======
+                % >> gl4prob1
+                % 0    0.5000
+                % 0.2000    0.8293
+                % 0.4000    1.2141
+                % 0.6000    1.6489
+                % 0.8000    2.1272
+                % 1.0000    2.6408
+                % 1.2000    3.1799
+                % 1.4000    3.7323
+                % 1.6000    4.2834
+                % 1.8000    4.8151
+                % 2.0000    5.3054
+            \end{lstlisting}
+
+            The same routine works without modification for a system. For example,
+            consider
+            \[
+                \begin{aligned}
+                    y_1' &= y_2,\\
+                    y_2' &= -y_1,
+                \end{aligned}
+                \qquad
+                y_1(0)=0,\qquad y_2(0)=1.
+            \]
+            Writing the system in vector form gives
+            \[
+                y'=
+                \begin{bmatrix}
+                    y_2\\
+                    -y_1
+                \end{bmatrix}.
+            \]
+            The corresponding Matlab code is
+            \begin{lstlisting}
+                f = @(t,y) [y(2); -y(1)];
+
+                alpha = [0;1];
+
+                [t,w] = rk4(f,0,2*pi,alpha,100);
+
+                plot(t,w(:,1),'LineWidth',1.5)
+                hold on
+                plot(t,w(:,2),'LineWidth',1.5)
+                legend('y_1','y_2')
+                xlabel('t')
+                ylabel('Approximate solution')
+                grid on
+            \end{lstlisting}
+
+            This code yields the plot in Figure \ref{gl1prob1fig1}
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[scale=0.5]{Prob1Figure1.png}
+                \caption{A solution for $y'_1 = y_2$ and $y'_2 = -y_1$}
+                \label{gl1prob1fig1}.
+            \end{figure}
+
+            Because \(w_i\), \(k_1\), \(k_2\), \(k_3\), and \(k_4\) may all be vectors,
+            the RK4 formulas are unchanged when solving a system of equations. The
+            classical RK4 method has global truncation error
+            \[
+                O(h^4).
+            \]
+            Consequently, in the asymptotic error regime, reducing the step size by a
+            factor of two reduces the global discretization error by approximately
+            \(2^4=16\).
         \end{solution}
 
         \noindent\textbf{2.} Consider the initial value problem
