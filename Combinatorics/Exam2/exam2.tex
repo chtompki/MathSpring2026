@@ -1,0 +1,77 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{leftindex}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\title{Combinatorics\\Exam 1}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        % Problem 1
+        \noindent\textbf{1.} (25pts): Let $a_n$ be the number of ways to partition an $n$-element
+        set into ordered pairs (i.e. matchings where order within each pair matters).
+        Find the exponential generating function for $a_n$.
+        Derive a closed-form expression for $a_n$.
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 2
+        \noindent\textbf{2.} (25pts): Let $a_n$ be the number of ways to distribute $n$ labled
+        objects into any number of labeled boxes such that each box contains at least two
+        objects.
+        Construct the exponential generating function for $a_n$.
+        Extract a formula for $a_n$.
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 3
+        \noindent\textbf{3.} (25pts): The Catalan nunbers are defined by $C_n =
+        \frac{1}{1+n}\binom{2n}{n}$.
+        Probe that $C_n$ satisfies the recurrence $C_n=\sum_{k=0}^{n-1}C_k C_{n-1-k}$.
+        Give a combinatorial interpretation of this recurrence.
+
+        \begin{proof}
+        \end{proof}
+
+        % Problem 4
+        \noindent\textbf{4.} (25 pts): How many integers between 1 and 1000 (inclusive) are
+        divisible by at least one of 3,5, or 7?
+        Use the Inclusion-Exclusion Principle and show all steps.
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 5
+        \noindent\textbf{5.}
+
+        % Problem 6
+        \noindent\textbf{6.}
+
+        % Problem 7
+        \noindent\textbf{7.}
+
+        % Problem 8
+        \noindent\textbf{8.}
+
+    \end{onehalfspace}
+\end{document}
