@@ -13,6 +13,9 @@
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{xcolor}
 \usepackage[colorlinks=true, urlcolor=black, linkcolor=black]{hyperref}
 
 \newenvironment{solution}
@@ -252,6 +255,196 @@
         \end{enumerate}
 
         \begin{solution}
+            Note athena output files can be found at \underline{https://github.com/chtompki/MathSpring2026/tree/main/NumericalAnalysis/GuidedLab4/athena-files}
+            \section*{1. Verification of the exact solution}
+            Let $u=e^t-1$ and $y=e^{-t}\tan u$. Differentiating gives
+            \begin{align*}
+                y'&=-e^{-t}\tan u+e^{-t}\sec^2u\,e^t\\
+                &=-y+1+\tan^2u=1-y+e^{2t}y^2.
+            \end{align*}
+            Also $y(0)=\tan 0=0$, so
+            \[
+                \boxed{y(t)=e^{-t}\tan(e^t-1).}
+            \]
+            The first positive pole occurs at $t_* = \log(1+\pi/2)\approx0.944216$,
+            which lies beyond $0.9$. Thus the solution is smooth throughout the
+            requested interval. Since $f(t,y)=1-y+e^{2t}y^2$ is locally Lipschitz in
+            $y$, this is the unique solution there.
+
+            \section*{2. Classical RK4 with $h=0.1$}
+            Set $t_n=nh$, $w_0=0$, and compute
+            \begin{align*}
+                k_1&=f(t_n,w_n), & k_2&=f(t_n+h/2,w_n+hk_1/2),\\
+                k_3&=f(t_n+h/2,w_n+hk_2/2), & k_4&=f(t_n+h,w_n+hk_3),\\
+                w_{n+1}&=w_n+\frac{h}{6}(k_1+2k_2+2k_3+k_4).
+            \end{align*}
+            In MATLAB, entry $n+1$ represents time $t_n$; the vectors include the
+            initial value. The code sets \texttt{x=exp(-t).*tan(expm1(t))} and
+            \texttt{err=x-w}, preserving the requested signed errors.
+            \begin{center}\small
+                \begin{tabular}{rrrr}\toprule
+                    $t_n$ & $x_n=y(t_n)$ & $w_n$ & $x_n-w_n$\\\midrule
+                    0.0 & 0.0000000000 & 0.0000000000 & 0.00000e+00 \\
+                    0.1 & 0.0955150033 & 0.0955152528 & -2.49549e-07 \\
+                    0.2 & 0.1842903884 & 0.1842907307 & -3.42349e-07 \\
+                    0.3 & 0.2703012310 & 0.2703013801 & -1.49077e-07 \\
+                    0.4 & 0.3591134152 & 0.3591129732 & 4.42060e-07 \\
+                    0.5 & 0.4598646541 & 0.4598633897 & 1.26439e-06 \\
+                    0.6 & 0.5906730569 & 0.5906721448 & 9.12094e-07 \\
+                    0.7 & 0.7972935784 & 0.7972918936 & 1.68477e-06 \\
+                    0.8 & 1.2493126185 & 1.2487983913 & 5.14227e-04 \\
+                    0.9 & 3.6413433579 & 3.4902224437 & 1.51121e-01 \\
+                    \bottomrule\end{tabular}
+            \end{center}
+            In particular, $y(0.9)\approx3.64134335794140$ and
+            $w_9\approx3.49022244367240$, with signed error
+            $0.15112091426900$. The relatively large error at this coarse step size
+            reflects the rapid growth near the pole.
+
+            \newpage
+            \section*{3. Convergence experiment and interpretation}
+            The supplied script \texttt{rk4\_ivp\_solution.m} uses
+            \[
+                h_j=10^{-j},\quad N_j=9\cdot10^{j-1},\quad j=1,\ldots,9,
+                \qquad E(h)=|y(0.9)-w_N|.
+            \]
+            Internally it sets $h=0.9/N$ and computes time from $t_n=nh$, avoiding
+            repeated floating-point addition of the time variable. Successive
+            observed orders are
+            \[
+                p_j=\frac{\log(E(h_{j-1})/E(h_j))}{\log(h_{j-1}/h_j)}.
+            \]
+            \textbf{Verification status.} The following table and plot were computed
+            locally with an independent Python implementation of the same RK4
+            formulas in double precision. MATLAB and an authenticated Athena session
+            were not available for this preparation. These are not Athena job results.
+            The supplied MATLAB program performs the full requested sweep through
+            $10^{-9}$ and writes its own tables, timing data, and plot.
+            \begin{center}
+                \begin{tabular}{rrrr}\toprule
+                    $h$ & Steps $N$ & $E(h)$ & Observed order\\\midrule
+                    $10^{-1}$ & 9 & 1.511209e-01 & -- \\
+                    $10^{-2}$ & 90 & 7.370413e-05 & 3.3118 \\
+                    $10^{-3}$ & 900 & 7.161237e-09 & 4.0125 \\
+                    $10^{-4}$ & 9,000 & 7.100986e-13 & 4.0037 \\
+                    $10^{-5}$ & 90,000 & 2.087219e-14 & 1.5318 \\
+                    $10^{-6}$ & 900,000 & 8.397727e-13 & -1.6046 \\
+                    \bottomrule\end{tabular}
+            \end{center}
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{loglogaxis}[width=0.92\linewidth,height=6.4cm,
+                    xlabel={Step size $h$},ylabel={Absolute endpoint error $E(h)$},
+                    grid=both,legend pos=north west,legend style={font=\small},
+                    xmin=5e-7,xmax=0.2,ymin=1e-21,ymax=1,
+                    log basis x=10,log basis y=10]
+                        \addplot+[mark=*,thick] coordinates {(0.1,0.151120914269) (0.01,7.37041332965e-05) (0.001,7.16123693678e-09) (0.0001,7.1009864655e-13) (1e-05,2.0872192863e-14) (1e-06,8.39772695826e-13)};
+                        \addlegendentry{Local independent verification}
+                        \addplot[black,dashed,domain=1e-6:1e-1,samples=2] {7161.23693678*x^4};
+                        \addlegendentry{$C h^4$ reference}
+                    \end{loglogaxis}
+                \end{tikzpicture}
+            \end{center}
+            The orders $4.0125$ and $4.0037$ confirm fourth-order behavior in the
+            truncation-dominated range. RK4 has one-step defect $O(h^5)$, which gives
+            global error $O(h^4)$ on this fixed smooth interval. The coarse step
+            $h=0.1$ is not yet in that asymptotic range. A slope fitted over the entire
+            range, including round-off-dominated points, would not estimate the
+            method's order reliably.
+
+            \newpage
+            \section*{4. Challenge: constant memory and round-off}
+            Storing one double-precision vector at $h=10^{-9}$ requires approximately
+            \[
+                8(N+1)=8(900{,}000{,}001)\ \text{bytes}\approx7.2\ \text{GB}.
+            \]
+            Four full vectors ($t,x,w,err$) require about $28.8$ GB before temporary
+            arrays and MATLAB overhead. The convergence solver instead keeps only
+            the current scalar $y$, the scalar time and index, and four RK stages.
+            Its working storage is $O(1)$ in the number of steps. It uses a scalar
+            \texttt{while} loop and never constructs a full grid for the fine runs.
+            The ten-entry vectors required in part 2 are still retained.
+
+            Constant memory does not remove the computational cost: the finest run
+            requires $9\times10^8$ steps, and all nine runs require $999{,}999{,}999$
+            steps. Runtime remains $O(1/h)$. Results are saved after each completed
+            step size so that a batch time limit does not erase earlier runs.
+
+            In exact arithmetic, the discretization error continues decreasing like
+            $h^4$. In floating-point arithmetic, rounding in stage evaluations and
+            updates eventually dominates. Already in the local check, the error
+            falls to approximately $2.1\times10^{-14}$ at $h=10^{-5}$ and rises to
+            approximately $8.4\times10^{-13}$ at $h=10^{-6}$. The detailed values
+            and turning point depend on the platform and arithmetic evaluation.
+            The double-precision evaluation of the exact endpoint also limits the
+            accuracy of the reported error near machine precision.
+
+            A useful qualitative model is
+            \[
+                E(h)\lesssim C_T h^4+C_R\frac{u}{h},
+            \]
+            where $u$ denotes unit round-off. The second term is a pessimistic
+            accumulation model, not a universal measured law; less correlated
+            round-off can grow more slowly. Perturbations can also be amplified by
+            $f_y=-1+2e^{2t}y$ along this rapidly growing solution. The expected plot
+            therefore decreases with slope approximately four before flattening or
+            becoming irregular and increasing. Zero computed errors, if any, are
+            omitted from the log-log plot and reported by the script.
+
+            \section*{5. Running the supplied files}
+            For a short MATLAB check (down to $10^{-5}$), run:
+            \begin{lstlisting}
+setenv('RK4_QUICK','1');
+rk4_ivp_solution
+            \end{lstlisting}
+            The full experiment is enabled by default. Submit it on Athena as a
+            batch job using the included \texttt{athena\_rk4.slurm}; do not execute
+            the full experiment on a login node.
+
+            \newpage
+            \section*{6. Athena batch submission}
+            Place \texttt{rk4\_ivp\_solution.m} and \texttt{athena\_rk4.slurm}
+            in the same writable directory on Athena. From that directory submit:
+            \begin{lstlisting}[language=bash]
+sbatch athena_rk4.slurm
+squeue -u "$USER"
+            \end{lstlisting}
+            The batch file is:
+            \begin{lstlisting}[language=bash]
+#!/bin/bash
+#SBATCH --job-name=rk4_ivp
+#SBATCH --output=rk4_%j.out
+#SBATCH --error=rk4_%j.err
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
+#SBATCH --time=1-00:00:00
+
+set -e
+cd "$SLURM_SUBMIT_DIR"
+module load matlab/R2024a
+export RK4_QUICK=0
+matlab -singleCompThread -batch "rk4_ivp_solution"
+            \end{lstlisting}
+            The one-day wall-time request is a starting allowance, not a runtime
+            prediction; adjust it to the applicable queue limits and measured speed.
+            Only one CPU is requested because each trajectory is advanced serially.
+            The module and submission command follow VCU's
+            \href{https://wiki-vcu.atlassian.net/wiki/spaces/unix/pages/45975823}{MATLAB module instructions};
+            also see the
+            \href{https://wiki-vcu.atlassian.net/wiki/spaces/unix/pages/45973545}{Athena cluster guide}
+            (documentation checked September 15, 2026).
+
+            The program writes \texttt{rk4\_nodes.csv/.mat},
+            \texttt{rk4\_convergence.csv/.mat}, and
+            \texttt{rk4\_convergence.pdf/.png} alongside the MATLAB script.
+            The convergence CSV contains the step size, step count, final value,
+            signed and absolute errors, observed order, and elapsed seconds.
+            Do not launch overlapping runs into the same output directory.
+
+            To finish the cluster-specific part of the assignment, retain the job ID
+            and logs, verify that all nine rows through $h=10^{-9}$ are present, and
+            use the generated MATLAB plot in the submitted report. No cluster job
+            submission or completion is claimed in this document.
         \end{solution}
 
         \noindent\textbf{3.} You will now use your RK4 code to reproduce figure 7.21 in your textbook. Consider
@@ -286,9 +479,6 @@
             $h\lambda=x+iy$ where $i=\sqrt{-1}$. Create a contour plot that shows the $|Q|=1$ level
             set over the complex plane. If you are using Matlab, you may find the command
             \texttt{meshgrid} useful for creating a grid of points in the complex plane as follows:
-
-            \noindent\makebox[\textwidth]{MATH 515\hfill Numerical Analysis\hfill Spring 2026}\par
-            \vspace{2pt}\hrule height 0.8pt\vspace{17pt}
             \begin{lstlisting}[basicstyle=\ttfamily\small,xleftmargin=2.6em]
 % Define the grid for the complex plane (z = h*lambda)
 x = linspace(-3, 3, 301);
