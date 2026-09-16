@@ -40,6 +40,21 @@
         \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} Label the responsibilities $A,B,C,D$. Choosing their
+            members successively gives
+            \[
+                \binom{12}{3}\binom{9}{4}\binom{5}{2}\binom{3}{3}
+                =\frac{12!}{3!4!2!3!}=277\,200.
+            \]
+            \textbf{(b)} Interchanging the two size-$3$ blocks does not change
+            the assignment. Each assignment was counted exactly $2!$ times,
+            so the answer is $277\,200/2=138\,600$.
+
+            \textbf{(c)} The multinomial coefficient
+            $\binom{12}{3,4,2,3}=12!/(3!4!2!3!)$ counts allocations to four
+            labeled blocks of those sizes. Equivalently, order all twelve
+            people and cut the order into blocks of lengths $3,4,2,3$;
+            dividing by the factorial of each block size forgets its internal order.
         \end{solution}
 
         % Problem 2
@@ -54,6 +69,24 @@
         \end{itemize}
 
         \begin{proof}
+            \emph{Correction:} The right-hand side must be $\binom{2n}{n}$,
+            not $\binom{2n}{k}$, since $k$ is the summation index.
+
+            \textbf{(a)} Compare coefficients of $x^n$ in
+            \[
+                (1+x)^n(1+x)^n=(1+x)^{2n}.
+            \]
+            On the left the coefficient is
+            $\sum_{k=0}^n\binom{n}{k}\binom{n}{n-k}
+            =\sum_{k=0}^n\binom{n}{k}^2$; on the right it is
+            $\binom{2n}{n}$.
+
+            \textbf{(b)} Choose $n$ people from two disjoint groups of $n$
+            people each. Directly there are $\binom{2n}{n}$ choices.
+            If exactly $k$ come from the first group, there are
+            $\binom{n}{k}\binom{n}{n-k}=\binom{n}{k}^2$ choices.
+            Summing over the mutually exclusive possibilities $0\le k\le n$
+            proves the identity.
         \end{proof}
 
         % Problem 3
@@ -72,6 +105,85 @@
         \end{itemize}
 
         \begin{proof}
+            \emph{Notation corrections:} Read $R(m.n-1)$ as $R(m,n-1)$
+            and $R(53)$ as $R(5,3)$. We use $R(m,n)$ for the least $N$
+            such that every red--blue edge coloring of $K_N$ contains
+            a red $K_m$ or a blue $K_n$.
+
+            \textbf{(a)} Put $a=R(m-1,n)$ and $b=R(m,n-1)$.
+            At any vertex of $K_{a+b}$, either at least $a$ incident edges
+            are red or at least $b$ are blue. In the first case its red
+            neighbors contain a blue $K_n$ or a red $K_{m-1}$, which extends
+            with the vertex to a red $K_m$. The second case is symmetric.
+            Thus $R(m,n)\le a+b$.
+
+            \textbf{(b)} Suppose a coloring of $K_{a+b-1}$ avoids both
+            forbidden cliques. The preceding argument implies that every
+            vertex has red degree at most $a-1$ and blue degree at most
+            $b-1$. Their sum is $a+b-2$, so both bounds are equalities.
+            If $a,b$ are even, the red graph has an odd number $a+b-1$
+            of vertices, all of odd degree $a-1$. Its degree sum is odd,
+            contradicting the handshake lemma. Hence $R(m,n)\le a+b-1$.
+
+            \textbf{(c)} We give both upper and lower bounds. First,
+            $R(2,t)=t$ and $R(s,t)=R(t,s)$. Also $R(3,3)=6$:
+            among the five edges at a vertex of $K_6$, three have one
+            color, and either a pair of their endpoints has that color
+            or all three intervening edges have the other color. For
+            the lower bound, color a $5$-cycle red and its complement blue;
+            neither graph has a triangle.
+            Part (b), followed by part (a), now gives
+            \[
+                R(4,3)\le 6+4-1=9,\qquad
+                R(5,3)\le 9+5=14,\qquad
+                R(4,4)\le 9+9=18.
+            \]
+            Here are explicit colorings establishing the reverse bounds.
+            In each construction, unlisted edges receive the other color.
+
+            \emph{$R(4,3)>8$.} On $\mathbb Z/8\mathbb Z$, color an edge
+            blue when its endpoints differ by $\pm1$ or $4$.
+            This is an $8$-cycle with opposite vertices joined. There is
+            no blue triangle: the blue neighbors of $0$ are $1,4,7$,
+            and no two of them are adjacent; translation handles every
+            other vertex. An independent set of size $4$ in the $8$-cycle
+            must consist of alternating vertices, but either alternating
+            set contains an opposite pair. Thus the blue graph has no
+            independent set of size $4$, so the red graph has no $K_4$.
+
+            \emph{$R(5,3)>13$.} On $\mathbb Z/13\mathbb Z$, color an edge
+            blue when the difference is $\pm1$ or $\pm5$.
+            The neighbors $1,5,8,12$ of $0$ have no blue edges between them,
+            so translation again proves triangle-freeness.
+            Suppose five vertices were independent, and list the five
+            positive circular gaps between consecutive chosen vertices.
+            Each gap is at least $2$ and their sum is $13$. Apart from order,
+            the only possibilities are
+            \[
+                (5,2,2,2,2),\quad (4,3,2,2,2),\quad (3,3,3,2,2).
+            \]
+            The first has a forbidden gap $5$. In the second, the gap $3$
+            must neighbor a gap $2$ on at least one side; in the third,
+            there is also an adjacent $3,2$ pair. Such a pair puts two
+            chosen vertices at circular distance $5$, again a blue edge.
+            Thus no independent set of size $5$ exists.
+
+            \emph{$R(4,4)>17$.} On $\mathbb Z/17\mathbb Z$, color an edge
+            red when its nonzero difference belongs to
+            \[
+                Q=\{1,2,4,8,9,13,15,16\},
+            \]
+            the set of nonzero squares modulo $17$. Since $-1\in Q$, this
+            defines an undirected graph. Translation and multiplication
+            by a member of $Q$ preserve red edges and take any red edge
+            to $\{0,1\}$. The common red neighbors of $0$ and $1$ are
+            $2,9,16$. Their pairwise differences are $7,7,14$, none in
+            $Q$, so this edge cannot belong to a red $K_4$. Consequently
+            there is no red $K_4$ anywhere. Multiplication by the nonsquare
+            $3$ interchanges square and nonsquare differences and hence
+            interchanges colors. There is no blue $K_4$ either.
+            Combining these constructions with the upper bounds gives
+            $R(4,3)=9$, $R(5,3)=14$, and $R(4,4)=18$.
         \end{proof}
 
         % Problem 4
@@ -87,73 +199,561 @@
             \item[(c)] Give a direct combinatorial interpretation of $S(6,3)$.
         \end{itemize}
 
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+            \textbf{(a)} Distinguish one element, say $n$. If it is alone
+            in its block, partition the other elements into $k-1$ blocks,
+            giving $S(n-1,k-1)$ choices. Otherwise first partition the other
+            elements into $k$ blocks and choose one of the $k$ blocks to
+            receive $n$, giving $kS(n-1,k)$. The cases are disjoint and
+            exhaustive. The boundary values are $S(0,0)=1$,
+            $S(n,0)=0$ for $n>0$, and $S(n,k)=0$ for $k>n$.
+
+            \textbf{(b)} Starting with $S(n,1)=S(n,n)=1$, the recurrence gives
+            \[
+                S(3,2)=3,\quad S(4,2)=2\cdot3+1=7,
+                \quad S(4,3)=3\cdot1+3=6.
+            \]
+            Hence
+            \[
+                S(5,2)=15,\qquad S(5,3)=25,\qquad
+                S(6,3)=3\cdot25+15=90.
+            \]
+            \textbf{(c)} $S(6,3)$ counts divisions of six distinct objects
+            into three nonempty, unlabeled groups. Their possible block
+            sizes are $(4,1,1)$, $(3,2,1)$, and $(2,2,2)$, yielding
+            \[
+                \binom64+\binom63\binom32+
+                \frac{6!}{(2!)^3 3!}=15+60+15=90.
+            \]
+        \end{proof}
 
         % Problem 5
-        \noindent\textbf{5.}
+        \noindent\textbf{5.} (P\'olya Enumeration) Consider coloring of the vertices of a square using
+        three colours: red, blue, and green.
+        Two colourings are considered equivalent if one can be obtained from the other by a rotation or
+        reflection of the square.
+        \begin{itemize}
+            \item[(a)] Identify the symmetry group acting on the vertices of the square.
+            \item[(b)] Write the cycle types of all symmetries of the square.
+            \item[(c)] Use Burnside's Lemma or P\'olya's Enumeration Theorem to determine the number
+            of distinct colourings.
+            \item[(d)] Briefly explain why simply computing $3^4$ over counts the number of essentially
+            different colourings.
+        \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} The group is the dihedral group $D_4$ of order $8$
+            (also denoted $D_8$), acting on the four vertices.
+
+            \textbf{(b)} The cycle types and fixed-coloring counts are
+            \[
+            \begin{array}{lccc}
+                \text{Symmetry} & \text{Number} & \text{Cycle type}
+                    & \text{Fixed colorings}\\ \hline
+                \text{Identity} &1&1^4&3^4\\
+                90^\circ,270^\circ\text{ rotations}&2&4&3\\
+                180^\circ\text{ rotation}&1&2^2&3^2\\
+                \text{Reflections in diagonals}&2&1^2 2&3^3\\
+                \text{Reflections through side midpoints}&2&2^2&3^2
+            \end{array}
+            \]
+            A coloring is fixed exactly when it is constant on each cycle.
+
+            \textbf{(c)} Burnside's lemma therefore gives
+            \[
+                \frac{3^4+2\cdot3+3^2+2\cdot3^3+2\cdot3^2}{8}
+                =\frac{168}{8}=21.
+            \]
+            Equivalently, the cycle index is
+            $\tfrac18(a_1^4+2a_4+3a_2^2+2a_1^2a_2)$.
+
+            \textbf{(d)} The number $3^4$ counts colorings of labeled
+            vertices, including rotated and reflected copies separately.
+            Orbit sizes vary because some colorings have symmetries,
+            so simply dividing $3^4$ by $8$ would also be incorrect.
         \end{solution}
 
         % Problem 6
-        \noindent\textbf{6.}
+        \noindent\textbf{6.} (Rubik's Cube Combinatorics)
+        \begin{itemize}
+            \item[(a)] A standard $3\times 3\times 3$ Rubik's Cube has 8 corner cubies and 12 edge
+            cubies.
+            Ignoring the physical how many ways can the 8 corner cubies be permuted and oriented, and
+            how many ways can the 12 edge cubies can be permuted and oriented?
+            Find the total number of reachable $3\times 3\times 3$ Rubik's Cube positions.
+            \item[(b)] A standard $5\times 5\times 5$ Rubik's Cube, also called the
+            \textbf{Professor's Cube}, as several types of movable pieces: corners, edges, wing edges,
+            and center pieces.
+            Find the total number of reachable $5\times 5\times 5$ Rubik's Cube Positions
+        \end{itemize}
 
         \begin{solution}
+            We count ordinary color patterns relative to the six fixed
+            face centers; rotations of the whole cube give no extra factor.
+
+            \textbf{(a)} Ignoring physical constraints, the corner count is
+            $8!3^8$ and the edge count is $12!2^{12}$, since each corner
+            has three orientations and each edge has two. Legal moves
+            impose three constraints: the total corner twist is $0$
+            modulo $3$, the total edge flip is $0$ modulo $2$, and the
+            corner and edge permutations have the same parity. These
+            conditions are also sufficient for reachability. Thus
+            \[
+                N_3=\frac{8!3^8\,12!2^{12}}{3\cdot2\cdot2}
+                =8!3^7\,12!2^{10}
+                =43\,252\,003\,274\,489\,856\,000.
+            \]
+            \textbf{(b)} There are $8$ corners, $12$ middle edges, $24$
+            wings, and two separate orbits of $24$ movable centers each
+            (diagonal centers and axial centers). Corners and middle
+            edges contribute $N_3$. Wings contribute $24!$: their
+            orientation is determined by their position. Each center
+            orbit contains four indistinguishable pieces of each of
+            six colors, contributing $24!/(4!)^6$. Parity restrictions
+            on labeled centers impose no further reduction on color
+            patterns, since swapping equal-colored centers changes
+            the labeled parity without changing the pattern.
+            The cube's standard reachability conditions therefore give
+            \[
+                \boxed{N_5=N_3\,24!\left(\frac{24!}{(4!)^6}\right)^2
+                =\frac{8!\,12!\,3^7\,2^{10}(24!)^3}{(4!)^{12}}
+                \approx 2.8287094228\times10^{74}.}
+            \]
+            This assumes unmarked centers, as on a standard Professor's Cube.
+            A reference for these piece-orbit and reachability constraints
+            is Jaap Scherphuis, \emph{Professor's Cube},
+            \begin{center}
+                \texttt{https://www.jaapsch.net/puzzles/cube5.htm}.
+            \end{center}
         \end{solution}
 
         % Problem 7
-        \noindent\textbf{7.}
+        \noindent\textbf{7.} (Combinatorics of Continued Fractions) A finite simple continued fraction
+        has the form
+        \[
+            [a_1,a_2,\ldots,a_k] = a_1 + \frac{1}{a_2 + \frac{1}{\ldots + \frac{1}{a_k}}},
+        \]
+        where $a_i\in\mathbb{Z}^+$.
+
+        Let $C(n)$ be the number of ordered compositions of $n$, that is the number of ways to write
+        \[
+            n = a_1 + a_2 + \cdots + a_k,
+        \]
+        where $k\ge 1$ and each $a_i \ge 1$.
+        \begin{itemize}
+            \item[(a)] Find the simple continued fraction expansion of $\frac{415}{93}$.
+            Then verify your answer by converting the continued fraction back into a rational number.
+            \item[(b)] Find the five partial quotients in the simple continued fraction of $\sqrt{7}$.
+            That is, write $\sqrt{7} = [a_0; a_1, a_2, a_3, a_4, \dots]$.
+            \item[(c)] Convert the periodic continued fraction $x = [2;\overline{1, 3}]$ into a
+            quadratic irrational nuber in simplified radical form.
+            That is, solve for $x$ exactly.
+            \item[(d)] Let $T_n$ be the number of ways to tile a $1\times n$ board using squares
+            of size $1 \times 1$ and dominoes of size $1\times 2$.
+            \begin{itemize}
+                \item[(a)] Prove that $T_n = T_{n-1} + T_{n-2}$, with initial values $T_0 = 1$ and
+                $T_1 = 1$.
+                \item[(b)] Compute $T_2$, $T_3$, $T_4$, $T_5$, and $T_6$.
+                \item[(c)] Explain why this recurrence is ralted to the continued fraction
+                \[
+                    1+ \frac{1}{1+\frac{1}{1 + \frac{1}{1+\cdots}}}.
+                \]
+                \item[(d)] Show that the infinite continued fraction
+                \[
+                    x = 1+ \frac{1}{1+\frac{1}{1 + \frac{1}{1+\cdots}}}
+                \]
+                satisfies $x = 1 + \frac{1}{x}$, and conclude $x = \frac{1 + \sqrt{5}}{2}$.
+
+                Thus, the same Fibonacci-type recurrence appears in both the tiling problem and
+                the convervents of the continued fraction.
+            \end{itemize}
+        \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} The Euclidean algorithm gives
+            \[
+                415=4\cdot93+43,\quad 93=2\cdot43+7,\quad
+                43=6\cdot7+1,\quad 7=7\cdot1.
+            \]
+            Therefore $415/93=[4;2,6,7]$. Reversing the calculation,
+            \[
+                6+\frac17=\frac{43}{7},\qquad
+                2+\frac{7}{43}=\frac{93}{43},\qquad
+                4+\frac{43}{93}=\frac{415}{93}.
+            \]
+            \textbf{(b)} Successive complete quotients after $a_0=2$ are
+            \[
+                \frac{1}{\sqrt7-2}=\frac{\sqrt7+2}{3},\quad
+                \frac{\sqrt7+1}{2},\quad
+                \frac{\sqrt7+1}{3},\quad \sqrt7+2.
+            \]
+            Their integer parts are $1,1,1,4$; the next complete quotient
+            repeats the first. Thus
+            \[
+                \sqrt7=[2;\overline{1,1,1,4}],\qquad
+                (a_0,a_1,a_2,a_3,a_4)=(2,1,1,1,4).
+            \]
+            \textbf{(c)} Put $y=[1;3,1,3,\ldots]$. Periodicity gives
+            \[
+                y=1+\frac{1}{3+1/y},\qquad
+                3y^2-3y-1=0.
+            \]
+            As $y>0$, $y=(3+\sqrt{21})/6$. Consequently
+            \[
+                x=2+\frac1y=2+\frac{\sqrt{21}-3}{2}
+                =\boxed{\frac{1+\sqrt{21}}{2}}.
+            \]
+            \textbf{(d)(a)} For $n\ge2$, the first tile is either a square,
+            leaving a board of length $n-1$, or a domino, leaving length
+            $n-2$. These disjoint cases give $T_n=T_{n-1}+T_{n-2}$.
+            There is one empty tiling and one tiling of a length-$1$ board,
+            so $T_0=T_1=1$.
+
+            \textbf{(d)(b)} The next values are
+            \[
+                T_2=2,\quad T_3=3,\quad T_4=5,\quad T_5=8,\quad T_6=13.
+            \]
+            \textbf{(d)(c)} With $F_0=0,F_1=1$, we have $T_n=F_{n+1}$.
+            The continued fraction with $r$ entries all equal to $1$ is
+            $F_{r+1}/F_r$, for $r\ge1$: adjoining an initial $1$ replaces
+            $p/q$ by $(p+q)/p$. Thus its numerators and denominators
+            obey the same Fibonacci recurrence.
+
+            \textbf{(d)(d)} To justify the limit, let
+            $\phi=(1+\sqrt5)/2$ and $\psi=(1-\sqrt5)/2$.
+            The formula $F_r=(\phi^r-\psi^r)/\sqrt5$ follows from the
+            recurrence and initial values. Since $|\psi/\phi|<1$,
+            $F_{r+1}/F_r\to\phi$. Removing the first entry of the infinite
+            continued fraction leaves the same tail, so its positive
+            value satisfies $x=1+1/x$, or $x^2-x-1=0$.
+            Hence $x=(1+\sqrt5)/2$.
+
+            \emph{The introductory composition count:} Although no subpart
+            asks for $C(n)$, it is $2^{n-1}$ for $n\ge1$: choose which of
+            the $n-1$ gaps in a row of $n$ ones receive separators.
+            This counts compositions, not distinct rational values of
+            continued fractions, which can have two finite representations.
         \end{solution}
 
         % Problem 8
-        \noindent\textbf{8.}
+        \noindent\textbf{8.} (Catalan Numbers) The Catalan numbers are given by
+        \[
+            C_n = \frac{1}{n+1}\binom{2n}{n}.
+        \]
+        \begin{itemize}
+            \item[(a)] Give three different combinatorial objects counted by $C_n$.
+            \item[(b)] Prove the number of balanced parentheses strings with $n$ pairs of parentheses
+            is $C_n$.
+            \item[(c)] Compute $C_4$, and list all balanced parenthesis strings with 4 pairs of
+            parenthesis.
+            \item[(d)] Show that the Catalan numbers satisfy the recurrence
+            \[
+                C_{n+1} = \sum_{k=0}^n C_k C_{n-k}.
+            \]
+        \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} Three examples are balanced strings with $n$ pairs
+            of parentheses, Dyck paths with $n$ up-steps and $n$ down-steps
+            that never go below height $0$, and rooted ordered full binary
+            trees with $n$ internal vertices.
+
+            \textbf{(b)} Interpret an opening parenthesis as an up-step and
+            a closing parenthesis as a down-step. There are $\binom{2n}{n}$
+            unrestricted strings with $n$ of each. For a bad string, reflect
+            its steps through its first visit to height $-1$ (interchange
+            opening and closing parentheses in that prefix). The result
+            has $n+1$ up-steps and $n-1$ down-steps. This is a bijection:
+            in a path ending at height $2$, reflect the prefix through
+            its first visit to height $1$ to recover the bad path.
+            Thus, for $n\ge1$, the number of good strings is
+            \[
+                \binom{2n}{n}-\binom{2n}{n+1}
+                =\frac{1}{n+1}\binom{2n}{n}=C_n.
+            \]
+            For $n=0$, the single empty string gives $C_0=1$.
+
+            \textbf{(c)} $C_4=\binom84/5=14$. The complete list is
+            \[
+            \begin{array}{lll}
+                \texttt{(((())))}&\texttt{((()()))}&\texttt{((())())}\\
+                \texttt{((()))()}&\texttt{(()(()))}&\texttt{(()()())}\\
+                \texttt{(()())()}&\texttt{(())(())}&\texttt{(())()()}\\
+                \texttt{()((()))}&\texttt{()(()())}&\texttt{()(())()}\\
+                \texttt{()()(())}&\texttt{()()()()}&
+            \end{array}
+            \]
+            \textbf{(d)} A nonempty balanced string has a unique form
+            $(A)B$, where the displayed closing parenthesis matches the
+            first opening parenthesis, and $A,B$ are balanced strings.
+            For $n+1$ pairs, if $A$ has $k$ pairs then $B$ has $n-k$ pairs,
+            giving $C_kC_{n-k}$ choices. Summing gives
+            $C_{n+1}=\sum_{k=0}^n C_kC_{n-k}$.
         \end{solution}
 
         % Problem 9
-        \noindent\textbf{9.}
+        \noindent\textbf{9.} (Generating Functions and Integer Partitions) Let $p_{\le 4}(n)$ be the
+        number of partitions of $n$ into at most 4 parts.
+        \begin{itemize}
+            \item[(a)] Write the ordinary generating function for $p_{\le 4}(n)$.
+            \item[(b)] Explain why this is also the generating functino for partitions of $n$ whose
+            largest part is at most 4.
+            \item[(c)] Use the generating function to compute $p_{\le 4}(8)$.
+            \item[(d)] List all partitions of 8 into at most 4 parts.
+        \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} Including the empty partition at $n=0$,
+            \[
+                \sum_{n\ge0}p_{\le4}(n)x^n
+                =\frac{1}{(1-x)(1-x^2)(1-x^3)(1-x^4)}.
+            \]
+            \textbf{(b)} In the product, the factor
+            $(1-x^j)^{-1}=\sum_{r\ge0}x^{jr}$ chooses the multiplicity
+            of part $j$. Hence it counts partitions with largest part
+            at most $4$. Transposing a Ferrers diagram gives a bijection
+            between these partitions and partitions with at most $4$ parts.
+
+            \textbf{(c)} The coefficient of $x^8$ counts nonnegative
+            solutions of $a+2b+3c+4d=8$. For each $c,d$, there are
+            $\lfloor(8-3c-4d)/2\rfloor+1$ choices of $b$, and then $a$
+            is determined. Therefore
+            \[
+                p_{\le4}(8)
+                =\underbrace{(5+3+2)}_{d=0}
+                 +\underbrace{(3+1)}_{d=1}
+                 +\underbrace{1}_{d=2}=15.
+            \]
+            \textbf{(d)} Grouping by the number of parts, the partitions are
+            \[
+            \begin{array}{ll}
+                1:&8;\\
+                2:&7+1,\ 6+2,\ 5+3,\ 4+4;\\
+                3:&6+1+1,\ 5+2+1,\ 4+3+1,\ 4+2+2,\ 3+3+2;\\
+                4:&5+1+1+1,\ 4+2+1+1,\ 3+3+1+1,\\
+                  &3+2+2+1,\ 2+2+2+2.
+            \end{array}
+            \]
         \end{solution}
 
         % Problem 10
-        \noindent\textbf{10.}
+        \noindent\textbf{10.} (Derangements) A derangement of $n$ objects is a permutation with no fixed
+        points.
+        Let $D_n$ denote the number of derangements of $n$ objects.
+        \begin{itemize}
+            \item[(a)] Use the inclusion-exclusion principle to prove that
+            \[
+                D_n = n!\sum_{k=0}^n \frac{(-1)^k}{k!}.
+            \]
+            \item[(b)] Compute $D_5$.
+            \item[(c)] Explain why $D_n$ is the nearest integer to
+            \[
+                \frac{n!}{e}.
+            \]
+        \end{itemize}
 
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+            \textbf{(a)} Let $A_i$ be the set of permutations fixing $i$.
+            For any specified $k$ elements, exactly $(n-k)!$ permutations
+            fix all of them. Inclusion--exclusion therefore gives
+            \[
+                D_n=\sum_{k=0}^n(-1)^k\binom nk(n-k)!
+                    =n!\sum_{k=0}^n\frac{(-1)^k}{k!}.
+            \]
+            \textbf{(b)} Substitution yields
+            \[
+                D_5=120-120+60-20+5-1=44.
+            \]
+            \textbf{(c)} For $n\ge1$, the strictly alternating tail of
+            $e^{-1}=\sum_{k=0}^\infty(-1)^k/k!$ has magnitude strictly
+            less than its first term. Thus
+            \[
+                \left|D_n-\frac{n!}{e}\right|
+                <\frac{n!}{(n+1)!}=\frac1{n+1}\le\frac12.
+            \]
+            Since $D_n$ is an integer, it is the unique nearest integer.
+            The restriction $n\ge1$ is necessary: $D_0=1$, whereas the
+            nearest integer to $0!/e$ is $0$.
+        \end{proof}
 
         % Problem 11
-        \noindent\textbf{11.}
+        \noindent\textbf{11.} (Graph Colouring) A proper colouring of a graph is an assignment of
+        colours to the vertices of the graph such that no two adjacent vertices (Vertices connected by
+        an edge) share the same colour.
+        Let $C_n$ be the cycle graph with $n$ vertices
+        \begin{itemize}
+            \item[(a)] Prove that the number of proper colourings of $C_n$ using $k$ available colours is
+            \[
+                (k-1)^n + (-1)^n(k-1).
+            \]
+            \item[(b)] Use the formula to find the number of proper colourings of $C_6$ using 4 colours.
+            \item[(c)] Explain why the answer changes depending on whether $n$ is even or odd.
+        \end{itemize}
 
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+            \textbf{(a)} Assume $n\ge3$ and first $k\ge2$. Fix the first
+            vertex's color in a path of $n$ vertices, and let $B_n$ count
+            proper path colorings whose last vertex differs from the first.
+            There are $(k-1)^{n-1}$ proper path colorings in total.
+            A coloring ending in the first color arises uniquely by
+            appending that color to one of the $B_{n-1}$ paths. Hence
+            \[
+                B_n=(k-1)^{n-1}-B_{n-1},\qquad B_1=0.
+            \]
+            Induction gives
+            \[
+                B_n=\frac{(k-1)^n+(-1)^n(k-1)}{k}.
+            \]
+            Indeed substitution into the recurrence gives this expression,
+            and its value at $n=1$ is $0$. Closing the path into a cycle
+            requires exactly that its endpoints differ. There are $k$
+            choices for the first color, so the required number is
+            $kB_n=(k-1)^n+(-1)^n(k-1)$. For $k=0$ or $1$, both the
+            coloring count and the claimed expression are $0$.
+
+            \textbf{(b)} For $C_6$ with four colors the answer is
+            $3^6+3=732$.
+
+            \textbf{(c)} The closing-edge correction has sign $(-1)^n$,
+            so it adds $k-1$ for even $n$ and subtracts $k-1$ for odd $n$.
+            With two colors this distinction is especially clear:
+            alternating colors close consistently on an even cycle
+            (two colorings), but not on an odd cycle (zero colorings).
+        \end{proof}
 
         % Problem 12
-        \noindent\textbf{12.}
+        \noindent\textbf{12.} (The Pigeonhole Principle)
+        \begin{itemize}
+            \item[(a)] Prove that amonng any $n + 1$ integers, there must be two whose difference is
+            divisible by $n$.
+            \item[(b)] Suppose 51 integers are chosen from
+            \[
+                [100] = \{1, 2, 3, \ldots, 100\}.
+            \]
+            Prove that among the consen integers, there mush be two sucn that one divides the other.
+        \end{itemize}
 
-        \begin{solution}
-        \end{solution}
+        \begin{proof}
+            \textbf{(a)} For $n\ge1$, there are only $n$ residue classes
+            modulo $n$. Among $n+1$ integers, two have the same residue
+            by the pigeonhole principle. Their difference is divisible by $n$.
+
+            \textbf{(b)} Every positive integer has a unique form $2^r q$,
+            where $q$ is odd and $r\ge0$. For numbers at most $100$,
+            the odd part $q$ belongs to the $50$-element set
+            $\{1,3,5,\ldots,99\}$. Among $51$ distinct chosen integers,
+            two therefore have the same odd part: $2^r q$ and $2^s q$,
+            with, say, $r<s$. Since
+            $2^s q=2^{s-r}(2^r q)$, the smaller divides the larger.
+        \end{proof}
 
         % Problem 13
-        \noindent\textbf{13.}
+        \noindent\textbf{13.} (Recurrence Relations) Let $a_n$ be the number of binary strings of
+        length $n$ that do not contain consecutive 1's.
+        \begin{itemize}
+            \item[(a)] Find the recurrence relation for $a_n$.
+            \item[(b)] State the initial conditions.
+            \item[(c)] Solve the recurrence or identify the sequence.
+            \item[(d)] Compute $a_6$ a dn list all valid binary strings of length 4.
+        \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} For $n\ge2$, a valid string either starts with
+            $0$, followed by any valid length-$(n-1)$ string, or starts
+            with $10$, followed by any valid length-$(n-2)$ string.
+            Thus $a_n=a_{n-1}+a_{n-2}$.
+
+            \textbf{(b)} $a_0=1$ for the empty string and $a_1=2$ for
+            the strings $0,1$.
+
+            \textbf{(c)} With $F_0=0,F_1=1$, we have $a_n=F_{n+2}$.
+            Equivalently,
+            \[
+                a_n=\frac{\phi^{n+2}-\psi^{n+2}}{\sqrt5},\qquad
+                \phi=\frac{1+\sqrt5}{2},\quad
+                \psi=\frac{1-\sqrt5}{2}.
+            \]
+            \textbf{(d)} The values $a_2,a_3,a_4,a_5,a_6$ are
+            $3,5,8,13,21$, so $a_6=21$. The eight valid length-$4$ strings are
+            \[
+                0000,\ 0001,\ 0010,\ 0100,\ 0101,\ 1000,\ 1001,\ 1010.
+            \]
         \end{solution}
 
         % Problem 14
-        \noindent\textbf{14.}
+        \noindent\textbf{14.} (Integer Solutions and Stars and Bars) Find the number of integer
+        solutions to
+        \[
+            x_1 + x_2 + x_3 + x_4 = 20
+        \]
+        under each condition.
+        \begin{itemize}
+            \item[(a)] $x_i \ge 0$ for all $i$.
+            \item[(b)] $x_i \ge 2$ for all $i$.
+            \item[(c)] $x_1 \ge 3$, $x_2 \ge 0$, $x_3 \ge 5$, and $x_4 \ge 1$.
+            \item[(d)] $0 \le x_i \le 8$ for all $i$.
+        \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} Stars and bars gives
+            $\binom{20+4-1}{4-1}=\binom{23}{3}=1771$.
+
+            \textbf{(b)} Set $y_i=x_i-2\ge0$. Then $\sum y_i=12$,
+            giving $\binom{15}{3}=455$.
+
+            \textbf{(c)} Subtract the lower bounds $3,0,5,1$.
+            The four resulting nonnegative variables sum to $11$,
+            giving $\binom{14}{3}=364$.
+
+            \textbf{(d)} Start with all nonnegative solutions and let
+            $A_i$ be the event $x_i\ge9$. Specifying $j$ such violations
+            and subtracting $9$ from each leaves a sum of $20-9j$.
+            Three violations are impossible, so inclusion--exclusion gives
+            \[
+                \binom{23}{3}-\binom41\binom{14}{3}
+                    +\binom42\binom53
+                =1771-1456+60=375.
+            \]
         \end{solution}
 
         % Problem 15
-        \noindent\textbf{15.}
+        \noindent\textbf{15.} (Set Partitions with Restricted Block Sizes) Let $a_n$ be the number
+        of ways to partition an $n$-element set into block sizes of 1, 2, or 3.
+        \begin{itemize}
+            \item[(a)] Write the exponential generating function for $a_n$.
+            \item[(b)] Explain why the correct exponential generating function is
+            \[
+                A(x) = \text{exp}\left(x  + \frac{x^2}{2!} + \frac{x^3}{3!}\right).
+            \]
+            \item[(c)] Find a summation formula for $a_n$.
+            \item[(d)] Compute $a_5$.
+        \end{itemize}
 
         \begin{solution}
+            \textbf{(a)} The exponential generating function is
+            \[
+                A(x)=\sum_{n\ge0}a_n\frac{x^n}{n!}
+                    =\exp\left(x+\frac{x^2}{2!}+\frac{x^3}{3!}\right).
+            \]
+            \textbf{(b)} A single allowed block has exponential generating
+            function $x+x^2/2!+x^3/3!$. A partition is an unordered set
+            of disjoint such blocks on labeled elements, so the exponential
+            formula gives the claimed expression. Explicitly, expanding
+            $\exp(x)\exp(x^2/2!)\exp(x^3/3!)$ independently chooses the
+            numbers of singleton, pair, and triple blocks.
+
+            \textbf{(c)} If these numbers are $b_1,b_2,b_3$, then
+            \[
+                a_n=\sum_{\substack{b_1,b_2,b_3\ge0\\b_1+2b_2+3b_3=n}}
+                    \frac{n!}{b_1!b_2!b_3!(2!)^{b_2}(3!)^{b_3}}.
+            \]
+            The block factorials remove internal orders, and the $b_j!$
+            factors remove orders among blocks of equal size.
+
+            \textbf{(d)} For $n=5$, the possible block-size patterns are
+            $1+1+1+1+1$, $2+1+1+1$, $2+2+1$, $3+1+1$, and $3+2$.
+            Their respective counts are $1,10,15,10,10$, so
+            $a_5=1+10+15+10+10=46$.
         \end{solution}
 
     \end{onehalfspace}
