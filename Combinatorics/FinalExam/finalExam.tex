@@ -1,0 +1,160 @@
+%! Author = chtompki
+%! Date = 1/14/26
+\documentclass[12pt]{amsart}
+% Default margins are too wide all the way around. I reset them here
+\setlength{\hoffset}{-.75in}
+\setlength{\textwidth}{6.5in}
+\setlength{\voffset}{-.5in}
+\setlength{\textheight}{9.0in}
+\usepackage{amsmath}
+\usepackage{leftindex}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\newenvironment{solution}
+{\begin{proof}[Solution]}
+{\end{proof}}
+
+\title{Combinatorics\\Final Exam}
+\author{Rob Tompkins}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \date{\today}
+    \begin{onehalfspace}
+        % Problem 1
+        \noindent\textbf{1.} (Multinomial Coefficients) A committee of 12 people is to be divided into
+        four subcommittees of sizes 3, 4, 2, and 3.
+        \begin{itemize}
+            \item[(a)] How many ways can this be done if the four subcommittees have distinct responsibilities?
+            \item[(b)] How many ways can this be done if two of the subcommittees of size 3 have identical
+            responsibilities, while the others are distinct?
+            \item[(c)] Explain why the multinomial coefficient
+            \[
+                \binom{12}{3.4.2.3}
+            \]
+            appears naturally in part (a).
+        \end{itemize}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 2
+        \noindent\textbf{2.} (Binomial Identies) Prove the identity
+        \[
+            \sum_{k=0}^n \binom{n}{k}^2 = \binom{2n}{k}.
+        \]
+        Give \textbf{two different proofs}
+        \begin{itemize}
+            \item[(a)] An algebraic proof using the binomial theorem.
+            \item[(b)] A combinatorial proof by counting the same set in two ways.
+        \end{itemize}
+
+        \begin{proof}
+        \end{proof}
+
+        % Problem 3
+        \noindent\textbf{3.} (Ramnsey Numbers)
+        \begin{itemize}
+            \item[(a)] Show that if $m\ge 3$ and $n\ge 3$ are integers then
+            \[
+                R(m,n) \le R(m-1,n) + R(m.n-1).
+            \]
+            \item[(b)] Show that if $R(m-1,n)$ and $R(m,n-1)$ are both even and greater than 2,
+            then
+            \[
+                R(m,n) \le R(m-1,n) + R(m,n-1) - 1.
+            \]
+            \item[(c)] Show that $R(4,3) = 9$, $R(53) = 14$, and $R(4,4)=18$
+        \end{itemize}
+
+        \begin{proof}
+        \end{proof}
+
+        % Problem 4
+        \noindent\textbf{4.} (Stirling Numbers of the Second Kind) Let $S(n,k)$ denote the Stirling
+        numbers of the second kind, the number of ways to partition an $n$-element set into $k$
+        nonempty unlabeled blocks.
+        \begin{itemize}
+            \item[(a)] Prove the recurrence
+            \[
+                S(n,k) = kS(n-1,k) + S(n-1,k-1).
+            \]
+            \item[(b)] Use the recurrence to compute $S(5,2)$, $S(5,3)$, and $S(6,3)$.
+            \item[(c)] Give a direct combinatorial interpretation of $S(6,3)$.
+        \end{itemize}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 5
+        \noindent\textbf{5.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 6
+        \noindent\textbf{6.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 7
+        \noindent\textbf{7.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 8
+        \noindent\textbf{8.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 9
+        \noindent\textbf{9.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 10
+        \noindent\textbf{10.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 11
+        \noindent\textbf{11.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 12
+        \noindent\textbf{12.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 13
+        \noindent\textbf{13.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 14
+        \noindent\textbf{14.}
+
+        \begin{solution}
+        \end{solution}
+
+        % Problem 15
+        \noindent\textbf{15.}
+
+        \begin{solution}
+        \end{solution}
+
+    \end{onehalfspace}
+\end{document}
