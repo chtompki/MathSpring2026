@@ -401,7 +401,6 @@ rk4_ivp_solution
             batch job using the included \texttt{athena\_rk4.slurm}; do not execute
             the full experiment on a login node.
 
-            \newpage
             \section*{6. Athena batch submission}
             Place \texttt{rk4\_ivp\_solution.m} and \texttt{athena\_rk4.slurm}
             in the same writable directory on Athena. From that directory submit:
@@ -491,7 +490,6 @@ matlab -singleCompThread -batch "rk4_ivp_solution"
             \end{equation}
             This identity provides a useful check of the numerical computation.
 
-            \newpage
             The Jacobian is
             \[
                 J(s,x)=\begin{pmatrix}
@@ -546,7 +544,6 @@ matlab -singleCompThread -batch "rk4_ivp_solution"
             column and cell mass in the second. The comparison run with $h=0.06$
             uses $200$ steps and $201$ stored values.
 
-            \newpage
             \subsection*{Computed plots and endpoint values}
             \begin{center}
                 \begin{figure}
@@ -568,7 +565,6 @@ matlab -singleCompThread -batch "rk4_ivp_solution"
             embeds the MATLAB data, so no external image or data file is needed
             to compile this document.
 
-            \newpage
             For $h=0.05$, the substrate initially increases slightly because
             $s'(0)=0.286666\ldots>0$, then decreases rapidly as cell mass increases.
             Subsequently the numerical solution approaches
@@ -621,7 +617,6 @@ matlab -singleCompThread -batch "rk4_ivp_solution"
             the differential equation; the chosen RK4 step has made it unstable
             in the numerical update.
 
-            \newpage
             \subsection*{Verification and MATLAB usage}
             The total mass is an especially useful diagnostic. Because its differential
             equation is linear and the RK4 stages are applied to both components
@@ -698,6 +693,169 @@ Z = X + 1i*Y;
         \end{enumerate}
 
         \begin{solution}
+            \leavevmode\par
+            \subsection*{(a) Derivation of the amplification polynomial}
+            Write $z=h\lambda$ and use the RK4 convention in which each stage
+            already contains a factor of $h$. Since $f(t,y)=\lambda y$, the stages are
+            \begin{align*}
+                k_1&=zw_n,\\
+                k_2&=z\left(w_n+\frac{k_1}{2}\right)
+                =\left(z+\frac{z^2}{2}\right)w_n,\\
+                k_3&=z\left(w_n+\frac{k_2}{2}\right)
+                =\left(z+\frac{z^2}{2}+\frac{z^3}{4}\right)w_n,\\
+                k_4&=z(w_n+k_3)
+                =\left(z+z^2+\frac{z^3}{2}+\frac{z^4}{4}\right)w_n.
+            \end{align*}
+            Substituting these expressions into the update gives
+            \begin{align*}
+                w_{n+1}&=w_n+\frac16(k_1+2k_2+2k_3+k_4)\\
+                &=\left(1+z+\frac{z^2}{2}+\frac{z^3}{6}+\frac{z^4}{24}\right)w_n.
+            \end{align*}
+            Thus, for a constant step size and $w_0=1$,
+            \[
+                \boxed{Q(z)=1+z+\frac{z^2}{2}+\frac{z^3}{6}+\frac{z^4}{24},
+                    \qquad w_n=Q(h\lambda)^n.}
+            \]
+            The exact value is $y(t_n)=e^{\lambda nh}$, so RK4 replaces the exact
+            one-step multiplier $e^{h\lambda}$ with its fourth-degree Taylor polynomial.
+
+            \subsection*{(b) Absolute stability region}
+            The bounded-amplification region is
+            \[
+                \boxed{\mathcal S=\{z\in\mathbb C:|Q(z)|\le1\}.}
+            \]
+            Its interior, where $|Q(z)|<1$, gives $w_n\to0$. On its boundary,
+            $|Q(z)|=1$, the magnitude remains constant. Some definitions reserve
+            ``absolute stability'' for the strict interior; the plotted boundary
+            is the same under either convention.
+
+            The shaded region on the next page is the stable side of the
+            $|Q|=1$ contour. It contains $z=-1$, for example, where $Q(-1)=3/8$.
+            The exterior gives $|Q|>1$ and amplifies perturbations. The region is
+            symmetric about the real axis because $Q$ has real coefficients.
+            It is bounded, so classical explicit RK4 is not A-stable.
+
+            \begin{center}
+                \begin{figure}
+                    \includegraphics[width=\textwidth]{stability_region.png}
+                    \caption{Stability Region.}
+                    \label{fig:stabilityregion}
+                \end{figure}
+            \end{center}
+            On the negative real axis, let $z=-r$, $r\ge0$. The nonzero endpoint
+            satisfies $Q(-r)=1$, or
+            \[
+                r^3-4r^2+12r-24=0.
+            \]
+            Its positive root is $r_*=2.785293563405\ldots$. Thus the real-axis
+            interval is $[-r_*,0]$, with strict decay for $-r_*<z<0$.
+            On the imaginary axis,
+            \[
+                |Q(iy)|^2=1+\frac{y^6(y^2-8)}{576},
+            \]
+            so the imaginary-axis segment runs from $-2\sqrt2\,i$ to $2\sqrt2\,i$.
+            The boundary also encloses small areas in the right half-plane;
+            part (d) tests one such point.
+
+            \subsection*{(c) The case $\lambda=-55.31$}
+            To obtain numerical decay, require $-r_*<-55.31h<0$, hence
+            \[
+                \boxed{0<h<\frac{2.785293563405\ldots}{55.31}
+                    =0.050357865909\ldots.}
+            \]
+            Equality gives $Q=1$, hence a constant numerical solution rather than
+            decay. The two test values are $h=0.05$ (inside) and $h=0.06$ (outside).
+            \begin{center}
+                \begin{tabular}{rrr}\toprule
+                    $h$ & $h\lambda$ & $Q(h\lambda)$\\\midrule
+                    $0.05$ & $-2.7655$ & $0.970565404941$\\
+                    $0.06$ & $-3.3186$ & $2.150291693782$\\\bottomrule
+                \end{tabular}
+            \end{center}
+            For $h=0.05$, RK4 uses $200$ steps and gives
+            \[
+                w_{200}=Q(-2.7655)^{200}\approx2.54074706385\times10^{-3}.
+            \]
+            For $h=0.06$, $10/h$ is not an integer. The script takes $166$ full
+            steps to $t=9.96$, followed by one step of length $0.04$. Consequently
+            \[
+                w(10)=Q(-0.04\cdot55.31)\,Q(-3.3186)^{166}
+                \approx6.70479885228\times10^{54}.
+            \]
+            The last shortened step is included explicitly; it does not undo the
+            enormous growth accumulated during the unstable full steps.
+
+            \begin{center}
+                \begin{figure}
+                    \includegraphics[width=\textwidth]{negative_real_test.png}
+                    \caption{Negative Real Test.}
+                    \label{fig:negativerealtest}
+                \end{figure}
+            \end{center}
+
+            The exact solution decays extremely rapidly:
+            \[
+                y(10)=e^{-553.1}\approx6.19044770713\times10^{-241}.
+            \]
+            The $h=0.05$ numerical solution also tends to zero as the number of
+            steps increases, but much too slowly. This is a clear example of
+            \emph{stability without adequate accuracy}. With $h=0.06$, the
+            numerical solution grows, although the exact solution decays.
+
+            In Problem 3, the positive chemostat equilibrium has eigenvalues $-1$
+            and $-55.3125$. The corresponding fast-mode stability threshold is
+            $0.05035558985\ldots$, almost identical to the one here. Thus $h=0.05$
+            damps small perturbations of that equilibrium, while $h=0.06$ amplifies
+            them. This explains the loss of numerical stability in Problem 3(c).
+            The scalar test grows without bound; the chemostat's nonlinear RK4
+            recurrence instead develops bounded artificial oscillations. The scalar
+            amplification factor diagnoses the initial instability, not the later
+            nonlinear waveform.
+
+            \subsection*{(d) The case $\lambda=1+20i$ and $h=0.1$}
+            Here $z=h\lambda=0.1+2i$, marked in red on the stability plot.
+            Direct evaluation gives
+            \[
+                Q(0.1+2i)=-0.4381625+0.743666666667i,
+                \qquad |Q(0.1+2i)|=0.863149168752<1.
+            \]
+            Although $\operatorname{Re}(z)>0$, this point is inside the RK4
+            stability region. Hence the numerical solution satisfies
+            \[
+                w_n=Q(0.1+2i)^n,\qquad
+                |w_n|=(0.863149168752\ldots)^n\longrightarrow0.
+            \]
+            In contrast, the exact solution is
+            \[
+                y(t)=e^{(1+20i)t}=e^t\bigl(\cos(20t)+i\sin(20t)\bigr),
+                \qquad |y(t)|=e^t\longrightarrow\infty.
+            \]
+            Thus the exact solution does \emph{not} converge to zero: it oscillates
+            with an exponentially growing amplitude. RK4 with this step size
+            produces oscillations with an artificially decaying amplitude.
+            At $t=10$ ($n=100$), MATLAB gives
+            \[
+                \boxed{|w_{100}|\approx4.06055748173\times10^{-7},
+                    \qquad |y(10)|=e^{10}\approx2.20264657948\times10^4.}
+            \]
+            For this growing mode, a useful step must lie \emph{outside} the
+            bounded-amplification region so that $|Q(h\lambda)|>1$. However,
+            being outside is not sufficient for accuracy: choose $h$ small enough
+            that $Q(h\lambda)$ approximates $e^{h\lambda}$ well in both magnitude
+            and phase. As $h\to0^+$ along this fixed $\lambda$, this is precisely
+            the behavior RK4 recovers. Absolute stability is a condition for
+            preserving decay of decaying modes, not a universal prescription
+            to damp every differential equation.
+
+            \newpage
+            \begin{center}
+
+                \begin{figure}
+                    \includegraphics[width=\textwidth]{complex_growth_test.png}
+                    \caption{Complex Growth Test.}
+                    \label{fig:complexgrowthtest}
+                \end{figure}
+            \end{center}
         \end{solution}
 
 
