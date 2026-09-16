@@ -32,6 +32,22 @@
         Derive a closed-form expression for $a_n$.
 
         \begin{solution}
+            The pairs themselves are unordered, but the two entries in each
+            pair are ordered.  On a fixed two-element set there are $2!$
+            ordered pairs, so the exponential generating function for one
+            pair is $2!x^2/2!=x^2$.  The exponential formula therefore gives
+            \[
+                A(x)=\sum_{n\ge0}a_n\frac{x^n}{n!}
+                =\exp(x^2)=\sum_{m\ge0}\frac{x^{2m}}{m!}.
+            \]
+            Comparing coefficients yields
+            \[
+                a_{2m}=\frac{(2m)!}{m!},\qquad a_{2m+1}=0.
+            \]
+            Here $a_0=1$, corresponding to the empty partition.  Alternatively,
+            arrange the $2m$ elements in a list and split it into consecutive
+            pairs.  Each partition is counted $m!$ times, once for each
+            ordering of its pairs, giving the same formula.
         \end{solution}
 
         % Problem 2
@@ -42,6 +58,32 @@
         Extract a formula for $a_n$.
 
         \begin{solution}
+            Interpret ``any number of labeled boxes'' as summing over
+            $k\ge0$, with the boxes labeled $1,\ldots,k$ for each fixed $k$.
+            (Choosing arbitrary labels from an infinite supply would not give
+            a finite count.)  A single box contains an unordered set of at
+            least two labeled objects, with exponential generating function
+            \[
+                B(x)=\sum_{j\ge2}\frac{x^j}{j!}=e^x-1-x.
+            \]
+            For $k$ labeled boxes the generating function is $B(x)^k$.
+            Consequently, as a formal power series,
+            \[
+                A(x)=\sum_{k\ge0}(e^x-1-x)^k
+                    =\frac{1}{2+x-e^x}.
+            \]
+            If box $i$ contains $n_i$ objects, the number of distributions is
+            the multinomial coefficient $n!/(n_1!\cdots n_k!)$.  Thus an
+            explicit finite formula is
+            \[
+                a_n=\sum_{k=0}^{\lfloor n/2\rfloor}
+                \ \sum_{\substack{n_1+\cdots+n_k=n\\n_i\ge2}}
+                \frac{n!}{n_1!\cdots n_k!}.
+            \]
+            The $k=0$ term is $1$ when $n=0$ and $0$ otherwise.
+            Equivalently, $a_n=\sum_k k!\left\{\begin{smallmatrix}n\\k
+            \end{smallmatrix}\right\}_{\ge2}$, where the symbol counts
+            partitions into $k$ blocks, each of size at least two.
         \end{solution}
 
         % Problem 3
@@ -51,6 +93,29 @@
         Give a combinatorial interpretation of this recurrence.
 
         \begin{proof}
+            Let $C(x)=\sum_{n\ge0}C_nx^n$.  The formal binomial expansion gives
+            \[
+                \frac{1-\sqrt{1-4x}}{2x}
+                =\sum_{n\ge0}\left[-\frac12
+                                 \binom{1/2}{n+1}(-4)^{n+1}\right]x^n
+                =\sum_{n\ge0}\frac{1}{n+1}\binom{2n}{n}x^n.
+            \]
+            Hence $C(x)=(1-\sqrt{1-4x})/(2x)$, which satisfies
+            $C(x)=1+xC(x)^2$.  Taking the coefficient of $x^n$, for $n\ge1$,
+            proves
+            \[
+                C_n=\sum_{k=0}^{n-1}C_kC_{n-1-k},\qquad C_0=1.
+            \]
+            Combinatorially, $C_n$ counts Dyck paths: paths with $n$ up-steps
+            and $n$ down-steps that never go below height zero.  Indeed, the
+            reflection principle counts the paths that go below zero as
+            $\binom{2n}{n+1}$, so the number of Dyck paths is
+            $\binom{2n}{n}-\binom{2n}{n+1}=C_n$.
+            Every nonempty Dyck path decomposes uniquely as $U P D Q$, where
+            the displayed $D$ is the first return to height zero.  If $P$ has
+            semilength $k$, then $Q$ has semilength $n-1-k$.  There are
+            $C_kC_{n-1-k}$ choices for these two paths; summing over $k$
+            gives the recurrence.
         \end{proof}
 
         % Problem 4
@@ -59,6 +124,22 @@
         Use the Inclusion-Exclusion Principle and show all steps.
 
         \begin{solution}
+            Let $A_d=\{m\in\{1,\ldots,1000\}:d\mid m\}$.
+            Since $3,5,7$ are pairwise coprime, their intersections consist
+            of multiples of the corresponding products.  Thus
+            \begin{align*}
+                |A_3|&=333,& |A_5|&=200,& |A_7|&=142,\\
+                |A_3\cap A_5|&=\lfloor1000/15\rfloor=66,\\
+                |A_3\cap A_7|&=\lfloor1000/21\rfloor=47,\\
+                |A_5\cap A_7|&=\lfloor1000/35\rfloor=28,\\
+                |A_3\cap A_5\cap A_7|&=\lfloor1000/105\rfloor=9.
+            \end{align*}
+            By inclusion--exclusion,
+            \begin{align*}
+                |A_3\cup A_5\cup A_7|
+                &=333+200+142-66-47-28+9\\
+                &=\boxed{543}.
+            \end{align*}
         \end{solution}
 
         % Problem 5
@@ -73,7 +154,36 @@
         \end{itemize}
 
         \begin{solution}
+            Interpret condition (ii) as saying that every coin outside the
+            \emph{bottom} row rests on two adjacent coins immediately below
+            it.  Upper rows may have gaps, and left--right reflections are
+            counted separately.  Let $f_n$ count these stacks on a fixed
+            bottom row of $n$ coins, and set $f_0=1$.
+
+            There are $n-1$ possible coin positions immediately above the
+            bottom row.  If this entire next row is occupied, the choices
+            above it form a stack with bottom row of length $n-1$, giving
+            $f_{n-1}$ arrangements.
+
+            Otherwise, let $k$ be the first vacant position in that row,
+            counted from the left, where $1\le k\le n-1$.  The first $k-1$
+            positions are occupied, and the choices above these coins give
+            $f_{k-1}$ stacks.  To the right of the vacancy there is an arbitrary
+            stack on the last $n-k$ bottom coins, giving $f_{n-k}$ choices.
+            No coin can bridge the vacancy: any such coin would require,
+            through its supports, the missing coin.  The two choices are
+            therefore independent.  Consequently,
+            \[
+                f_n=f_{n-1}+\sum_{k=1}^{n-1}f_{k-1}f_{n-k}
+                =\sum_{k=1}^{n}f_{k-1}f_{n-k}.
+            \]
+            This is the Catalan recurrence with $f_0=1$, so
+            \[
+                f_n=C_n=\frac{1}{n+1}\binom{2n}{n}.
+            \]
+            For example, $f_1=1$, $f_2=2$, and $f_3=5$.
         \end{solution}
+
 
         % Problem 6
         \noindent\textbf{6.} (25pts): Consider the colorings of the vertices of a regular hexagon using
