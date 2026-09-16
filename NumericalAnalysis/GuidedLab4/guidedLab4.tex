@@ -465,6 +465,192 @@ matlab -singleCompThread -batch "rk4_ivp_solution"
         \end{enumerate}
 
         \begin{solution}
+            \leavevmode\par
+            \subsection*{1. Fixed points and their stability}
+            Adding the two equations gives
+            \[
+                (s+x)'=1-(s+x).
+            \]
+            Consequently every fixed point satisfies $s+x=1$. The second equation
+            also requires
+            \[
+                x\left(\frac{ms}{a+s}-1\right)=0.
+            \]
+            If $x=0$, then $s=1$. Otherwise $ms=a+s$, giving $s=a/(m-1)$.
+            Thus the two fixed points are
+            \[
+                \boxed{E_0=(1,0),\qquad E_*=
+                    \left(\frac{a}{m-1},1-\frac{a}{m-1}\right)
+                    =\left(\frac1{60},\frac{59}{60}\right).}
+            \]
+            Both lie in the physical region $s,x\ge0$. This region is forward
+            invariant: at $s=0$ we have $s'=1$, and at $x=0$ we have $x'=0$.
+            For the specified initial condition, the exact total mass is
+            \begin{equation}\label{eq:mass}
+                \boxed{s(t)+x(t)=1-0.48e^{-t}.}
+            \end{equation}
+            This identity provides a useful check of the numerical computation.
+
+            \newpage
+            The Jacobian is
+            \[
+                J(s,x)=\begin{pmatrix}
+                           -1-\dfrac{m\,a\,x}{(a+s)^2} & -\dfrac{ms}{a+s}\\[6pt]
+                           \dfrac{m\,a\,x}{(a+s)^2} & \dfrac{ms}{a+s}-1
+                \end{pmatrix},
+            \]
+            At the washout equilibrium,
+            \[
+                J(E_0)=\begin{pmatrix}-1&-12.8\\0&11.8\end{pmatrix},
+                \qquad \lambda_1=-1,\quad\lambda_2=11.8.
+            \]
+            Hence $\boxed{E_0\text{ is an unstable saddle.}}$
+
+            At the positive equilibrium, put
+            \[
+                b=\frac{ma x_*}{(a+s_*)^2}=\frac{885}{16}=55.3125.
+            \]
+            Since $ms_* /(a+s_*)=1$,
+            \[
+                J(E_*)=\begin{pmatrix}-1-b&-1\\b&0\end{pmatrix}
+                =\begin{pmatrix}-56.3125&-1\\55.3125&0\end{pmatrix}.
+            \]
+            The characteristic polynomial factors as
+            \[
+                \det(\lambda I-J) = \lambda^2+(1+b)\lambda+b
+                =(\lambda+1)(\lambda+b).
+            \]
+            Therefore
+            \[
+                \boxed{\lambda_1=-1,\quad \lambda_2=-55.3125,
+                    \qquad E_*\text{ is an asymptotically stable node.}}
+            \]
+            Both eigenvalues are real and negative, so the linearized system has
+            two decaying modes, with time scales $1$ and $1/55.3125\approx0.01808$.
+            It has no oscillatory linear mode.
+
+            \subsection*{2. RK4 approximation with $h=0.05$}
+            Let $Y=(s,x)^T$ and
+            \[
+                F(Y)=\begin{pmatrix}1-s-16sx/(0.25+s)\\16sx/(0.25+s)-x\end{pmatrix}.
+            \]
+            Classical RK4 advances both components together using
+            \begin{align*}
+                K_1&=F(W_n),& K_2&=F(W_n+\tfrac h2K_1),\\
+                K_3&=F(W_n+\tfrac h2K_2),& K_4&=F(W_n+hK_3),\\
+                W_{n+1}&=W_n+\frac h6(K_1+2K_2+2K_3+K_4),
+                &W_0&=(0.5,0.02)^T.
+            \end{align*}
+            For $h=0.05$, $N=12/h=240$ steps are required. The MATLAB file stores
+            all $241$ values in an $(N+1)\times2$ array, with substrate in the first
+            column and cell mass in the second. The comparison run with $h=0.06$
+            uses $200$ steps and $201$ stored values.
+
+            \newpage
+            \subsection*{Computed plots and endpoint values}
+            \begin{center}
+                \begin{figure}
+                    \includegraphics[width=\textwidth]{chemostat_figure.png}
+                    \caption{Generated Figure 7.21.}
+                    \label{fig:chemostat}
+                \end{figure}
+            \end{center}
+            \begin{center}
+                \begin{tabular}{rrrr}\toprule
+                    $h$ & Steps & $s_h(12)$ & $x_h(12)$\\\midrule
+                    $0.05$ & $240$ & $0.0166667213$ & $0.9833303294$\\
+                    $0.06$ & $200$ & $0.2028741247$ & $0.7971229261$\\\bottomrule
+                \end{tabular}
+            \end{center}
+            These plots were generated from the supplied code run in MATLAB R2025b.
+            They reproduce the smooth approach to equilibrium and the artificial
+            oscillations shown in the supplied textbook figure. The LaTeX source
+            embeds the MATLAB data, so no external image or data file is needed
+            to compile this document.
+
+            \newpage
+            For $h=0.05$, the substrate initially increases slightly because
+            $s'(0)=0.286666\ldots>0$, then decreases rapidly as cell mass increases.
+            Subsequently the numerical solution approaches
+            \[
+                (s_*,x_*)=(0.0166666667,0.9833333333),
+            \]
+            in agreement with the stable-node analysis. The residual difference at
+            $t=12$ includes the finite-time transient; an endpoint value need not
+            equal its limiting equilibrium exactly.
+
+            \subsection*{3. Why $h=0.06$ gives a different result}
+            For the scalar test equation $u'=\lambda u$, one RK4 step multiplies
+            the solution by
+            \[
+                R(z)=1+z+\frac{z^2}{2}+\frac{z^3}{6}+\frac{z^4}{24},\qquad z=h\lambda.
+            \]
+            A decaying linear mode is numerically damped only if $|R(h\lambda)|<1$.
+            On the negative real axis, RK4 is stable for
+            $-2.785293563\ldots<z<0$. The fast eigenvalue therefore imposes
+            \[
+                \boxed{h<\frac{2.785293563\ldots}{55.3125}
+                    =0.05035558985\ldots.}
+            \]
+            The slow eigenvalue $-1$ is stable for both requested steps. For the fast mode,
+            \begin{center}
+                \begin{tabular}{rrrl}\toprule
+                    $h$ & $h\lambda_{\rm fast}$ & $R(h\lambda_{\rm fast})$ & Effect\\\midrule
+                    $0.05$ & $-2.765625$ & $0.970748745$ & Perturbations decay\\
+                    $0.06$ & $-3.318750$ & $2.150727239$ & Perturbations grow\\\bottomrule
+                \end{tabular}
+            \end{center}
+            Thus $h=0.05$ is just inside the local stability interval, whereas
+            $h=0.06$ is outside it. With $h=0.06$, the early transient looks similar,
+            but numerical perturbations grow and the trajectory leaves the vicinity
+            of the stable equilibrium. The nonlinear RK4 recurrence then develops
+            persistent, bounded oscillations, with the substrate too large and the
+            cell mass too small. In this run, for $10\le t\le12$,
+            \[
+                0.0868612\lesssim s_h(t)\lesssim0.2028741.
+            \]
+            The linear amplification factor is positive, so it predicts growth of
+            perturbations, not an alternating linear mode; the subsequent zigzags
+            are a property of the nonlinear discrete computation.
+
+            These oscillations are numerical artifacts. In particular, the continuous
+            system cannot have a nonconstant periodic orbit: a periodic solution
+            would require $s+x=1$ by the total-mass equation, reducing the dynamics
+            to a scalar autonomous equation on that line, which has no nonconstant
+            periodic solutions. The stable equilibrium has not become unstable in
+            the differential equation; the chosen RK4 step has made it unstable
+            in the numerical update.
+
+            \newpage
+            \subsection*{Verification and MATLAB usage}
+            The total mass is an especially useful diagnostic. Because its differential
+            equation is linear and the RK4 stages are applied to both components
+            together, the discrete solution satisfies, up to rounding,
+            \[
+                s_n+x_n=1-0.48\,[R(-h)]^n.
+            \]
+            The script checks this identity to within $10^{-11}$. In the MATLAB run,
+            the maximum discrepancy was below $5\times10^{-16}$. Comparison with
+            the continuous identity \eqref{eq:mass} gives
+            \begin{center}
+                \begin{tabular}{rr}\toprule
+                    $h$ & $\displaystyle\max_n|s_n+x_n-(1-0.48e^{-t_n})|$\\\midrule
+                    $0.05$ & $9.589\times10^{-9}$\\
+                    $0.06$ & $2.005\times10^{-8}$\\\bottomrule
+                \end{tabular}
+            \end{center}
+            Even the unstable trajectory has a very accurate total mass. The errors
+            in the two components largely cancel, explaining why the artificial
+            oscillations in $s$ and $x$ are opposite in phase. Accurate total mass
+            alone does not imply accurate individual concentrations.
+
+            Also, numerical stability alone does not imply high accuracy. For
+            $h=0.05$, RK4 damps the fast mode by approximately $0.97075$ per step,
+            whereas the exact linearized damping is $e^{-2.765625}\approx0.06294$.
+            The supplied code includes a finer run with $h=0.005$; the maximum
+            difference on the $h=0.05$ grid is approximately $2.273\times10^{-3}$
+            for each component. The finer run is an accuracy check, not a substitute
+            for either of the two requested plots.
         \end{solution}
 
         \noindent\textbf{4.} In order to explore absolute stability of RK4, consider the test problem $y'=\lambda y$ with
