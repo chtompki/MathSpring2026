@@ -192,6 +192,33 @@
         Use Polya's Enumeration Theorem to compute the number of distinct colorings.
 
         \begin{solution}
+            Write $s_j$ for a cycle of length $j$.  The group $D_6$ has
+            $12$ elements, with the following cycle types on the six vertices:
+            \[
+                \begin{array}{c|c|c}
+                    \text{Symmetry}&\text{Number}&\text{Cycle monomial}\\ \hline
+                    \text{Identity}&1&s_1^6\\
+                    \text{Rotations by }\pm60^\circ&2&s_6\\
+                    \text{Rotations by }\pm120^\circ&2&s_3^2\\
+                    \text{Rotation by }180^\circ&1&s_2^3\\
+                    \text{Reflections through opposite vertices}&3&s_1^2s_2^2\\
+                    \text{Reflections through opposite edges}&3&s_2^3
+                \end{array}
+            \]
+            Averaging these monomials gives
+            \[
+                Z(D_6)=\frac1{12}
+                    (s_1^6+2s_6+2s_3^2+4s_2^3+3s_1^2s_2^2).
+            \]
+            Each cycle must be monochromatic in a coloring fixed by its
+            permutation.  With three available colors, Polya's theorem
+            therefore gives
+            \[
+                Z(D_6)(3,3,3,3,3,3)
+                =\frac{3^6+2(3)+2(3^2)+4(3^3)+3(3^4)}{12}
+                =\frac{1104}{12}=\boxed{92}.
+            \]
+            Colors are distinct, and there is no requirement to use all three.
         \end{solution}
 
         % Problem 7
@@ -201,12 +228,94 @@
         (up to rotational and reflectional symmetry).
 
         \begin{solution}
+            If every site is occupied by either $A$ or $B$, these are
+            two-colorings of a hexagon under $D_6$.  Substituting $s_j=2$
+            into the cycle index from Problem 6 gives
+            \[
+                Z(D_6)(2,2,2,2,2,2)
+                    =\frac{2^6+2(2)+2(2^2)+4(2^3)+3(2^4)}{12}
+                    =13.
+            \]
+            More precisely, substituting $s_j=a^j+b^j$ gives the pattern
+            inventory
+            \begin{align*}
+                P(a,b)=\frac1{12}\bigl(& (a+b)^6+2(a^6+b^6)
+                +2(a^3+b^3)^2\\
+                &+4(a^2+b^2)^3+3(a+b)^2(a^2+b^2)^2\bigr)\\
+                ={}&a^6+a^5b+3a^4b^2+3a^3b^3
+                +3a^2b^4+ab^5+b^6.
+            \end{align*}
+            Thus, for example, exactly three $A$ atoms and three $B$ atoms
+            give three patterns.  If both types must occur, the total is
+            $13-2=11$.
+
+            If the wording instead allows some hydrogens to remain, each
+            site has three states, $H,A,B$.  The answer is then $92$,
+            as in Problem 6, including the unsubstituted ring; requiring
+            at least one substitution gives $92-1=91$ patterns.
         \end{solution}
 
         % Problem 8
         \noindent\textbf{8.} (25pts): Show that: $R(3, 5) > 13$ and $R(3,5)\le 14$.
 
         \begin{proof}
+            Recall that $R(3,5)$ is the least $N$ such that every graph on
+            $N$ vertices contains a triangle or an independent set of size $5$.
+
+            \noindent\emph{Lower bound.}
+            Let $G$ have vertex set $\mathbb Z/13\mathbb Z$, with $u$ adjacent
+            to $v$ exactly when $u-v\in\{1,-1,5,-5\}$ modulo $13$.
+            This graph is triangle-free.  Indeed, the neighbors of $0$ are
+            $1,5,8,12$, and the positive differences between distinct members
+            are $3,4,7,11$; none is congruent to $\pm1$ or $\pm5$.
+            Thus no two neighbors of $0$ are adjacent, and translation
+            proves the same statement at every vertex.
+
+            Suppose five vertices were independent.  List them in cyclic
+            order, and let $g_1,\ldots,g_5$ be their positive cyclic gaps.
+            No gap is $1$, and their sum is $13$.  Thus, up to reordering,
+            the only possibilities are
+            \[
+                (5,2,2,2,2),\qquad(4,3,2,2,2),\qquad(3,3,3,2,2).
+            \]
+            The first possibility contains a gap of $5$, which is an edge.
+            In the second, the gap $3$ must have a neighboring gap $2$,
+            since there is only one gap $4$.  In the third, a gap $2$ and a
+            gap $3$ must be consecutive somewhere around the cycle.
+            In either case, two consecutive gaps sum to $5$, again giving
+            an edge between two selected vertices.  This contradiction
+            proves that $G$ has no independent set of size $5$.  Coloring
+            its edges red and its nonedges blue gives no red triangle and
+            no blue $K_5$, so $R(3,5)>13$.
+
+            \noindent\emph{Upper bound.}
+            First, every graph on six vertices has a triangle or an
+            independent triple.  To see this, color edges red and nonedges
+            blue.  A vertex has at least three incident edges of one color.
+            Among their other endpoints, an edge of that color completes a
+            monochromatic triangle; if none exists, the endpoints themselves
+            form a triangle of the other color.  Thus $R(3,3)\le6$.
+
+            Next, a triangle-free graph on nine vertices must have an
+            independent set of size $4$.  Otherwise every vertex has degree
+            at most $3$, since its neighbors are independent.  If a vertex
+            had degree at most $2$, it would have at least six other
+            nonneighbors; by the preceding result these contain an
+            independent triple, which together with the vertex gives an
+            independent set of size $4$.  All degrees would therefore be
+            $3$, impossible because their sum would be $27$, an odd number.
+            This proves $R(3,4)\le9$.
+
+            Finally, let $G$ be triangle-free on $14$ vertices, and choose a
+            vertex $v$.  If $\deg(v)\ge5$, five of its neighbors are an
+            independent set.  Otherwise $v$ has at least $13-4=9$ other
+            nonneighbors.  Their induced graph is triangle-free, so it
+            contains an independent set of size $4$; adjoining $v$ gives
+            an independent set of size $5$.  Hence $R(3,5)\le14$, and
+            together the two bounds yield
+            \[
+                R(3,5)=14.
+            \]
         \end{proof}
 
     \end{onehalfspace}
